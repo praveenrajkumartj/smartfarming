@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Videos - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Farmer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/farmer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/farmer/crop-recommendation}"><span class="nav-icon">🌱</span> Crop Recommendation</a>
+                <a th:href="@{/farmer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/farmer/disease-detection}"><span class="nav-icon">🔬</span> Disease Detection</a>
+                <a th:href="@{/farmer/marketplace}"><span class="nav-icon">🛒</span> My Marketplace</a>
+                <a th:href="@{/farmer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/farmer/learning}" class="active"><span class="nav-icon">🎓</span> Learning Videos</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🎓 Agriculture Learning Videos</span>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="section-header" style="margin-bottom:24px;">
+                    <div>
+                        <h2 class="section-title">Learn Modern Farming Techniques</h2>
+                        <p class="section-subtitle">Expert-curated videos on crop management, organic farming, and more
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Category Tabs -->
+                <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
+                    <button class="btn btn-primary btn-sm" onclick="filterVideos('all')">All Videos</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterVideos('crop')">Crop Management</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterVideos('organic')">Organic Farming</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterVideos('machinery')">Farm Machinery</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterVideos('disease')">Disease Control</button>
+                </div>
+
+                <div class="videos-grid">
+                    <!-- Video 1 -->
+                    <div class="video-card" data-cat="crop">
+                        <div class="video-thumb">
+                            <iframe src="https://www.youtube.com/embed/SCfNbQnH6DY"
+                                title="Modern Farming Techniques India"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">🌾 Modern Farming Techniques in India</div>
+                            <div class="video-desc">Learn about advanced farming methods that increase crop yield
+                                significantly.</div>
+                            <span class="badge badge-success" style="margin-top:8px;">Crop Management</span>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="video-card" data-cat="organic">
+                        <div class="video-thumb">
+                            <iframe src="https://www.youtube.com/embed/CtLKZBPTg8o" title="Organic Farming Guide"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">🌿 Complete Guide to Organic Farming</div>
+                            <div class="video-desc">Transition from conventional to organic farming methods for better
+                                health and income.</div>
+                            <span class="badge badge-info" style="margin-top:8px;">Organic Farming</span>
+                        </div>
+                    </div>
+
+                    <!-- Video 3 -->
+                    <div class="video-card" data-cat="disease">
+                        <div class="video-thumb">
+                            <iframe src="https://www.youtube.com/embed/MmM7oXkqy0o" title="Crop Disease Management"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">🔬 Crop Disease Identification &amp; Control</div>
+                            <div class="video-desc">Identify common plant diseases early and learn effective treatment
+                                methods.</div>
+                            <span class="badge badge-warning" style="margin-top:8px;">Disease Control</span>
+                        </div>
+                    </div>
+
+                    <!-- Video 4 -->
+                    <div class="video-card" data-cat="crop">
+                        <div class="video-thumb">
+                            <iframe src="https://www.youtube.com/embed/a7ZwZ7zOp7s" title="Wheat Cultivation"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">🌾 Complete Wheat Cultivation Guide</div>
+                            <div class="video-desc">Everything you need to know about growing high-yield wheat crops.
+                            </div>
+                            <span class="badge badge-success" style="margin-top:8px;">Crop Management</span>
+                        </div>
+                    </div>
+
+                    <!-- Video 5 -->
+                    <div class="video-card" data-cat="machinery">
+                        <div class="video-thumb">
+                            <iframe src="https://www.youtube.com/embed/GYCr2a3iE80" title="Farm Machinery"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">🚜 Smart Farm Machinery &amp; Equipment</div>
+                            <div class="video-desc">Learn about modern agricultural machinery that saves time and
+                                reduces labor costs.</div>
+                            <span class="badge badge-purple" style="margin-top:8px;">Farm Machinery</span>
+                        </div>
+                    </div>
+
+                    <!-- Video 6 -->
+                    <div class="video-card" data-cat="organic">
+                        <div class="video-thumb">
+                            <iframe src="https://www.youtube.com/embed/cKkuGm7DGWQ" title="Drip Irrigation"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">💧 Drip Irrigation System Setup</div>
+                            <div class="video-desc">Save water and increase crop yield with efficient drip irrigation
+                                setup.</div>
+                            <span class="badge badge-info" style="margin-top:8px;">Water Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+        function filterVideos(cat) {
+            document.querySelectorAll('.video-card').forEach(card => {
+                if (cat === 'all' || card.dataset.cat === cat) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

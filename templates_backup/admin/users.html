@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Users - Admin Panel</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Admin Panel</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Admin Menu</div>
+                <a th:href="@{/admin/dashboard}"><span class="nav-icon">📊</span> Dashboard</a>
+                <a th:href="@{/admin/users}" class="active"><span class="nav-icon">👥</span> Manage Users</a>
+                <a th:href="@{/admin/crops}"><span class="nav-icon">🌱</span> Manage Crops</a>
+                <a th:href="@{/admin/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/admin/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/admin/disease-queries}"><span class="nav-icon">🔬</span> Disease Queries</a>
+                <a th:href="@{/admin/marketplace}"><span class="nav-icon">🛒</span> Marketplace</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">👥 Manage Users</span>
+                </div>
+            </header>
+            <div class="page-body">
+                <div th:if="${successMessage}" class="alert alert-success">✅ <span th:text="${successMessage}"></span>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">All Registered Users</span>
+                        <span class="badge badge-success" th:text="${users.size()} + ' total users'"></span>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Role</th>
+                                    <th>State</th>
+                                    <th>District</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="u,iStat : ${users}">
+                                    <td style="color:#6b7280;font-size:12px;" th:text="${iStat.count}"></td>
+                                    <td>
+                                        <div style="display:flex;align-items:center;gap:10px;">
+                                            <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;"
+                                                th:text="${u.fullName.substring(0,1)}"></div>
+                                            <span style="font-weight:600;color:#f0fdf4;" th:text="${u.fullName}"></span>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:13px;color:#9ca3af;" th:text="${u.email}"></td>
+                                    <td style="font-size:13px;" th:text="${u.phone}"></td>
+                                    <td>
+                                        <span class="badge"
+                                            th:classappend="${u.role.name()=='FARMER' ? 'badge-success' : (u.role.name()=='BUYER' ? 'badge-info' : 'badge-warning')}"
+                                            th:text="${u.role}"></span>
+                                    </td>
+                                    <td style="font-size:12px;color:#9ca3af;" th:text="${u.state}"></td>
+                                    <td style="font-size:12px;color:#9ca3af;" th:text="${u.district}"></td>
+                                    <td>
+                                        <form th:if="${u.role.name() != 'ADMIN'}"
+                                            th:action="@{/admin/users/delete/{id}(id=${u.id})}" method="post"
+                                            onsubmit="return confirm('Delete user ' + this.dataset.name + '?')"
+                                            th:data-name="${u.fullName}">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                        <span th:if="${u.role.name() == 'ADMIN'}"
+                                            style="color:#6b7280;font-size:12px;">Protected</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Crops - Admin Panel</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Admin Panel</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Admin Menu</div>
+                <a th:href="@{/admin/dashboard}"><span class="nav-icon">📊</span> Dashboard</a>
+                <a th:href="@{/admin/users}"><span class="nav-icon">👥</span> Manage Users</a>
+                <a th:href="@{/admin/crops}" class="active"><span class="nav-icon">🌱</span> Manage Crops</a>
+                <a th:href="@{/admin/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/admin/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/admin/disease-queries}"><span class="nav-icon">🔬</span> Disease Queries</a>
+                <a th:href="@{/admin/marketplace}"><span class="nav-icon">🛒</span> Marketplace</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🌱 Manage Crops</span>
+                </div>
+                <div class="top-nav-right">
+                    <button class="btn btn-primary" onclick="openModal('addCropModal')">+ Add Crop</button>
+                </div>
+            </header>
+            <div class="page-body">
+                <div th:if="${successMessage}" class="alert alert-success">✅ <span th:text="${successMessage}"></span>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🌱 Crop Database</span>
+                        <span class="badge badge-success" th:text="${crops.size()} + ' crops'"></span>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Crop Name</th>
+                                    <th>Season</th>
+                                    <th>Soil Type</th>
+                                    <th>Water Needed</th>
+                                    <th>Duration</th>
+                                    <th>Temp Range</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="crop,iStat : ${crops}">
+                                    <td style="color:#6b7280;font-size:12px;" th:text="${iStat.count}"></td>
+                                    <td><strong style="color:#22c55e;" th:text="${crop.name}"></strong></td>
+                                    <td><span class="badge badge-success" th:text="${crop.season}"></span></td>
+                                    <td style="font-size:13px;" th:text="${crop.soilType}"></td>
+                                    <td style="font-size:13px;" th:text="${crop.waterRequirement}"></td>
+                                    <td style="font-size:13px;" th:text="${crop.growthDuration}"></td>
+                                    <td style="font-size:13px;"
+                                        th:text="${crop.minTemperature} + '°C – ' + ${crop.maxTemperature} + '°C'"></td>
+                                    <td>
+                                        <form th:action="@{/admin/crops/delete/{id}(id=${crop.id})}" method="post"
+                                            onsubmit="return confirm('Delete this crop?')">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Crop Modal -->
+    <div class="modal-overlay" id="addCropModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">🌱 Add New Crop</span>
+                <div class="modal-close" onclick="closeModal('addCropModal')">✕</div>
+            </div>
+            <form th:action="@{/admin/crops/add}" method="post">
+                <div class="modal-body">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                        <div class="form-group">
+                            <label class="form-label">Crop Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="e.g. Wheat" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Season</label>
+                            <select name="season" class="form-control">
+                                <option value="Kharif">Kharif</option>
+                                <option value="Rabi">Rabi</option>
+                                <option value="Annual">Annual</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Soil Type</label>
+                            <select name="soilType" class="form-control">
+                                <option value="Loamy">Loamy</option>
+                                <option value="Clay">Clay</option>
+                                <option value="Sandy">Sandy</option>
+                                <option value="Sandy Loam">Sandy Loam</option>
+                                <option value="Black">Black</option>
+                                <option value="Clay Loam">Clay Loam</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Water Requirement</label>
+                            <select name="waterRequirement" class="form-control">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Min Temp (°C)</label>
+                            <input type="number" name="minTemperature" class="form-control" placeholder="15" step="0.1"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Max Temp (°C)</label>
+                            <input type="number" name="maxTemperature" class="form-control" placeholder="35" step="0.1"
+                                required />
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label class="form-label">Growth Duration</label>
+                            <input type="text" name="growthDuration" class="form-control" placeholder="e.g. 90-120 days"
+                                required />
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="3"
+                                placeholder="Brief description of the crop..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addCropModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">🌱 Add Crop</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+        function openModal(id) { document.getElementById(id).classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        document.querySelectorAll('.modal-overlay').forEach(o => {
+            o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
+        });
+    </script>
+</body>
+
+</html>

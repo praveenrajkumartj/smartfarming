@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Government Schemes - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Farmer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/farmer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/farmer/crop-recommendation}"><span class="nav-icon">🌱</span> Crop Recommendation</a>
+                <a th:href="@{/farmer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/farmer/disease-detection}"><span class="nav-icon">🔬</span> Disease Detection</a>
+                <a th:href="@{/farmer/marketplace}"><span class="nav-icon">🛒</span> My Marketplace</a>
+                <a th:href="@{/farmer/schemes}" class="active"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/farmer/learning}"><span class="nav-icon">🎓</span> Learning Videos</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🏛️ Government Schemes &amp; Subsidies</span>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <!-- Search -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-body">
+                        <form th:action="@{/farmer/schemes}" method="get">
+                            <div style="display:flex;gap:12px;">
+                                <input type="text" name="search" class="form-control"
+                                    placeholder="Search schemes by name (e.g. PM-KISAN, PMFBY)..." th:value="${search}"
+                                    style="flex:1;" />
+                                <button type="submit" class="btn btn-primary">🔍 Search</button>
+                                <a th:href="@{/farmer/schemes}" class="btn btn-secondary">Clear</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Available Government Schemes</h2>
+                        <p class="section-subtitle" th:text="${schemes.size()} + ' schemes available'"></p>
+                    </div>
+                </div>
+
+                <div th:if="${schemes.empty}" class="empty-state">
+                    <div class="empty-state-icon">🏛️</div>
+                    <h3>No schemes found</h3>
+                    <p>Try a different search term</p>
+                </div>
+
+                <div class="schemes-grid">
+                    <div class="scheme-card fade-in" th:each="scheme : ${schemes}">
+                        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
+                            <span class="badge badge-success" th:text="${scheme.category}">Category</span>
+                            <span class="badge badge-info">Active</span>
+                        </div>
+                        <h3 class="scheme-title" th:text="${scheme.title}"></h3>
+                        <p class="scheme-description" th:text="${scheme.description}"></p>
+
+                        <div class="scheme-detail">
+                            <span class="scheme-detail-label">✅ Eligible:</span>
+                            <span style="font-size:12px;color:#9ca3af;" th:text="${scheme.eligibility}"></span>
+                        </div>
+                        <div class="scheme-detail">
+                            <span class="scheme-detail-label">💰 Benefits:</span>
+                            <span style="font-size:12px;color:#9ca3af;" th:text="${scheme.benefits}"></span>
+                        </div>
+                        <div th:if="${scheme.lastDate}" class="scheme-detail">
+                            <span class="scheme-detail-label">📅 Deadline:</span>
+                            <span style="font-size:12px;color:#fcd34d;" th:text="${scheme.lastDate}"></span>
+                        </div>
+
+                        <div style="margin-top:16px;">
+                            <a th:href="${scheme.applicationLink}" target="_blank" class="btn btn-primary btn-sm">
+                                🔗 Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>

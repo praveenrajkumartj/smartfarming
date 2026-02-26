@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Admin Panel</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Admin Menu</div>
+                <a th:href="@{/admin/dashboard}" class="active"><span class="nav-icon">📊</span> Dashboard</a>
+                <a th:href="@{/admin/users}"><span class="nav-icon">👥</span> Manage Users</a>
+                <a th:href="@{/admin/crops}"><span class="nav-icon">🌱</span> Manage Crops</a>
+                <a th:href="@{/admin/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/admin/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/admin/disease-queries}"><span class="nav-icon">🔬</span> Disease Queries</a>
+                <a th:href="@{/admin/marketplace}"><span class="nav-icon">🛒</span> Marketplace</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">📊 Admin Dashboard</span>
+                </div>
+                <div class="top-nav-right">
+                    <div class="user-info">
+                        <div class="user-avatar" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">A</div>
+                        <div>
+                            <div class="user-name" th:text="${admin.fullName}">Administrator</div>
+                            <div class="user-role" style="color:#c4b5fd;">⚙️ Admin</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <!-- Welcome -->
+                <div
+                    style="background:linear-gradient(135deg,#1e1232,#2d1b4e);border:1px solid rgba(124,58,237,0.2);border-radius:20px;padding:28px;margin-bottom:24px;position:relative;overflow:hidden;">
+                    <div style="position:absolute;right:-20px;top:-20px;font-size:100px;opacity:0.08;">⚙️</div>
+                    <h2 style="font-size:22px;font-weight:800;color:#f0fdf4;margin-bottom:6px;">
+                        Platform Overview 🛡️
+                    </h2>
+                    <p style="color:#c4b5fd;font-size:14px;">
+                        📅 <span id="currentDate"></span> &nbsp;|&nbsp; 🟢 All Systems Operational
+                    </p>
+                </div>
+
+                <!-- Stats Row 1 -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">👨‍🌾</span>
+                        <div class="stat-value" th:text="${totalFarmers}">0</div>
+                        <div class="stat-label">Total Farmers</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <span class="stat-icon">🛒</span>
+                        <div class="stat-value" th:text="${totalBuyers}">0</div>
+                        <div class="stat-label">Total Buyers</div>
+                    </div>
+                    <div class="stat-card amber">
+                        <span class="stat-icon">🌾</span>
+                        <div class="stat-value" th:text="${totalListings}">0</div>
+                        <div class="stat-label">Active Listings</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <span class="stat-icon">🔬</span>
+                        <div class="stat-value" th:text="${pendingQueries}">0</div>
+                        <div class="stat-label">Pending Queries</div>
+                    </div>
+                </div>
+
+                <!-- Stats Row 2 -->
+                <div class="stats-grid" style="margin-top:0;">
+                    <div class="stat-card">
+                        <span class="stat-icon">🌱</span>
+                        <div class="stat-value" th:text="${totalCrops}">0</div>
+                        <div class="stat-label">Crops in DB</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <span class="stat-icon">📈</span>
+                        <div class="stat-value" th:text="${totalPrices}">0</div>
+                        <div class="stat-label">Price Records</div>
+                    </div>
+                    <div class="stat-card amber">
+                        <span class="stat-icon">🏛️</span>
+                        <div class="stat-value" th:text="${totalSchemes}">0</div>
+                        <div class="stat-label">Govt. Schemes</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <span class="stat-icon">👥</span>
+                        <div class="stat-value" th:text="${totalFarmers + totalBuyers}">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                </div>
+
+                <!-- Quick Admin Actions -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header">
+                        <span class="card-title">⚡ Admin Quick Actions</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-actions">
+                            <a th:href="@{/admin/users}" class="quick-action-btn">
+                                <span class="quick-action-icon">👥</span>
+                                <span class="quick-action-label">Manage Users</span>
+                            </a>
+                            <a th:href="@{/admin/crops}" class="quick-action-btn">
+                                <span class="quick-action-icon">🌱</span>
+                                <span class="quick-action-label">Manage Crops</span>
+                            </a>
+                            <a th:href="@{/admin/market-prices}" class="quick-action-btn">
+                                <span class="quick-action-icon">📈</span>
+                                <span class="quick-action-label">Market Prices</span>
+                            </a>
+                            <a th:href="@{/admin/schemes}" class="quick-action-btn">
+                                <span class="quick-action-icon">🏛️</span>
+                                <span class="quick-action-label">Govt Schemes</span>
+                            </a>
+                            <a th:href="@{/admin/disease-queries}" class="quick-action-btn">
+                                <span class="quick-action-icon">🔬</span>
+                                <span class="quick-action-label">Disease Queries</span>
+                            </a>
+                            <a th:href="@{/admin/marketplace}" class="quick-action-btn">
+                                <span class="quick-action-icon">🛒</span>
+                                <span class="quick-action-label">Marketplace</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Users + Pending Queries -->
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">👥 Recent Users</span>
+                            <a th:href="@{/admin/users}" class="btn btn-secondary btn-sm">View All</a>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>State</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="u : ${recentUsers}">
+                                        <td>
+                                            <div style="font-weight:600;color:#f0fdf4;font-size:13px;"
+                                                th:text="${u.fullName}"></div>
+                                            <div style="font-size:11px;color:#6b7280;" th:text="${u.email}"></div>
+                                        </td>
+                                        <td>
+                                            <span class="badge"
+                                                th:classappend="${u.role.name()=='FARMER' ? 'badge-success' : (u.role.name()=='BUYER' ? 'badge-info' : 'badge-warning')}"
+                                                th:text="${u.role}"></span>
+                                        </td>
+                                        <td style="font-size:12px;color:#9ca3af;" th:text="${u.state}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">🔬 Pending Disease Queries</span>
+                            <a th:href="@{/admin/disease-queries}" class="btn btn-secondary btn-sm">View All</a>
+                        </div>
+                        <div class="card-body" style="padding:12px;">
+                            <div th:if="${recentQueries.empty}" class="empty-state" style="padding:20px;">
+                                <p style="color:#6b7280;">No pending queries 🎉</p>
+                            </div>
+                            <div th:each="q : ${recentQueries}"
+                                style="padding:12px;background:var(--surface);border-radius:10px;margin-bottom:10px;border:1px solid var(--border);">
+                                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                                    <strong style="color:#22c55e;font-size:13px;" th:text="${q.cropName}"></strong>
+                                    <span class="badge badge-warning">Pending</span>
+                                </div>
+                                <div style="font-size:12px;color:#9ca3af;" th:text="${q.farmer.fullName}"></div>
+                                <div style="font-size:12px;color:#6b7280;margin-top:4px;"
+                                    th:text="${#strings.abbreviate(q.symptoms, 80)}"></div>
+                                <a th:href="@{/admin/disease-queries/update/{id}(id=${q.id})}"
+                                    class="btn btn-primary btn-sm" style="margin-top:8px;">Update Diagnosis</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    </script>
+</body>
+
+</html>

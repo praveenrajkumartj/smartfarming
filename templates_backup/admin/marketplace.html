@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace - Admin Panel</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Admin Panel</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Admin Menu</div>
+                <a th:href="@{/admin/dashboard}"><span class="nav-icon">📊</span> Dashboard</a>
+                <a th:href="@{/admin/users}"><span class="nav-icon">👥</span> Manage Users</a>
+                <a th:href="@{/admin/crops}"><span class="nav-icon">🌱</span> Manage Crops</a>
+                <a th:href="@{/admin/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/admin/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/admin/disease-queries}"><span class="nav-icon">🔬</span> Disease Queries</a>
+                <a th:href="@{/admin/marketplace}" class="active"><span class="nav-icon">🛒</span> Marketplace</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🛒 Marketplace Overview</span>
+                </div>
+            </header>
+            <div class="page-body">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🛒 All Marketplace Listings</span>
+                        <span class="badge badge-success" th:text="${listings.size()} + ' listings'"></span>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Crop</th>
+                                    <th>Farmer</th>
+                                    <th>Quantity</th>
+                                    <th>Price/Unit</th>
+                                    <th>Total Value</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Listed On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="l,iStat : ${listings}">
+                                    <td style="color:#6b7280;font-size:11px;" th:text="${iStat.count}"></td>
+                                    <td><strong style="color:#22c55e;" th:text="${l.cropName}"></strong></td>
+                                    <td>
+                                        <div style="font-size:13px;font-weight:600;color:#f0fdf4;"
+                                            th:text="${l.farmer.fullName}"></div>
+                                        <div style="font-size:11px;color:#6b7280;" th:text="${l.farmer.phone}"></div>
+                                    </td>
+                                    <td th:text="${l.quantity} + ' ' + ${l.unit}"></td>
+                                    <td th:text="'₹' + ${l.pricePerUnit} + '/' + ${l.unit}"></td>
+                                    <td><strong style="color:#fcd34d;"
+                                            th:text="'₹' + ${l.quantity * l.pricePerUnit}"></strong></td>
+                                    <td style="font-size:12px;color:#9ca3af;" th:text="${l.location}"></td>
+                                    <td>
+                                        <span class="badge"
+                                            th:classappend="${l.status.name() == 'AVAILABLE' ? 'badge-success' : (l.status.name() == 'SOLD' ? 'badge-danger' : 'badge-warning')}"
+                                            th:text="${l.status}"></span>
+                                    </td>
+                                    <td style="font-size:11px;color:#9ca3af;"
+                                        th:text="${#temporals.format(l.createdAt, 'dd MMM yyyy')}"></td>
+                                </tr>
+                                <tr th:if="${listings.empty}">
+                                    <td colspan="9" style="text-align:center;padding:40px;color:#6b7280;">
+                                        No marketplace listings yet.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>

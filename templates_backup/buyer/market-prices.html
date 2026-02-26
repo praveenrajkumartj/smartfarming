@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Market Prices - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Buyer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/buyer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/buyer/marketplace}"><span class="nav-icon">🛒</span> Browse Marketplace</a>
+                <a th:href="@{/buyer/market-prices}" class="active"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/buyer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">📈 Real-Time Market Prices</span>
+                </div>
+            </header>
+            <div class="page-body">
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-body">
+                        <form th:action="@{/buyer/market-prices}" method="get">
+                            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:end;">
+                                <div>
+                                    <label class="form-label">🔍 Search Crop</label>
+                                    <input type="text" name="search" class="form-control"
+                                        placeholder="e.g. Rice, Wheat..." th:value="${search}" />
+                                </div>
+                                <div>
+                                    <label class="form-label">🗺️ Filter by State</label>
+                                    <select name="state" class="form-control">
+                                        <option value="">All States</option>
+                                        <option th:each="s : ${states}" th:value="${s}" th:text="${s}"
+                                            th:selected="${s == selectedState}"></option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🏪 Mandi Prices (₹/Quintal)</span>
+                        <span class="badge badge-success" th:text="${prices.size()} + ' records'"></span>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Mandi</th>
+                                    <th>State</th>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                    <th>Modal Price</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="price : ${prices}">
+                                    <td><strong style="color:#22c55e;" th:text="${price.cropName}"></strong></td>
+                                    <td style="font-size:12px;color:#9ca3af;" th:text="${price.market}"></td>
+                                    <td><span class="badge badge-info" th:text="${price.state}"></span></td>
+                                    <td th:text="'₹' + ${price.minPrice}"></td>
+                                    <td th:text="'₹' + ${price.maxPrice}"></td>
+                                    <td><strong style="color:#4ade80;font-size:15px;"
+                                            th:text="'₹' + ${price.modalPrice}"></strong></td>
+                                    <td style="font-size:12px;" th:text="${price.unit}"></td>
+                                </tr>
+                                <tr th:if="${prices.empty}">
+                                    <td colspan="7" style="text-align:center;padding:40px;color:#6b7280;">No price data
+                                        found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>

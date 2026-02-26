@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buyer Dashboard - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3>
+                    <span>Buyer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/buyer/dashboard}" class="active"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/buyer/marketplace}"><span class="nav-icon">🛒</span> Browse Marketplace</a>
+                <a th:href="@{/buyer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/buyer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div style="font-size:11px;color:#6b7280;text-align:center;">
+                    Smart Farming Platform v1.0<br />
+                    <span style="color:#22c55e;">🟢 System Online</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🏠 Buyer Dashboard</span>
+                </div>
+                <div class="top-nav-right">
+                    <div class="user-info">
+                        <div class="user-avatar" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);"
+                            th:text="${user.fullName.substring(0,1)}">P</div>
+                        <div>
+                            <div class="user-name" th:text="${user.fullName}">Priya Sharma</div>
+                            <div class="user-role" style="color:#7dd3fc;">🛒 Buyer</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <!-- Welcome Banner -->
+                <div
+                    style="background:linear-gradient(135deg,#0c1f2e,#162b3a);border:1px solid rgba(14,165,233,0.2);border-radius:20px;padding:28px;margin-bottom:24px;position:relative;overflow:hidden;">
+                    <div style="position:absolute;right:-30px;top:-30px;font-size:120px;opacity:0.08;">🛒</div>
+                    <h2 style="font-size:22px;font-weight:800;color:#f0fdf4;margin-bottom:6px;">
+                        Welcome, <span style="color:#7dd3fc;" th:text="${user.fullName}">Buyer</span>! 👋
+                    </h2>
+                    <p style="color:#7dd3fc;font-size:14px;">
+                        📍 <span th:text="${user.district}">District</span>, <span th:text="${user.state}">State</span>
+                        &nbsp;|&nbsp; 📅 <span id="currentDate"></span>
+                    </p>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <span class="stat-icon">🛒</span>
+                        <div class="stat-value" th:text="${availableListings}">0</div>
+                        <div class="stat-label">Available Listings</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🌾</span>
+                        <div class="stat-value" th:text="${recentPrices.size()}">0</div>
+                        <div class="stat-label">Market Prices</div>
+                    </div>
+                    <div class="stat-card amber">
+                        <span class="stat-icon">🏛️</span>
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Govt Schemes</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <span class="stat-icon">🤝</span>
+                        <div class="stat-value">0%</div>
+                        <div class="stat-label">Middlemen</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header">
+                        <span class="card-title">⚡ Quick Actions</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-actions">
+                            <a th:href="@{/buyer/marketplace}" class="quick-action-btn">
+                                <span class="quick-action-icon">🛒</span>
+                                <span class="quick-action-label">Browse Market</span>
+                            </a>
+                            <a th:href="@{/buyer/market-prices}" class="quick-action-btn">
+                                <span class="quick-action-icon">📈</span>
+                                <span class="quick-action-label">Check Prices</span>
+                            </a>
+                            <a th:href="@{/buyer/schemes}" class="quick-action-btn">
+                                <span class="quick-action-icon">🏛️</span>
+                                <span class="quick-action-label">Govt Schemes</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Listings -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header">
+                        <span class="card-title">🌾 Fresh Crop Listings</span>
+                        <a th:href="@{/buyer/marketplace}" class="btn btn-secondary btn-sm">View All</a>
+                    </div>
+                    <div class="card-body" style="padding:16px;">
+                        <div th:if="${recentListings.empty}" class="empty-state" style="padding:20px;">
+                            <div class="empty-state-icon">🛒</div>
+                            <h3>No listings available yet</h3>
+                        </div>
+                        <div class="listings-grid">
+                            <div class="listing-card" th:each="l : ${recentListings}">
+                                <div class="listing-crop" th:text="${l.cropName}">Wheat</div>
+                                <div class="listing-price" th:text="'₹' + ${l.pricePerUnit} + '/' + ${l.unit}">
+                                    ₹2500/Quintal</div>
+                                <div class="listing-detail">
+                                    <span>📦</span>
+                                    <span th:text="${l.quantity} + ' ' + ${l.unit} + ' available'"></span>
+                                </div>
+                                <div class="listing-detail">
+                                    <span>📍</span>
+                                    <span th:text="${l.location}"></span>
+                                </div>
+                                <div class="listing-detail">
+                                    <span>📞</span>
+                                    <span th:text="${l.contactNumber}"></span>
+                                </div>
+                                <div style="margin-top:12px;">
+                                    <a th:href="@{/buyer/contact-farmer/{id}(id=${l.id})}"
+                                        class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">
+                                        🤝 Contact Farmer
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Prices -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📈 Today's Market Prices</span>
+                        <a th:href="@{/buyer/market-prices}" class="btn btn-secondary btn-sm">View All</a>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Mandi</th>
+                                    <th>State</th>
+                                    <th>Modal Price</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="price : ${recentPrices}">
+                                    <td><strong style="color:#22c55e;" th:text="${price.cropName}"></strong></td>
+                                    <td style="font-size:12px;color:#9ca3af;" th:text="${price.market}"></td>
+                                    <td><span class="badge badge-info" th:text="${price.state}"></span></td>
+                                    <td><strong style="color:#4ade80;" th:text="'₹' + ${price.modalPrice}"></strong>
+                                    </td>
+                                    <td style="font-size:12px;color:#9ca3af;" th:text="${price.unit}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    </script>
+</body>
+
+</html>

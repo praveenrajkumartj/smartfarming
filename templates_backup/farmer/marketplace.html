@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Marketplace - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Farmer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/farmer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/farmer/crop-recommendation}"><span class="nav-icon">🌱</span> Crop Recommendation</a>
+                <a th:href="@{/farmer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/farmer/disease-detection}"><span class="nav-icon">🔬</span> Disease Detection</a>
+                <a th:href="@{/farmer/marketplace}" class="active"><span class="nav-icon">🛒</span> My Marketplace</a>
+                <a th:href="@{/farmer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/farmer/learning}"><span class="nav-icon">🎓</span> Learning Videos</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🛒 My Marketplace Listings</span>
+                </div>
+                <div class="top-nav-right">
+                    <button class="btn btn-primary" onclick="openModal('addListingModal')">
+                        + Add New Listing
+                    </button>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div th:if="${successMessage}" class="alert alert-success">
+                    ✅ <span th:text="${successMessage}"></span>
+                </div>
+
+                <!-- Listings Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📋 My Listings</span>
+                        <span class="badge badge-success" th:text="${myListings.size()} + ' listings'"></span>
+                    </div>
+
+                    <div th:if="${myListings.empty}" class="empty-state">
+                        <div class="empty-state-icon">🛒</div>
+                        <h3>No listings yet</h3>
+                        <p>Click "Add New Listing" to start selling your crops</p>
+                        <br />
+                        <button class="btn btn-primary" onclick="openModal('addListingModal')">
+                            + Create First Listing
+                        </button>
+                    </div>
+
+                    <div th:if="${!myListings.empty}" class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Crop Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price/Unit</th>
+                                    <th>Total Value</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Posted</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="l : ${myListings}">
+                                    <td><strong style="color:#22c55e;" th:text="${l.cropName}"></strong></td>
+                                    <td th:text="${l.quantity} + ' ' + ${l.unit}"></td>
+                                    <td th:text="'₹' + ${l.pricePerUnit} + '/' + ${l.unit}"></td>
+                                    <td><strong style="color:#fcd34d;"
+                                            th:text="'₹' + ${l.quantity * l.pricePerUnit}"></strong></td>
+                                    <td style="font-size:12px;" th:text="${l.location}"></td>
+                                    <td>
+                                        <span class="badge"
+                                            th:classappend="${l.status.name() == 'AVAILABLE' ? 'badge-success' : (l.status.name() == 'SOLD' ? 'badge-danger' : 'badge-warning')}"
+                                            th:text="${l.status}"></span>
+                                    </td>
+                                    <td style="font-size:12px;color:#9ca3af;"
+                                        th:text="${#temporals.format(l.createdAt, 'dd MMM yyyy')}"></td>
+                                    <td>
+                                        <form th:action="@{/farmer/marketplace/delete/{id}(id=${l.id})}" method="post"
+                                            onsubmit="return confirm('Delete this listing?')">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Listing Modal -->
+    <div class="modal-overlay" id="addListingModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">🌾 Add New Crop Listing</span>
+                <div class="modal-close" onclick="closeModal('addListingModal')">✕</div>
+            </div>
+            <form th:action="@{/farmer/marketplace/add}" method="post">
+                <div class="modal-body">
+                    <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="form-group">
+                            <label class="form-label">Crop Name</label>
+                            <input type="text" name="cropName" class="form-control" placeholder="e.g. Wheat" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Unit</label>
+                            <select name="unit" class="form-control">
+                                <option value="Quintal">Quintal</option>
+                                <option value="Kg">Kilogram</option>
+                                <option value="Ton">Ton</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="form-group">
+                            <label class="form-label">Available Quantity</label>
+                            <input type="number" name="quantity" class="form-control" placeholder="50" min="1"
+                                step="0.1" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Price per Unit (₹)</label>
+                            <input type="number" name="pricePerUnit" class="form-control" placeholder="2500" min="1"
+                                step="0.1" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description (Optional)</label>
+                        <textarea name="description" class="form-control" rows="3"
+                            placeholder="Quality of crop, any special details..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('addListingModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">🛒 Post Listing</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+        function openModal(id) { document.getElementById(id).classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        document.querySelectorAll('.modal-overlay').forEach(o => {
+            o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
+        });
+    </script>
+</body>
+
+</html>

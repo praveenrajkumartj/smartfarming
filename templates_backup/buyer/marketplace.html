@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Buyer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/buyer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/buyer/marketplace}" class="active"><span class="nav-icon">🛒</span> Browse
+                    Marketplace</a>
+                <a th:href="@{/buyer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/buyer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🛒 Farmer Marketplace</span>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <!-- Search -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-body">
+                        <form th:action="@{/buyer/marketplace}" method="get">
+                            <div style="display:flex;gap:12px;align-items:center;">
+                                <div
+                                    style="flex:1;display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:8px 16px;">
+                                    <span>🔍</span>
+                                    <input type="text" name="search"
+                                        style="background:none;border:none;color:var(--text-primary);font-size:14px;width:100%;outline:none;"
+                                        placeholder="Search crops (e.g. Wheat, Rice, Tomato)..." th:value="${search}" />
+                                </div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <a th:href="@{/buyer/marketplace}" class="btn btn-secondary">Clear</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Available Crop Listings</h2>
+                        <p class="section-subtitle"
+                            th:text="${listings.size()} + ' listings from farmers across India'"></p>
+                    </div>
+                </div>
+
+                <div th:if="${listings.empty}" class="empty-state">
+                    <div class="empty-state-icon">🌾</div>
+                    <h3>No listings available</h3>
+                    <p>Farmers haven't posted any listings yet. Check back soon!</p>
+                </div>
+
+                <div class="listings-grid">
+                    <div class="listing-card fade-in" th:each="l : ${listings}">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+                            <div class="listing-crop" th:text="${l.cropName}">Wheat</div>
+                            <span class="badge badge-success">Available</span>
+                        </div>
+
+                        <div class="listing-price" th:text="'₹' + ${l.pricePerUnit} + ' / ' + ${l.unit}"></div>
+
+                        <div style="background:var(--surface);border-radius:10px;padding:12px;margin-bottom:12px;">
+                            <div class="listing-detail" style="margin-bottom:6px;">
+                                <span>📦</span>
+                                <span th:text="${l.quantity} + ' ' + ${l.unit} + ' available'"></span>
+                            </div>
+                            <div class="listing-detail" style="margin-bottom:6px;">
+                                <span>💰</span>
+                                <span style="color:#fcd34d;font-weight:600;"
+                                    th:text="'Total: ₹' + ${l.quantity * l.pricePerUnit}"></span>
+                            </div>
+                            <div class="listing-detail" style="margin-bottom:6px;">
+                                <span>📍</span>
+                                <span th:text="${l.location}">Location</span>
+                            </div>
+                            <div class="listing-detail">
+                                <span>👨‍🌾</span>
+                                <span th:text="${l.farmer.fullName}">Farmer Name</span>
+                            </div>
+                        </div>
+
+                        <div th:if="${l.description}"
+                            style="font-size:12px;color:#9ca3af;margin-bottom:12px;font-style:italic;"
+                            th:text="${l.description}"></div>
+
+                        <a th:href="@{/buyer/contact-farmer/{id}(id=${l.id})}" class="btn btn-primary"
+                            style="width:100%;justify-content:center;">
+                            🤝 Contact Farmer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>

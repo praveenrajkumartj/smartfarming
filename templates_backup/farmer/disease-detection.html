@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disease Detection - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>" />
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Farmer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/farmer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/farmer/crop-recommendation}"><span class="nav-icon">🌱</span> Crop Recommendation</a>
+                <a th:href="@{/farmer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/farmer/disease-detection}" class="active"><span class="nav-icon">🔬</span> Disease
+                    Detection</a>
+                <a th:href="@{/farmer/marketplace}"><span class="nav-icon">🛒</span> My Marketplace</a>
+                <a th:href="@{/farmer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/farmer/learning}"><span class="nav-icon">🎓</span> Learning Videos</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🔬 Plant Disease Detection</span>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <!-- Alert -->
+                <div th:if="${successMessage}" class="alert alert-success">
+                    ✅ <span th:text="${successMessage}"></span>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Submit Form -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">🔬 Submit Disease Query</span>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/farmer/disease-detection/submit}" method="post"
+                                enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label class="form-label">🌾 Crop Name</label>
+                                    <input type="text" name="cropName" class="form-control"
+                                        placeholder="e.g. Wheat, Rice, Tomato" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">📝 Describe Symptoms</label>
+                                    <textarea name="symptoms" class="form-control" rows="5"
+                                        placeholder="Describe the symptoms you see on your plant. E.g. yellow leaves, brown spots, wilting, rust colored patches..."
+                                        required></textarea>
+                                    <div style="font-size:11px;color:#6b7280;margin-top:4px;">
+                                        💡 Tips: yellowing, brown spots, wilting, rust will get instant AI diagnosis
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">📷 Upload Plant Image (Optional)</label>
+                                    <div class="upload-area" onclick="document.getElementById('imageFile').click()">
+                                        <div class="upload-icon">📷</div>
+                                        <div class="upload-text">Click to upload or drag & drop</div>
+                                        <div style="font-size:11px;color:#6b7280;margin-top:4px;">JPEG, PNG up to 10MB
+                                        </div>
+                                    </div>
+                                    <input type="file" id="imageFile" name="image" accept="image/*"
+                                        style="display:none;" onchange="showFileName(this)" />
+                                    <div id="fileName" style="font-size:12px;color:#22c55e;margin-top:6px;"></div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width:100%;">
+                                    🔬 Analyze Disease
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Info Panel -->
+                    <div>
+                        <!-- Disease Guide -->
+                        <div class="card" style="margin-bottom:16px;">
+                            <div class="card-header">
+                                <span class="card-title">⚡ Quick Disease Guide</span>
+                            </div>
+                            <div class="card-body">
+                                <div style="display:flex;flex-direction:column;gap:10px;">
+                                    <div
+                                        style="padding:12px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+                                        <div style="font-size:13px;font-weight:700;color:#fcd34d;margin-bottom:4px;">🟡
+                                            Yellow Leaves</div>
+                                        <div style="font-size:12px;color:#9ca3af;">Possible nitrogen deficiency or viral
+                                            infection</div>
+                                    </div>
+                                    <div
+                                        style="padding:12px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+                                        <div style="font-size:13px;font-weight:700;color:#f87171;margin-bottom:4px;">🔴
+                                            Brown Spots</div>
+                                        <div style="font-size:12px;color:#9ca3af;">Fungal infection - leaf spot disease
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="padding:12px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+                                        <div style="font-size:13px;font-weight:700;color:#c4b5fd;margin-bottom:4px;">🟣
+                                            Wilting Plant</div>
+                                        <div style="font-size:12px;color:#9ca3af;">Root rot or fusarium wilt fungal
+                                            disease</div>
+                                    </div>
+                                    <div
+                                        style="padding:12px;background:var(--surface);border-radius:10px;border:1px solid var(--border);">
+                                        <div style="font-size:13px;font-weight:700;color:#fdba74;margin-bottom:4px;">🟠
+                                            Rust Patches</div>
+                                        <div style="font-size:12px;color:#9ca3af;">Rust disease - fungal infection on
+                                            leaves</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="card">
+                            <div class="card-header"><span class="card-title">📊 Your Submissions</span></div>
+                            <div class="card-body" style="padding:16px;">
+                                <div style="text-align:center;padding:8px;">
+                                    <div style="font-size:32px;font-weight:800;color:#22c55e;"
+                                        th:text="${myQueries.size()}">0</div>
+                                    <div style="font-size:13px;color:#9ca3af;">Total Queries Submitted</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Query History -->
+                <div class="card" style="margin-top:24px;">
+                    <div class="card-header">
+                        <span class="card-title">📋 Your Query History</span>
+                    </div>
+                    <div class="card-body" style="padding:0;">
+                        <div th:if="${myQueries.empty}" class="empty-state">
+                            <div class="empty-state-icon">🔬</div>
+                            <h3>No queries yet</h3>
+                            <p>Submit your first disease query above</p>
+                        </div>
+
+                        <div th:each="q : ${myQueries}" class="disease-result-card" style="margin:12px;">
+                            <div class="disease-status-banner"
+                                th:class="${q.status == T(com.smartfarminganddigitalagriplatform.entity.DiseaseQuery.Status).PENDING ? 'disease-status-banner pending' : 'disease-status-banner diagnosed'}">
+                                <span th:if="${q.status.name() == 'PENDING'}">⏳ Pending Review</span>
+                                <span th:if="${q.status.name() == 'DIAGNOSED'}">✅ Diagnosed</span>
+                                <span th:if="${q.status.name() == 'RESOLVED'}">✔️ Resolved</span>
+                            </div>
+                            <div style="padding:16px;">
+                                <div
+                                    style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                                    <strong style="color:#22c55e;font-size:15px;" th:text="${q.cropName}"></strong>
+                                    <span style="font-size:11px;color:#6b7280;" th:text="${q.createdAt}"></span>
+                                </div>
+                                <div style="font-size:13px;color:#9ca3af;margin-bottom:10px;">
+                                    <strong style="color:#f0fdf4;">Symptoms:</strong> <span
+                                        th:text="${q.symptoms}"></span>
+                                </div>
+                                <div th:if="${q.diagnosis}"
+                                    style="padding:12px;background:rgba(22,163,74,0.08);border-radius:8px;border:1px solid rgba(22,163,74,0.15);">
+                                    <div style="font-size:13px;font-weight:700;color:#22c55e;margin-bottom:4px;">🩺
+                                        Diagnosis:</div>
+                                    <div style="font-size:13px;color:#f0fdf4;" th:text="${q.diagnosis}"></div>
+                                    <div
+                                        style="font-size:13px;font-weight:700;color:#fcd34d;margin-top:8px;margin-bottom:4px;">
+                                        💊 Treatment:</div>
+                                    <div style="font-size:13px;color:#f0fdf4;" th:text="${q.treatment}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+        function showFileName(input) {
+            if (input.files.length > 0) {
+                document.getElementById('fileName').textContent = '📎 ' + input.files[0].name;
+            }
+        }
+    </script>
+</body>
+
+</html>

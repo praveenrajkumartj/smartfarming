@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Recommendation - Smart Farming Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🌾</div>
+                <div class="brand-text">
+                    <h3>Smart Farming</h3><span>Farmer Portal</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Main Menu</div>
+                <a th:href="@{/farmer/dashboard}"><span class="nav-icon">🏠</span> Dashboard</a>
+                <a th:href="@{/farmer/crop-recommendation}" class="active"><span class="nav-icon">🌱</span> Crop
+                    Recommendation</a>
+                <a th:href="@{/farmer/market-prices}"><span class="nav-icon">📈</span> Market Prices</a>
+                <a th:href="@{/farmer/disease-detection}"><span class="nav-icon">🔬</span> Disease Detection</a>
+                <a th:href="@{/farmer/marketplace}"><span class="nav-icon">🛒</span> My Marketplace</a>
+                <a th:href="@{/farmer/schemes}"><span class="nav-icon">🏛️</span> Govt. Schemes</a>
+                <a th:href="@{/farmer/learning}"><span class="nav-icon">🎓</span> Learning Videos</a>
+                <div class="nav-section-title">Account</div>
+                <a th:href="@{/logout}"><span class="nav-icon">🚪</span> Logout</a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+                    <span class="page-title">🌱 Crop Recommendation</span>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <!-- Filter Card -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <span class="card-title">🔍 Find Best Crops for Your Farm</span>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/farmer/crop-recommendation}" method="get">
+                            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:end;">
+                                <div>
+                                    <label class="form-label">🌞 Select Season</label>
+                                    <select name="season" class="form-control">
+                                        <option value="">All Seasons</option>
+                                        <option value="Kharif" th:selected="${selectedSeason == 'Kharif'}">Kharif
+                                            (June–November)</option>
+                                        <option value="Rabi" th:selected="${selectedSeason == 'Rabi'}">Rabi
+                                            (November–April)</option>
+                                        <option value="Annual" th:selected="${selectedSeason == 'Annual'}">Annual Crops
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="form-label">🌍 Select Soil Type</label>
+                                    <select name="soilType" class="form-control">
+                                        <option value="">All Soil Types</option>
+                                        <option value="Clay" th:selected="${selectedSoil == 'Clay'}">Clay Soil</option>
+                                        <option value="Loamy" th:selected="${selectedSoil == 'Loamy'}">Loamy Soil
+                                        </option>
+                                        <option value="Sandy" th:selected="${selectedSoil == 'Sandy'}">Sandy Soil
+                                        </option>
+                                        <option value="Sandy Loam" th:selected="${selectedSoil == 'Sandy Loam'}">Sandy
+                                            Loam</option>
+                                        <option value="Black" th:selected="${selectedSoil == 'Black'}">Black Soil
+                                        </option>
+                                        <option value="Clay Loam" th:selected="${selectedSoil == 'Clay Loam'}">Clay Loam
+                                        </option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    🔍 Get Recommendations
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Recommended Crops</h2>
+                        <p class="section-subtitle" th:text="${crops.size()} + ' crops found'"></p>
+                    </div>
+                </div>
+
+                <div th:if="${crops.empty}" class="empty-state">
+                    <div class="empty-state-icon">🌾</div>
+                    <h3>No crops found for selected filters</h3>
+                    <p>Try selecting different season or soil type</p>
+                </div>
+
+                <div class="crops-grid">
+                    <div class="crop-card fade-in" th:each="crop : ${crops}">
+                        <div class="crop-card-header">
+                            <span class="crop-emoji" th:switch="${crop.name}">
+                                <span th:case="'Rice (Paddy)'">🌾</span>
+                                <span th:case="'Wheat'">🌾</span>
+                                <span th:case="'Maize (Corn)'">🌽</span>
+                                <span th:case="'Cotton'">🌸</span>
+                                <span th:case="'Sugarcane'">🎋</span>
+                                <span th:case="'Soybean'">🫘</span>
+                                <span th:case="'Tomato'">🍅</span>
+                                <span th:case="'Onion'">🧅</span>
+                                <span th:case="'Potato'">🥔</span>
+                                <span th:case="'Banana'">🍌</span>
+                                <span th:case="'Turmeric'">🟡</span>
+                                <span th:case="'Groundnut'">🥜</span>
+                                <span th:case="'Mustard'">🌼</span>
+                                <span th:case="*">🌱</span>
+                            </span>
+                            <div class="crop-name" th:text="${crop.name}"></div>
+                            <div style="margin-top:6px;">
+                                <span class="badge badge-success" th:text="${crop.season}"></span>
+                            </div>
+                        </div>
+                        <div class="crop-card-body">
+                            <div class="crop-detail">
+                                <span class="crop-detail-label">🌍 Soil</span>
+                                <span class="crop-detail-value" th:text="${crop.soilType}"></span>
+                            </div>
+                            <div class="crop-detail">
+                                <span class="crop-detail-label">💧 Water</span>
+                                <span class="crop-detail-value" th:text="${crop.waterRequirement}"></span>
+                            </div>
+                            <div class="crop-detail">
+                                <span class="crop-detail-label">🕐 Duration</span>
+                                <span class="crop-detail-value" th:text="${crop.growthDuration}"></span>
+                            </div>
+                            <div class="crop-detail">
+                                <span class="crop-detail-label">🌡️ Temp</span>
+                                <span class="crop-detail-value"
+                                    th:text="${crop.minTemperature} + '°C – ' + ${crop.maxTemperature} + '°C'"></span>
+                            </div>
+                            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:#9ca3af;"
+                                th:text="${crop.description}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
+</body>
+
+</html>
