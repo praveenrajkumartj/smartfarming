@@ -7,8 +7,8 @@
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Help Center & Support | Smart Farming Platform</title>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
             <style>
                 .help-hero {
                     background: linear-gradient(rgba(10, 15, 10, 0.8), rgba(10, 15, 10, 0.9)), url('https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=2070') center/cover;
@@ -410,8 +410,9 @@
                     background: rgba(255, 255, 255, 0.2);
                 }
             </style>
-            <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❓</text></svg>" />
-            </head>
+            <link rel="icon"
+                href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❓</text></svg>" />
+        </head>
 
         <body style="background-color: var(--bg-dark); color: var(--text-light); font-family: 'Inter', sans-serif;">
             <nav
@@ -422,7 +423,9 @@
                     <span style="font-size: 20px; font-weight: 800; color: #fff;">Smart <span
                             style="color: #22c55e;">Farming</span></span>
                 </a>
-                <a href="${pageContext.request.contextPath}/" class="btn btn-secondary">← Back to Home</a>
+                <div class="top-nav-right">
+                    <a href="${pageContext.request.contextPath}/" class="btn btn-secondary">← Back to Home</a>
+                </div>
             </nav>
 
             <div class="help-hero">
@@ -439,30 +442,37 @@
                 <div class="help-card searchable">
                     <div class="help-card-icon">💡</div>
                     <h3>Account & Login</h3>
-                    <p>Troubleshoot login issues, password resets, and role registrations (Farmer, Buyer, Admin).</p>
+                    <p>Troubleshoot login issues, password resets, and role registrations (Farmer, Buyer,
+                        Admin).</p>
                     <button class="read-articles-btn" onclick="toggleArticles('acc-articles', this)">
                         <span>Read Articles</span> <span>↓</span>
                     </button>
                     <div class="article-content" id="acc-articles">
-                        <div class="article-item" onclick="toggleAnswer('ans1')">Resetting your forgotten password <span
-                                style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans1">Go to the Login page and click 'Forgot Password'. You will
+                        <div class="article-item" onclick="toggleAnswer('ans1')">Resetting your forgotten
+                            password <span style="float:right;">+</span></div>
+                        <div class="article-answer" id="ans1">Go to the Login page and click 'Forgot Password'.
+                            You will
                             be able to reset it by verifying your registered phone number.</div>
 
-                        <div class="article-item" onclick="toggleAnswer('ans2')">Documentation: Roles Explained <span
-                                style="float:right;">+</span></div>
+                        <div class="article-item" onclick="toggleAnswer('ans2')">Documentation: Roles Explained
+                            <span style="float:right;">+</span>
+                        </div>
                         <div class="article-answer" id="ans2">
-                            <strong>Farmer:</strong> Access crop recommendations, AI disease diagnosis, scheme apps, and
+                            <strong>Farmer:</strong> Access crop recommendations, AI disease diagnosis, scheme
+                            apps, and
                             marketplace listing.<br>
                             <strong>Buyer:</strong> Browse marketplace, contact farmers, and check live mandi
                             prices.<br>
-                            <strong>Admin:</strong> Full control over platform verification, marketplace audits, and AI
+                            <strong>Admin:</strong> Full control over platform verification, marketplace audits,
+                            and AI
                             assistance.
                         </div>
 
-                        <div class="article-item" onclick="toggleAnswer('ans3')">Can I change my account type? <span
-                                style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans3">Currently, you cannot change an existing registered role.
+                        <div class="article-item" onclick="toggleAnswer('ans3')">Can I change my account type?
+                            <span style="float:right;">+</span>
+                        </div>
+                        <div class="article-answer" id="ans3">Currently, you cannot change an existing
+                            registered role.
                             You must create a new account to switch from Buyer to Farmer or vice versa.</div>
                     </div>
                 </div>
@@ -470,32 +480,42 @@
                 <div class="help-card searchable">
                     <div class="help-card-icon">🌿</div>
                     <h3>AI Disease Detection</h3>
-                    <p>Learn how to take accurate photos, upload symptoms, and interpret the AI & Expert diagnostic
+                    <p>Learn how to take accurate photos, upload symptoms, and interpret the AI & Expert
+                        diagnostic
                         reports.</p>
                     <button class="read-articles-btn" onclick="toggleArticles('ai-articles', this)">
                         <span>Read Articles</span> <span>↓</span>
                     </button>
                     <div class="article-content" id="ai-articles">
-                        <div class="article-item" onclick="toggleAnswer('ans4')">How to take high-quality leaf photos
+                        <div class="article-item" onclick="toggleAnswer('ans4')">How to take high-quality leaf
+                            photos
                             for AI <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans4">Ensure good natural lighting, focus on a single infected
-                            leaf on a neutral background, and avoid blurry or shaky captures for maximum accuracy.</div>
+                        <div class="article-answer" id="ans4">Ensure good natural lighting, focus on a single
+                            infected
+                            leaf on a neutral background, and avoid blurry or shaky captures for maximum
+                            accuracy.</div>
 
                         <div class="article-item" onclick="toggleAnswer('ans5')">Understanding Confidence Scores
                             (0-100%) <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans5">A high score (>80%) means the AI is highly confident in
+                        <div class="article-answer" id="ans5">A high score (>80%) means the AI is highly
+                            confident in
                             its diagnosis. Lower scores trigger manual expert reviews.</div>
 
-                        <div class="article-item" onclick="toggleAnswer('ans6')">What does "Awaiting Expert Analysis"
+                        <div class="article-item" onclick="toggleAnswer('ans6')">What does "Awaiting Expert
+                            Analysis"
                             mean? <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans6">The AI was unable to confidently identify the disease due
-                            to atypical symptoms. A human agricultural administrator will review your query shortly.
+                        <div class="article-answer" id="ans6">The AI was unable to confidently identify the
+                            disease due
+                            to atypical symptoms. A human agricultural administrator will review your query
+                            shortly.
                         </div>
 
                         <div class="article-item" onclick="toggleAnswer('ans7')">Organic vs Chemical Treatment
                             recommendations <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans7">We provide <em>Organic</em> solutions leveraging natural
-                            remedies (like Neem oil) alongside <em>Chemical</em> options (like commercial fungicides) so
+                        <div class="article-answer" id="ans7">We provide <em>Organic</em> solutions leveraging
+                            natural
+                            remedies (like Neem oil) alongside <em>Chemical</em> options (like commercial
+                            fungicides) so
                             you can choose based on your farming style.</div>
                     </div>
                 </div>
@@ -511,23 +531,30 @@
                     <div class="article-content" id="market-articles">
                         <div class="article-item" onclick="toggleAnswer('ans8')">How often are live Mandi prices
                             updated? <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans8">Prices are updated rapidly based on national agricultural
+                        <div class="article-answer" id="ans8">Prices are updated rapidly based on national
+                            agricultural
                             market data streams directly matching your state.</div>
 
                         <div class="article-item" onclick="toggleAnswer('ans9')">Guide to creating an attractive
                             Marketplace Listing <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans9">Upload clear crop photos, set highly competitive pricing
+                        <div class="article-answer" id="ans9">Upload clear crop photos, set highly competitive
+                            pricing
                             relative to mandi rates, and accurately describe the quantity.</div>
 
-                        <div class="article-item" onclick="toggleAnswer('ans10')">Negotiating prices with buyers through
+                        <div class="article-item" onclick="toggleAnswer('ans10')">Negotiating prices with buyers
+                            through
                             the platform <span style="float:right;">+</span></div>
-                        <div class="article-answer" id="ans10">Buyers will contact you directly via the registered phone
-                            number you provided on your Marketplace Listing to discuss logistics and pricing.</div>
+                        <div class="article-answer" id="ans10">Buyers will contact you directly via the
+                            registered phone
+                            number you provided on your Marketplace Listing to discuss logistics and pricing.
+                        </div>
 
-                        <div class="article-item" onclick="toggleAnswer('ans11')">State & District level price filtering
+                        <div class="article-item" onclick="toggleAnswer('ans11')">State & District level price
+                            filtering
                             <span style="float:right;">+</span>
                         </div>
-                        <div class="article-answer" id="ans11">Use the dropdown selectors in the Market Prices module to
+                        <div class="article-answer" id="ans11">Use the dropdown selectors in the Market Prices
+                            module to
                             filter data specifically for your localized region.</div>
                     </div>
                 </div>
@@ -536,7 +563,8 @@
             <div
                 style="max-width: 800px; margin: 0 auto 100px; padding: 40px; background: var(--surface); border-radius: 16px; border: 1px solid var(--border); text-align: center;">
                 <h2 style="font-size: 28px; color: #f0fdf4; margin-bottom: 15px;">Still need help?</h2>
-                <p style="color: #9ca3af; margin-bottom: 30px;">Our AI Support Bot is available instantly, or you can
+                <p style="color: #9ca3af; margin-bottom: 30px;">Our AI Support Bot is available instantly, or
+                    you can
                     contact our human support team 24/7.</p>
                 <a href="${pageContext.request.contextPath}/contact" class="btn btn-primary"
                     style="padding: 15px 40px; font-size: 16px;">Contact Human Support</a>
@@ -722,9 +750,9 @@
                     }
                 }
             </script>
-        
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+            <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
 
         </html>

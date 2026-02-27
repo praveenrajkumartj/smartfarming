@@ -21,23 +21,23 @@ public class GovernmentSchemeService {
         return schemeRepository.findByActiveTrue();
     }
 
-    public List<GovernmentScheme> getByCategory(String category) {
+    public List<GovernmentScheme> getByCategory(@org.springframework.lang.NonNull String category) {
         return schemeRepository.findByCategory(category);
     }
 
-    public List<GovernmentScheme> searchByTitle(String title) {
+    public List<GovernmentScheme> searchByTitle(@org.springframework.lang.NonNull String title) {
         return schemeRepository.findByTitleContainingIgnoreCase(title);
     }
 
-    public GovernmentScheme saveScheme(GovernmentScheme scheme) {
+    public GovernmentScheme saveScheme(@org.springframework.lang.NonNull GovernmentScheme scheme) {
         return schemeRepository.save(scheme);
     }
 
-    public Optional<GovernmentScheme> getSchemeById(Long id) {
+    public Optional<GovernmentScheme> getSchemeById(@org.springframework.lang.NonNull Long id) {
         return schemeRepository.findById(id);
     }
 
-    public void deleteScheme(Long id) {
+    public void deleteScheme(@org.springframework.lang.NonNull Long id) {
         schemeRepository.deleteById(id);
     }
 

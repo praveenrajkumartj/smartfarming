@@ -8,15 +8,17 @@
                 <meta charset="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <title>Manage Crops - Admin Panel</title>
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-                <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+                <link rel="icon"
+                    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
             </head>
 
             <body>
                 <div class="dashboard-layout">
                     <aside class="sidebar" id="sidebar">
-                        <div class="sidebar-brand" style="cursor: pointer;" onclick="window.location.href='${pageContext.request.contextPath}/'">
+                        <div class="sidebar-brand" style="cursor: pointer;"
+                            onclick="window.location.href='${pageContext.request.contextPath}/'">
                             <div class="brand-icon">🌾</div>
                             <div class="brand-text">
                                 <h3>Smart Farming</h3><span>Admin Panel</span>
@@ -26,7 +28,8 @@
                             <div class="nav-section-title">Admin Menu</div>
                             <a href="${pageContext.request.contextPath}/admin/dashboard"><span
                                     class="nav-icon">📊</span> Dashboard</a>
-                            <a href="${pageContext.request.contextPath}/admin/users"><span class="nav-icon">👥</span> Manage Users</a>
+                            <a href="${pageContext.request.contextPath}/admin/users"><span class="nav-icon">👥</span>
+                                Manage Users</a>
                             <a href="${pageContext.request.contextPath}/admin/crops" class="active"><span
                                     class="nav-icon">🌾</span> Manage Crops</a>
                             <a href="${pageContext.request.contextPath}/admin/market-prices"><span
@@ -40,7 +43,8 @@
                             <a href="${pageContext.request.contextPath}/admin/learning-videos"><span
                                     class="nav-icon">🎓</span> Learning Videos</a>
                             <div class="nav-section-title">Account</div>
-                            <a href="${pageContext.request.contextPath}/logout"><span class="nav-icon">🚪</span> Logout</a>
+                            <a href="${pageContext.request.contextPath}/logout"><span class="nav-icon">🚪</span>
+                                Logout</a>
                         </nav>
                     </aside>
                     <div class="main-content">
@@ -119,15 +123,15 @@
                 </div>
 
                 <!-- Add Crop Modal -->
-                <div class="modal-overlay" id="addCropModal">
-                    <div class="modal">
-                        <div class="modal-header">
-                            <span class="modal-title">Add New Crop</span>
-                            <div class="modal-close" onclick="closeModal('addCropModal')"></div>
+                <div class="sc-modal-overlay" id="addCropModal">
+                    <div class="sc-modal">
+                        <div class="sc-modal-header">
+                            <span class="sc-modal-title">Add New Crop</span>
+                            <div class="sc-modal-close" onclick="closeModal('addCropModal')"></div>
                         </div>
                         <form action="${pageContext.request.contextPath}/admin/crops/add" method="post"
                             enctype="multipart/form-data">
-                            <div class="modal-body">
+                            <div class="sc-modal-body">
                                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
                                     <div class="form-group">
                                         <label class="form-label">Crop Name</label>
@@ -202,7 +206,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="sc-modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     onclick="closeModal('addCropModal')">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Add Crop</button>
@@ -212,16 +216,16 @@
                 </div>
 
                 <!-- Edit Crop Modal -->
-                <div class="modal-overlay" id="editCropModal">
-                    <div class="modal">
-                        <div class="modal-header">
-                            <span class="modal-title">Edit Crop</span>
-                            <div class="modal-close" onclick="closeModal('editCropModal')"></div>
+                <div class="sc-modal-overlay" id="editCropModal">
+                    <div class="sc-modal">
+                        <div class="sc-modal-header">
+                            <span class="sc-modal-title">Edit Crop</span>
+                            <div class="sc-modal-close" onclick="closeModal('editCropModal')"></div>
                         </div>
                         <form action="${pageContext.request.contextPath}/admin/crops/edit" method="post"
                             enctype="multipart/form-data">
                             <input type="hidden" name="id" id="edit-id" />
-                            <div class="modal-body">
+                            <div class="sc-modal-body">
                                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
                                     <div class="form-group">
                                         <label class="form-label">Crop Name</label>
@@ -295,7 +299,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="sc-modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     onclick="closeModal('editCropModal')">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -334,13 +338,13 @@
                     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
                     function openModal(id) { document.getElementById(id).classList.add('show'); }
                     function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-                    document.querySelectorAll('.modal-overlay').forEach(o => {
+                    document.querySelectorAll('.sc-modal-overlay').forEach(o => {
                         o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
                     });
                 </script>
-            
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+                <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            </body>
 
             </html>

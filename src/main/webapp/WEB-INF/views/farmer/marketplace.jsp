@@ -9,15 +9,18 @@
                     <meta charset="UTF-8" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <title>My Marketplace - Smart Farming Platform</title>
-                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-                    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>" />
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+                        rel="stylesheet">
+                    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+                    <link rel="icon"
+                        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>" />
                 </head>
 
                 <body>
                     <div class="dashboard-layout">
                         <aside class="sidebar" id="sidebar">
-                            <div class="sidebar-brand" style="cursor: pointer;" onclick="window.location.href='${pageContext.request.contextPath}/'">
+                            <div class="sidebar-brand" style="cursor: pointer;"
+                                onclick="window.location.href='${pageContext.request.contextPath}/'">
                                 <div class="brand-icon">🌾</div>
                                 <div class="brand-text">
                                     <h3>Smart Farming</h3><span>Farmer Portal</span>
@@ -40,7 +43,8 @@
                                 <a href="${pageContext.request.contextPath}/farmer/learning"><span
                                         class="nav-icon">🎓</span> Learning Videos</a>
                                 <div class="nav-section-title">Account</div>
-                                <a href="${pageContext.request.contextPath}/logout"><span class="nav-icon">🚪</span> Logout</a>
+                                <a href="${pageContext.request.contextPath}/logout"><span class="nav-icon">🚪</span>
+                                    Logout</a>
                             </nav>
                         </aside>
 
@@ -48,7 +52,8 @@
                             <header class="top-nav">
                                 <div class="top-nav-left">
                                     <div class="hamburger" onclick="toggleSidebar()">
-                                        <span></span><span></span><span></span></div>
+                                        <span></span><span></span><span></span>
+                                    </div>
                                     <span class="page-title">✨ My Marketplace Listings</span>
                                 </div>
                                 <div class="top-nav-right">
@@ -143,14 +148,14 @@
                     </div>
 
                     <!-- Add Listing Modal -->
-                    <div class="modal-overlay" id="addListingModal">
-                        <div class="modal">
-                            <div class="modal-header">
-                                <span class="modal-title">Add New Crop Listing</span>
-                                <div class="modal-close" onclick="closeModal('addListingModal')"></div>
+                    <div class="sc-modal-overlay" id="addListingModal">
+                        <div class="sc-modal">
+                            <div class="sc-modal-header">
+                                <span class="sc-modal-title">Add New Crop Listing</span>
+                                <div class="sc-modal-close" onclick="closeModal('addListingModal')"></div>
                             </div>
                             <form action="${pageContext.request.contextPath}/farmer/marketplace/add" method="post">
-                                <div class="modal-body">
+                                <div class="sc-modal-body">
                                     <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                                         <div class="form-group">
                                             <label class="form-label">Crop Name</label>
@@ -174,7 +179,7 @@
                                                 min="1" step="0.1" required />
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Price per Unit (?)</label>
+                                            <label class="form-label">Price per Unit (₹)</label>
                                             <input type="number" name="pricePerUnit" class="form-control"
                                                 placeholder="2500" min="1" step="0.1" required />
                                         </div>
@@ -186,7 +191,7 @@
                                             placeholder="Quality of crop, any special details..."></textarea>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div class="sc-modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         onclick="closeModal('addListingModal')">Cancel</button>
                                     <button type="submit" class="btn btn-primary">Post Listing</button>
@@ -199,13 +204,13 @@
                         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
                         function openModal(id) { document.getElementById(id).classList.add('show'); }
                         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-                        document.querySelectorAll('.modal-overlay').forEach(o => {
+                        document.querySelectorAll('.sc-modal-overlay').forEach(o => {
                             o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
                         });
                     </script>
-                
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+                    <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                </body>
 
                 </html>

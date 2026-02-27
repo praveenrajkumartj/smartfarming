@@ -22,23 +22,23 @@ public class MarketplaceService {
         return listingRepository.findByStatusOrderByCreatedAtDesc(MarketplaceListing.Status.AVAILABLE);
     }
 
-    public List<MarketplaceListing> getListingsByFarmer(User farmer) {
+    public List<MarketplaceListing> getListingsByFarmer(@org.springframework.lang.NonNull User farmer) {
         return listingRepository.findByFarmer(farmer);
     }
 
-    public List<MarketplaceListing> searchByCrop(String cropName) {
+    public List<MarketplaceListing> searchByCrop(@org.springframework.lang.NonNull String cropName) {
         return listingRepository.findByCropNameContainingIgnoreCase(cropName);
     }
 
-    public MarketplaceListing saveListing(MarketplaceListing listing) {
+    public MarketplaceListing saveListing(@org.springframework.lang.NonNull MarketplaceListing listing) {
         return listingRepository.save(listing);
     }
 
-    public Optional<MarketplaceListing> getListingById(Long id) {
+    public Optional<MarketplaceListing> getListingById(@org.springframework.lang.NonNull Long id) {
         return listingRepository.findById(id);
     }
 
-    public void deleteListing(Long id) {
+    public void deleteListing(@org.springframework.lang.NonNull Long id) {
         listingRepository.deleteById(id);
     }
 

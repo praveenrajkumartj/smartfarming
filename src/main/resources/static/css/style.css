@@ -936,89 +936,100 @@ tbody tr:last-child td {
 }
 
 /* ===== MODALS ===== */
-.modal-overlay {
+.sc-modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
-.modal-overlay.show {
+.sc-modal-overlay.show {
     display: flex;
 }
 
-.modal {
+.sc-modal {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    width: 90%;
+    width: 100%;
     max-width: 560px;
     max-height: 90vh;
     overflow-y: auto;
-    animation: slideUp 0.3s ease;
+    position: relative;
+    display: block;
+    animation: scSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes slideUp {
+@keyframes scSlideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px) scale(0.95);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-.modal-header {
+.sc-modal-header {
     padding: 20px 24px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: rgba(22, 163, 74, 0.03);
 }
 
-.modal-title {
-    font-size: 17px;
+.sc-modal-title {
+    font-size: 18px;
     font-weight: 700;
     color: var(--text-primary);
 }
 
-.modal-close {
+.sc-modal-close {
     width: 32px;
     height: 32px;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: var(--text-muted);
-    font-size: 16px;
     transition: var(--transition);
 }
 
-.modal-close:hover {
+.sc-modal-close:hover {
     background: var(--danger);
     color: white;
-    border-color: var(--danger);
+    transform: rotate(90deg);
 }
 
-.modal-body {
+.sc-modal-close::before {
+    content: '✕';
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sc-modal-body {
     padding: 24px;
 }
 
-.modal-footer {
+.sc-modal-footer {
     padding: 16px 24px;
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 /* ===== EMPTY STATE ===== */

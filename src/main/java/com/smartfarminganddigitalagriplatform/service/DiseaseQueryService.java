@@ -18,7 +18,7 @@ public class DiseaseQueryService {
         return diseaseQueryRepository.findAll();
     }
 
-    public List<DiseaseQuery> getQueriesByUser(User user) {
+    public List<DiseaseQuery> getQueriesByUser(@org.springframework.lang.NonNull User user) {
         return diseaseQueryRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
@@ -26,11 +26,11 @@ public class DiseaseQueryService {
         return diseaseQueryRepository.findByStatus(DiseaseQuery.Status.PENDING);
     }
 
-    public DiseaseQuery saveQuery(DiseaseQuery query) {
+    public DiseaseQuery saveQuery(@org.springframework.lang.NonNull DiseaseQuery query) {
         return diseaseQueryRepository.save(query);
     }
 
-    public Optional<DiseaseQuery> getQueryById(Long id) {
+    public Optional<DiseaseQuery> getQueryById(@org.springframework.lang.NonNull Long id) {
         return diseaseQueryRepository.findById(id);
     }
 
@@ -42,7 +42,7 @@ public class DiseaseQueryService {
         return diseaseQueryRepository.count();
     }
 
-    public void deleteQuery(Long id) {
+    public void deleteQuery(@org.springframework.lang.NonNull Long id) {
         diseaseQueryRepository.deleteById(id);
     }
 }

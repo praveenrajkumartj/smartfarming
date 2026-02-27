@@ -17,7 +17,7 @@ public class CropService {
         return cropRepository.findAll();
     }
 
-    public Optional<Crop> getCropById(Long id) {
+    public Optional<Crop> getCropById(@org.springframework.lang.NonNull Long id) {
         return cropRepository.findById(id);
     }
 
@@ -40,11 +40,11 @@ public class CropService {
         return cropRepository.findAll();
     }
 
-    public Crop saveCrop(Crop crop) {
+    public Crop saveCrop(@org.springframework.lang.NonNull Crop crop) {
         return cropRepository.save(crop);
     }
 
-    public void deleteCrop(Long id) {
+    public void deleteCrop(@org.springframework.lang.NonNull Long id) {
         cropRepository.deleteById(id);
     }
 
