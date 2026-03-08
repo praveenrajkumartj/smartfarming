@@ -1,0 +1,416 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< com.smartfarminganddigitalagriplatform:smartfarminganddigitalagriplatform >--
+[INFO] Building smartfarminganddigitalagriplatform 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ smartfarminganddigitalagriplatform ---
+[INFO] Deleting D:\spring\smartfarminganddigitalagriplatform\target
+[INFO] 
+[INFO] >>> spring-boot:3.2.3:run (default-cli) > test-compile @ smartfarminganddigitalagriplatform >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ smartfarminganddigitalagriplatform ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ smartfarminganddigitalagriplatform ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 26 source files with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ smartfarminganddigitalagriplatform ---
+[INFO] skip non existing resourceDirectory D:\spring\smartfarminganddigitalagriplatform\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ smartfarminganddigitalagriplatform ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 21] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.2.3:run (default-cli) < test-compile @ smartfarminganddigitalagriplatform <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.3:run (default-cli) @ smartfarminganddigitalagriplatform ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-02-24T12:07:12.223+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Starting SmartfarminganddigitalagriplatformApplication using Java 25.0.1 with PID 14740 (D:\spring\smartfarminganddigitalagriplatform\target\classes started by ADMIN in D:\spring\smartfarminganddigitalagriplatform)
+2026-02-24T12:07:12.224+05:30 DEBUG 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-02-24T12:07:12.225+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-24T12:07:12.305+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-24T12:07:12.305+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-24T12:07:13.238+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-24T12:07:13.341+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 93 ms. Found 6 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/C:/Users/ADMIN/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.19/tomcat-embed-core-10.1.19.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-02-24T12:07:14.300+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-24T12:07:14.315+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-24T12:07:14.315+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-02-24T12:07:14.618+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2026-02-24T12:07:14.628+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-24T12:07:14.629+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2323 ms
+2026-02-24T12:07:14.858+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-24T12:07:14.920+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-02-24T12:07:14.958+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-24T12:07:15.243+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-24T12:07:15.275+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-24T12:07:15.488+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@503ab253
+2026-02-24T12:07:15.491+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-24T12:07:15.561+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-24T12:07:16.909+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-24T12:07:17.007+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:07:17.502+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-24T12:07:18.119+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-24T12:07:18.537+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1f3f2602, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@33abeb8b, org.springframework.security.web.context.SecurityContextHolderFilter@1dad473f, org.springframework.security.web.header.HeaderWriterFilter@50409b6a, org.springframework.web.filter.CorsFilter@78e99e29, org.springframework.security.web.csrf.CsrfFilter@1e9c2f5, org.springframework.security.web.authentication.logout.LogoutFilter@6ae27955, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@f18922d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@419cdc46, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1c614d9f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4d43d95, org.springframework.security.web.access.ExceptionTranslationFilter@7e464d29, org.springframework.security.web.access.intercept.AuthorizationFilter@6908b618]
+2026-02-24T12:07:18.833+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-02-24T12:07:18.896+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-24T12:07:18.910+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Started SmartfarminganddigitalagriplatformApplication in 7.213 seconds (process running for 7.817)
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        count(*) 
+    from
+        crops c1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        market_prices mp1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        government_schemes gs1_0
+2026-02-24T12:08:16.704+05:30  INFO 14740 --- [SmartFarmingPlatform] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 30 class path changes (0 additions, 29 deletions, 1 modification)
+2026-02-24T12:08:16.718+05:30  INFO 14740 --- [SmartFarmingPlatform] [       Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:08:16.723+05:30  INFO 14740 --- [SmartFarmingPlatform] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-24T12:08:16.735+05:30  INFO 14740 --- [SmartFarmingPlatform] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-02-24T12:08:16.855+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Starting SmartfarminganddigitalagriplatformApplication using Java 25.0.1 with PID 14740 (D:\spring\smartfarminganddigitalagriplatform\target\classes started by ADMIN in D:\spring\smartfarminganddigitalagriplatform)
+2026-02-24T12:08:16.855+05:30 DEBUG 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-02-24T12:08:16.855+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-24T12:08:17.131+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-24T12:08:17.134+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2026-02-24T12:08:17.305+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-24T12:08:17.307+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-24T12:08:17.307+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-02-24T12:08:17.506+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2026-02-24T12:08:17.514+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-24T12:08:17.514+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 656 ms
+2026-02-24T12:08:17.611+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-24T12:08:17.615+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-24T12:08:17.621+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-24T12:08:17.625+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-02-24T12:08:17.633+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4fb961ee
+2026-02-24T12:08:17.633+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-02-24T12:08:17.635+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-24T12:08:17.655+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-24T12:08:17.657+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:08:17.701+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-24T12:08:17.880+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d9057392-2cc7-45d5-9fef-e8c79348755c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-24T12:08:17.918+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5475342f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4fea0684, org.springframework.security.web.context.SecurityContextHolderFilter@366db8a6, org.springframework.security.web.header.HeaderWriterFilter@6cee10a3, org.springframework.web.filter.CorsFilter@60e719d8, org.springframework.security.web.csrf.CsrfFilter@2172d825, org.springframework.security.web.authentication.logout.LogoutFilter@17d23313, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7a99928b, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@42fcf5ea, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@61e17798, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@746ead39, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@169edbe, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5e8b9d90, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1c48e3c7, org.springframework.security.web.access.ExceptionTranslationFilter@4253bdce, org.springframework.security.web.access.intercept.AuthorizationFilter@7cd57ca9]
+2026-02-24T12:08:17.948+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-02-24T12:08:17.968+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-24T12:08:17.975+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Started SmartfarminganddigitalagriplatformApplication in 1.158 seconds (process running for 66.881)
+2026-02-24T12:08:17.981+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration matched:
+      - AllNestedConditions 2 matched 0 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) did not find any beans; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+   SpringBootWebSecurityConfiguration.WebSecurityEnablerConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
+      - @ConditionalOnMissingBean (names: springSecurityFilterChain; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   UserDetailsServiceAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+      - AnyNestedCondition 1 matched 2 did not; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.PasswordConfigured @ConditionalOnProperty (spring.security.user.password) did not find property 'password'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.NameConfigured @ConditionalOnProperty (spring.security.user.name) did not find property 'name'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.MissingAlternative @ConditionalOnMissingClass did not find unwanted classes 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository', 'org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector', 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured)
+      - @ConditionalOnBean (types: org.springframework.security.config.annotation.ObjectPostProcessor; SearchStrategy: all) found bean 'objectPostProcessor'; @ConditionalOnMissingBean (types: org.springframework.security.authentication.AuthenticationManager,org.springframework.security.authentication.AuthenticationProvider,org.springframework.security.core.userdetails.UserDetailsService,org.springframework.security.authentication.AuthenticationManagerResolver,org.springframework.security.oauth2.jwt.JwtDecoder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2026-02-24T12:08:19.362+05:30  INFO 14740 --- [SmartFarmingPlatform] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 29 class path changes (29 additions, 0 deletions, 0 modifications)
+2026-02-24T12:08:19.371+05:30  INFO 14740 --- [SmartFarmingPlatform] [       Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:08:19.373+05:30  INFO 14740 --- [SmartFarmingPlatform] [       Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-02-24T12:08:19.377+05:30  INFO 14740 --- [SmartFarmingPlatform] [       Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-02-24T12:08:19.478+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Starting SmartfarminganddigitalagriplatformApplication using Java 25.0.1 with PID 14740 (D:\spring\smartfarminganddigitalagriplatform\target\classes started by ADMIN in D:\spring\smartfarminganddigitalagriplatform)
+2026-02-24T12:08:19.479+05:30 DEBUG 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-02-24T12:08:19.479+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-24T12:08:19.734+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-24T12:08:19.778+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 6 JPA repository interfaces.
+2026-02-24T12:08:19.981+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-24T12:08:19.981+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-24T12:08:19.981+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-02-24T12:08:20.110+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2026-02-24T12:08:20.115+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-24T12:08:20.115+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 634 ms
+2026-02-24T12:08:20.175+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-24T12:08:20.179+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-24T12:08:20.183+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-24T12:08:20.185+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-02-24T12:08:20.190+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@717b279f
+2026-02-24T12:08:20.191+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-02-24T12:08:20.193+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-24T12:08:20.423+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-24T12:08:20.476+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:08:20.857+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-24T12:08:21.001+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1cd16222, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@648426b7, org.springframework.security.web.context.SecurityContextHolderFilter@1dc35065, org.springframework.security.web.header.HeaderWriterFilter@de29f74, org.springframework.web.filter.CorsFilter@56f38d38, org.springframework.security.web.csrf.CsrfFilter@1bdbbdea, org.springframework.security.web.authentication.logout.LogoutFilter@7d0a60d4, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@32f3b868, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5b318ada, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@63cd6db2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@79ec4f76, org.springframework.security.web.access.ExceptionTranslationFilter@14858836, org.springframework.security.web.access.intercept.AuthorizationFilter@22120afd]
+2026-02-24T12:08:21.092+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-02-24T12:08:21.108+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-24T12:08:21.113+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Started SmartfarminganddigitalagriplatformApplication in 1.663 seconds (process running for 70.019)
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        count(*) 
+    from
+        crops c1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        market_prices mp1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        government_schemes gs1_0
+2026-02-24T12:08:21.190+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+    None
+
+
+Negative matches:
+-----------------
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration:
+      Did not match:
+         - AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.web.SecurityFilterChain' filterChain; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+   SpringBootWebSecurityConfiguration.WebSecurityEnablerConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (names: springSecurityFilterChain; SearchStrategy: all) found beans named springSecurityFilterChain (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
+
+   UserDetailsServiceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.security.authentication.AuthenticationManager,org.springframework.security.authentication.AuthenticationProvider,org.springframework.security.core.userdetails.UserDetailsService,org.springframework.security.authentication.AuthenticationManagerResolver,org.springframework.security.oauth2.jwt.JwtDecoder; SearchStrategy: all) found beans of type 'org.springframework.security.authentication.AuthenticationManager' authenticationManager and found beans of type 'org.springframework.security.core.userdetails.UserDetailsService' customUserDetailsService and found beans of type 'org.springframework.security.authentication.AuthenticationProvider' authenticationProvider (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+         - AnyNestedCondition 1 matched 2 did not; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.PasswordConfigured @ConditionalOnProperty (spring.security.user.password) did not find property 'password'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.NameConfigured @ConditionalOnProperty (spring.security.user.name) did not find property 'name'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.MissingAlternative @ConditionalOnMissingClass did not find unwanted classes 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository', 'org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector', 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2026-02-24T12:10:35.194+05:30  INFO 14740 --- [SmartFarmingPlatform] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-02-24T12:10:35.200+05:30  INFO 14740 --- [SmartFarmingPlatform] [      Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:10:35.200+05:30  INFO 14740 --- [SmartFarmingPlatform] [      Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-02-24T12:10:35.203+05:30  INFO 14740 --- [SmartFarmingPlatform] [      Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-02-24T12:10:35.261+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Starting SmartfarminganddigitalagriplatformApplication using Java 25.0.1 with PID 14740 (D:\spring\smartfarminganddigitalagriplatform\target\classes started by ADMIN in D:\spring\smartfarminganddigitalagriplatform)
+2026-02-24T12:10:35.261+05:30 DEBUG 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-02-24T12:10:35.261+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-24T12:10:35.393+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-24T12:10:35.411+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 6 JPA repository interfaces.
+2026-02-24T12:10:35.484+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-24T12:10:35.485+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-24T12:10:35.485+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-02-24T12:10:35.553+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2026-02-24T12:10:35.555+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-24T12:10:35.555+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 292 ms
+2026-02-24T12:10:35.582+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-24T12:10:35.583+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-24T12:10:35.586+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-24T12:10:35.587+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-02-24T12:10:35.590+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74ba6ca8
+2026-02-24T12:10:35.590+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-02-24T12:10:35.591+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-24T12:10:35.683+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-24T12:10:35.705+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-24T12:10:35.939+05:30  WARN 14740 --- [SmartFarmingPlatform] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-24T12:10:36.004+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4b565913, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3f3cd3e6, org.springframework.security.web.context.SecurityContextHolderFilter@5378b80b, org.springframework.security.web.header.HeaderWriterFilter@2de79c61, org.springframework.web.filter.CorsFilter@49a3e608, org.springframework.security.web.authentication.logout.LogoutFilter@89800c0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@461cc84, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4f66d21f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@f23daec, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@432c0654, org.springframework.security.web.access.ExceptionTranslationFilter@4a615c9b, org.springframework.security.web.access.intercept.AuthorizationFilter@4cb74bd2]
+2026-02-24T12:10:36.041+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-02-24T12:10:36.050+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-24T12:10:36.053+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Started SmartfarminganddigitalagriplatformApplication in 0.806 seconds (process running for 204.959)
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        count(*) 
+    from
+        crops c1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        market_prices mp1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        government_schemes gs1_0
+2026-02-24T12:10:36.091+05:30  INFO 14740 --- [SmartFarmingPlatform] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-02-24T12:10:45.328+05:30  INFO 14740 --- [SmartFarmingPlatform] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-24T12:10:45.329+05:30  INFO 14740 --- [SmartFarmingPlatform] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-24T12:10:45.330+05:30  INFO 14740 --- [SmartFarmingPlatform] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

@@ -1,5 +1,6 @@
 package com.smartfarminganddigitalagriplatform.service;
 
+import com.smartfarminganddigitalagriplatform.entity.ClinicExpert;
 import com.smartfarminganddigitalagriplatform.entity.DiseaseQuery;
 import com.smartfarminganddigitalagriplatform.entity.User;
 import com.smartfarminganddigitalagriplatform.repository.DiseaseQueryRepository;
@@ -22,8 +23,12 @@ public class DiseaseQueryService {
         return diseaseQueryRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
+    public List<DiseaseQuery> getQueriesByExpert(@org.springframework.lang.NonNull ClinicExpert expert) {
+        return diseaseQueryRepository.findByExpert(expert);
+    }
+
     public List<DiseaseQuery> getPendingQueries() {
-        return diseaseQueryRepository.findByStatus(DiseaseQuery.Status.PENDING);
+        return diseaseQueryRepository.findByStatus(DiseaseQuery.Status.PENDING.name());
     }
 
     public DiseaseQuery saveQuery(@org.springframework.lang.NonNull DiseaseQuery query) {
@@ -35,7 +40,7 @@ public class DiseaseQueryService {
     }
 
     public long getPendingCount() {
-        return diseaseQueryRepository.countByStatus(DiseaseQuery.Status.PENDING);
+        return diseaseQueryRepository.countByStatus(DiseaseQuery.Status.PENDING.name());
     }
 
     public long getTotalQueries() {

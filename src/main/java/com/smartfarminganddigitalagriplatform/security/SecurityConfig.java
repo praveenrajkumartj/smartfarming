@@ -44,8 +44,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/farmer/**").hasRole("FARMER")
-                        .requestMatchers("/buyer/**").hasRole("BUYER")
+                        .requestMatchers("/farmer/safety/**", "/farmer/safety-hub").authenticated()
+                        .requestMatchers("/farmer/**").hasAnyRole("FARMER", "MENTOR")
+                        .requestMatchers("/buyer/**").hasAnyRole("BUYER", "B2B_BUYER")
+                        .requestMatchers("/b2b/**").hasAnyRole("B2B_BUYER", "ADMIN")
+                        .requestMatchers("/mentor/become").hasRole("FARMER")
+                        .requestMatchers("/mentor/**").hasRole("MENTOR")
+                        .requestMatchers("/clinic/expert/register").permitAll()
+                        .requestMatchers("/chat/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -60,6 +66,12 @@ public class SecurityConfig {
                                 response.sendRedirect("/farmer/dashboard");
                             } else if (role.equals("ROLE_BUYER")) {
                                 response.sendRedirect("/buyer/dashboard");
+                            } else if (role.equals("ROLE_EXPERT")) {
+                                response.sendRedirect("/clinic/expert/dashboard");
+                            } else if (role.equals("ROLE_MENTOR")) {
+                                response.sendRedirect("/mentor/dashboard");
+                            } else if (role.equals("ROLE_B2B_BUYER")) {
+                                response.sendRedirect("/b2b/dashboard");
                             } else {
                                 response.sendRedirect("/home");
                             }
@@ -70,10 +82,17 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
+                        .deleteCookies("JSESSIONID", "Agroplanter-remember-me")
                         .permitAll())
                 .exceptionHandling(ex -> ex
                         .accessDeniedPage("/login?error=true"))
+                .rememberMe(remember -> remember
+                        .key("AgroplanterSecureKey_2026")
+                        .tokenValiditySeconds(86400 * 30) // 30 days
+                        .userDetailsService(userDetailsService)
+                        .rememberMeParameter("remember-me")
+                        .rememberMeCookieName("Agroplanter-remember-me")
+                        .useSecureCookie(false))
                 .authenticationProvider(authenticationProvider());
 
         return http.build();

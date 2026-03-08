@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.smartfarminganddigitalagriplatform.service.OTPService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
@@ -16,13 +18,22 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OTPService otpService;
+
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(org.springframework.security.core.Authentication auth, Model model) {
+        if (auth != null && auth.isAuthenticated()) {
+            userService.findByEmail(auth.getName()).ifPresent(user -> model.addAttribute("user", user));
+        }
         return "home";
     }
 
     @GetMapping("/home")
-    public String homeRedirect() {
+    public String homeRedirect(org.springframework.security.core.Authentication auth, Model model) {
+        if (auth != null && auth.isAuthenticated()) {
+            userService.findByEmail(auth.getName()).ifPresent(user -> model.addAttribute("user", user));
+        }
         return "home";
     }
 
@@ -48,19 +59,60 @@ public class AuthController {
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") User user,
             BindingResult result,
+            HttpSession session,
             RedirectAttributes redirectAttributes,
             Model model) {
         if (result.hasErrors()) {
             return "auth/register";
         }
         try {
-            userService.registerUser(user);
+            if (userService.findByEmail(user.getEmail()).isPresent()) {
+                model.addAttribute("errorMessage", "Email already registered!");
+                return "auth/register";
+            }
+            // Store pending user in session
+            session.setAttribute("pendingUser", user);
+            // Generate and send OTP
+            otpService.generateAndSendRegistrationOTP(user.getEmail());
+
+            return "redirect:/verify-registration";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error starting registration: " + e.getMessage());
+            return "auth/register";
+        }
+    }
+
+    @GetMapping("/verify-registration")
+    public String verifyRegistrationPage(HttpSession session, Model model) {
+        User pendingUser = (User) session.getAttribute("pendingUser");
+        if (pendingUser == null) {
+            return "redirect:/register";
+        }
+        model.addAttribute("email", pendingUser.getEmail());
+        return "auth/verify-registration";
+    }
+
+    @PostMapping("/verify-registration")
+    public String completeRegistration(@RequestParam("otp") String otp,
+            HttpSession session,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+        User pendingUser = (User) session.getAttribute("pendingUser");
+        if (pendingUser == null) {
+            return "redirect:/register";
+        }
+
+        if (otpService.verifyOTP(pendingUser.getEmail(), otp)) {
+            userService.registerUser(pendingUser);
+            otpService.clearOTP(pendingUser.getEmail());
+            session.removeAttribute("pendingUser");
             redirectAttributes.addFlashAttribute("successMessage",
                     "Registration successful! Please login to continue.");
             return "redirect:/login";
-        } catch (RuntimeException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "auth/register";
+        } else {
+            model.addAttribute("errorMessage", "Invalid or expired OTP. Please try again.");
+            model.addAttribute("email", pendingUser.getEmail());
+            return "auth/verify-registration";
         }
     }
 
@@ -105,7 +157,11 @@ public class AuthController {
     }
 
     @GetMapping("/subscription")
-    public String subscriptionPage() {
+    public String subscriptionPage(org.springframework.security.core.Authentication auth, Model model) {
+        if (auth != null && auth.isAuthenticated()) {
+            User user = userService.findByEmail(auth.getName()).orElse(null);
+            model.addAttribute("user", user);
+        }
         return "subscription";
     }
 
@@ -133,5 +189,10 @@ public class AuthController {
             }
         }
         return "/login";
+    }
+
+    @GetMapping("/safety")
+    public String safetyRedirect() {
+        return "redirect:/farmer/safety-hub";
     }
 }

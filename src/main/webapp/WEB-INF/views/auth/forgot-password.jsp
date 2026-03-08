@@ -7,10 +7,12 @@
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Forgot Password - Smart Farming Platform</title>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            <link rel="stylesheet"
                 href="${pageContext.request.contextPath}/css/style.css?v=<%= System.currentTimeMillis() %>" />
-            <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>" />
+            <link rel="icon"
+                href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>" />
             <style>
                 body {
                     background: transparent;
@@ -105,12 +107,14 @@
                     transform: translateY(-50%);
                     font-size: 16px;
                     cursor: pointer;
-                    opacity: 0.6;
-                    transition: opacity 0.2s;
+                    color: rgba(255, 255, 255, 0.4);
+                    transition: 0.3s;
                     user-select: none;
-                    background: none;
-                    border: none;
-                    padding: 0;
+                    z-index: 10;
+                }
+
+                .password-toggle:hover {
+                    color: #22c55e;
                 }
 
                 .password-toggle:hover {
@@ -209,7 +213,8 @@
         <body>
             <div class="auth-container">
                 <div class="auth-box">
-                    <div class="auth-logo" style="cursor: pointer;" onclick="window.location.href='${pageContext.request.contextPath}/'">
+                    <div class="auth-logo" style="cursor: pointer;"
+                        onclick="window.location.href='${pageContext.request.contextPath}/'">
                         <div class="auth-logo-icon">🌾</div>
                         <h1>Smart Farming Platform</h1>
                         <p>Digital Agriculture for Modern India</p>
@@ -242,8 +247,8 @@
                                     <span class="input-icon">🌾</span>
                                     <input type="password" name="newPassword" id="newPassword"
                                         placeholder="Enter your new password" required style="padding-right: 42px;" />
-                                    <span class="password-toggle" onclick="togglePassword('newPassword', this)"
-                                        title="Toggle password visibility">👁️</span>
+                                    <i class="fas fa-eye password-toggle" onclick="togglePassword('newPassword', this)"
+                                        title="Toggle password visibility"></i>
                                 </div>
                             </div>
 
@@ -269,16 +274,18 @@
                     const input = document.getElementById(inputId);
                     if (input.type === 'password') {
                         input.type = 'text';
-                        icon.innerText = '👁️';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
                     } else {
                         input.type = 'password';
-                        icon.innerText = '🙈';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
                     }
                 }
             </script>
-        
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+            <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
 
         </html>

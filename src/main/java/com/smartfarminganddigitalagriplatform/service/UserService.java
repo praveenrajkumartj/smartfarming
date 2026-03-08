@@ -33,6 +33,8 @@ public class UserService {
     }
 
     public Optional<User> findById(Long id) {
+        if (id == null)
+            return Optional.empty();
         return userRepository.findById(id);
     }
 
@@ -41,6 +43,8 @@ public class UserService {
     }
 
     public User updateUser(User user) {
+        if (user == null)
+            throw new IllegalArgumentException("User cannot be null");
         return userRepository.save(user);
     }
 
@@ -51,8 +55,17 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updatePasswordByEmail(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("No account found with this email."));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        if (id != null) {
+            userRepository.deleteById(id);
+        }
     }
 
     public long countByRole(User.Role role) {
@@ -61,5 +74,9 @@ public class UserService {
 
     public long getTotalUsers() {
         return userRepository.count();
+    }
+
+    public long countByVerifiedTrue() {
+        return userRepository.countByIsVerifiedTrue();
     }
 }

@@ -2,226 +2,332 @@
     <%@ taglib prefix="c" uri="jakarta.tags.core" %>
         <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
             <!DOCTYPE html>
-            <html>
+            <html lang="en">
 
             <head>
                 <meta charset="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>Disease Queries - Admin Panel</title>
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-                <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>" />
+                <title>🔬 Bio-Triage Oversight - AGROPLANTER Admin</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/voice-assistant.css" />
+                <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap"
+                    rel="stylesheet">
+                <link rel="icon"
+                    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>" />
+                <script>
+                    window.AgroplanterUser = "${user.id}";
+                    window.AgroplanterUserFull = "${user.fullName}";
+                    window.AgroplanterRole = "${user.role}";
+                </script>
+                <style>
+                    .v3-admin-hero {
+                        background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%);
+                        border-radius: 40px;
+                        padding: 60px;
+                        margin-bottom: 50px;
+                        backdrop-filter: blur(40px);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .v3-triage-node {
+                        background: rgba(15, 23, 42, 0.4);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 40px;
+                        padding: 45px;
+                        margin-bottom: 30px;
+                        backdrop-filter: blur(40px);
+                    }
+
+                    .v3-evidence-node {
+                        background: rgba(34, 197, 94, 0.05);
+                        border: 1px solid rgba(34, 197, 94, 0.1);
+                        border-radius: 20px;
+                        padding: 25px;
+                        margin-bottom: 30px;
+                    }
+
+                    .v3-protocol-box {
+                        background: rgba(0, 0, 0, 0.2);
+                        border: 1px solid rgba(255, 255, 255, 0.03);
+                        border-radius: 25px;
+                        padding: 35px;
+                    }
+
+                    .v3-data-pill {
+                        background: rgba(255, 255, 255, 0.02);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 12px;
+                        padding: 12px 20px;
+                        color: #fff;
+                        font-weight: 600;
+                        font-family: 'Outfit';
+                        font-size: 14px;
+                    }
+
+                    .v3-severity-badge {
+                        padding: 6px 15px;
+                        border-radius: 10px;
+                        font-size: 9px;
+                        font-weight: 950;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                    }
+                </style>
             </head>
 
             <body>
+                <div class="dashboard-scene"></div>
                 <div class="dashboard-layout">
-                    <aside class="sidebar" id="sidebar">
-                        <div class="sidebar-brand" style="cursor: pointer;" onclick="window.location.href='${pageContext.request.contextPath}/'">
-                            <div class="brand-icon">🌾</div>
-                            <div class="brand-text">
-                                <h3>Smart Farming</h3><span>Admin Panel</span>
+                    <aside class="sidebar sidebar-premium" id="sidebar">
+                        <div class="sidebar-brand px-4 py-4"
+                            style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;"
+                            onclick="window.location.href='${pageContext.request.contextPath}/'">
+                            <div class="brand-premium" style="font-size: 20px;">
+                                <div class="brand-icon-box"><i class="fas fa-leaf"></i></div>
+                                <div class="brand-text">
+                                    <h3 class="brand-premium m-0" style="font-size: 20px;">AGROPLANTER</h3>
+                                    <span
+                                        style="font-size: 10px; color: #ef4444; font-weight: 800; letter-spacing: 1px;">ROOT
+                                        ACCESS V3</span>
+                                </div>
                             </div>
                         </div>
-                        <nav class="sidebar-nav">
-                            <div class="nav-section-title">Admin Menu</div>
-                            <a href="${pageContext.request.contextPath}/admin/dashboard"><span
-                                    class="nav-icon">📊</span> Dashboard</a>
-                            <a href="${pageContext.request.contextPath}/admin/users"><span class="nav-icon">👥</span> Manage Users</a>
-                            <a href="${pageContext.request.contextPath}/admin/crops"><span class="nav-icon">🌾</span> Manage Crops</a>
-                            <a href="${pageContext.request.contextPath}/admin/market-prices"><span
-                                    class="nav-icon">📈</span> Market Prices</a>
-                            <a href="${pageContext.request.contextPath}/admin/schemes"><span class="nav-icon">🏛️</span>
-                                Govt. Schemes</a>
-                            <a href="${pageContext.request.contextPath}/admin/disease-queries" class="active"><span
-                                    class="nav-icon">🔬</span> Disease
-                                Queries</a>
-                            <a href="${pageContext.request.contextPath}/admin/marketplace"><span
-                                    class="nav-icon">📈</span> Marketplace</a>
-                            <a href="${pageContext.request.contextPath}/admin/learning-videos"><span
-                                    class="nav-icon">🎓</span> Learning Videos</a>
-                            <div class="nav-section-title">Account</div>
-                            <a href="${pageContext.request.contextPath}/logout"><span class="nav-icon">🚪</span> Logout</a>
+                        <nav class="sidebar-nav px-3 py-4">
+                            <div class="nav-section-title px-2 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                STRATEGIC CONTROL</div>
+                            <a href="${pageContext.request.contextPath}/admin/dashboard"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🛡️</span>
+                                Intelligence</a>
+                            <a href="${pageContext.request.contextPath}/admin/users" class="sidebar-nav-item mb-2"><span
+                                    class="nav-icon">👥</span> Identity Registry</a>
+                            <a href="${pageContext.request.contextPath}/admin/marketplace"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🛒</span> Market Oversight</a>
+                            <a href="${pageContext.request.contextPath}/admin/disease-queries"
+                                class="sidebar-nav-item active mb-2"><span class="nav-icon">🔬</span> Bio-Triage</a>
+                            <a href="${pageContext.request.contextPath}/chat" class="sidebar-nav-item mb-2"><span
+                                    class="nav-icon">💬</span> Message Core</a>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                OVERSIGHT & MONITORING</div>
+                            <a href="${pageContext.request.contextPath}/admin/traceability-monitor"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🛡️</span> Traceability</a>
+                            <a href="${pageContext.request.contextPath}/admin/rental-transactions"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🚜</span> Rental Logs</a>
+                            <a href="${pageContext.request.contextPath}/admin/b2b-deals"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🏢</span> B2B Deals</a>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                SYSTEM ASSETS</div>
+                            <a href="${pageContext.request.contextPath}/admin/crops" class="sidebar-nav-item mb-2"><span
+                                    class="nav-icon">🌾</span> Crop Index</a>
+                            <a href="${pageContext.request.contextPath}/admin/market-prices"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">📈</span> Data Streams</a>
+                            <a href="${pageContext.request.contextPath}/admin/schemes"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🏛️</span> Institutional</a>
+                            <a href="${pageContext.request.contextPath}/admin/learning-videos"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🎓</span> Academy Manager</a>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                OPERATIONS</div>
+                            <a href="${pageContext.request.contextPath}/admin/equipment-approvals"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🚜</span> Agri-Uber</a>
+                            <a href="${pageContext.request.contextPath}/admin/clinic-experts"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🩺</span> Clinic Panel</a>
+                            <a href="${pageContext.request.contextPath}/admin/payouts"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">💰</span> Payout Registry</a>
+
+                            <div class="mt-auto px-2">
+                                <a href="${pageContext.request.contextPath}/logout"
+                                    class="sidebar-nav-item text-danger mt-4"><span class="nav-icon">🚪</span>
+                                    Terminate Session</a>
+                            </div>
                         </nav>
                     </aside>
-                    <div class="main-content">
+
+                    <main class="main-content">
                         <header class="top-nav">
-                            <div class="top-nav-left">
-                                <div class="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span>
+                            <div class="top-nav-left d-flex align-items-center gap-3">
+                                <div class="hamburger" onclick="toggleSidebar()">
+                                    <span></span><span></span><span></span>
                                 </div>
-                                <span class="page-title">🔬 Disease Queries</span>
+                                <div class="page-title">
+                                    <h1 class="m-0 fw-950 text-white"
+                                        style="font-size: 2.2rem; letter-spacing: -1.5px;">Bio-Triage Oversight</h1>
+                                    <span class="v3-page-subtitle text-danger uppercase"
+                                        style="letter-spacing: 1px; font-weight: 800;">
+                                        🔬 PATHOGEN TELEMETRY | CLINIC MONITORING: ACTIVE | NODE: SECURED
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="top-nav-right">
+                                <div class="user-info"
+                                    style="gap: 15px; cursor: pointer; display: flex; align-items: center;"
+                                    onclick="window.location.href='${pageContext.request.contextPath}/admin/disease-queries'">
+                                    <div class="user-details d-none d-md-flex flex-column text-end">
+                                        <span class="user-name text-white fw-800"
+                                            style="font-size: 14px; letter-spacing: -0.5px;">${admin.fullName}</span>
+                                        <span class="user-role uppercase fw-950"
+                                            style="font-size: 9px; color: #7c3aed; letter-spacing: 1px;">ROOT ACCESS:
+                                            ${admin.role}</span>
+                                    </div>
+                                    <div class="user-avatar"
+                                        style="width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);">
+                                        <c:choose>
+                                            <c:when test="${not empty admin.profileImagePath}">
+                                                <img src="${pageContext.request.contextPath}${admin.profileImagePath}"
+                                                    alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div
+                                                    style="width: 100%; height: 100%; background: linear-gradient(135deg, #7c3aed, #4f46e5); display: flex; align-items: center; justify-content: center; font-weight: 950; font-size: 20px; color: white;">
+                                                    ${fn:substring(admin.fullName, 0, 1)}
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
                             </div>
                         </header>
-                        <div class="page-body">
-                            <c:if test="${not empty successMessage}">
-                                <div class="alert alert-success">✅ <span>${successMessage}</span></div>
-                            </c:if>
 
-                            <div class="card">
-                                <div class="card-header">
-                                    <span class="card-title">🔬 All Disease Queries</span>
-                                    <span class="badge badge-warning">${fn:length(queries)} queries</span>
-                                </div>
-                                <div class="card-body" style="padding:16px;">
-                                    <c:if test="${empty queries}">
-                                        <div class="empty-state">
-                                            <div class="empty-state-icon">📍</div>
-                                            <h3>No disease queries yet</h3>
-                                            <p>Farmers haven't submitted any disease detection queries</p>
+                        <div class="page-body px-5 py-5">
+                            <div class="v3-admin-hero">
+                                <div class="row align-items-center">
+                                    <div class="col-md-9">
+                                        <h1 class="fw-950 text-white mb-3 display-4" style="letter-spacing: -3px;">
+                                            Agricultural Bio-Diagnostics</h1>
+                                        <p class="text-white-50 fw-800 uppercase x-small mb-0"
+                                            style="letter-spacing: 2px; opacity: 0.6;">
+                                            MONITORING REGIONAL CROP PATHOGENS, EXPERT CLINICAL ASSIGNMENTS, AND
+                                            BIOLOGICAL NEUTRALIZATION PROTOCOLS.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3 text-md-end">
+                                        <div class="badge bg-warning bg-opacity-10 text-warning fw-950 px-4 py-2 rounded-pill uppercase"
+                                            style="font-size: 10px; letter-spacing: 1px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                                            ${fn:length(queries)} ACTIVE TRACES
                                         </div>
-                                    </c:if>
-
-                                    <c:forEach items="${queries}" var="q">
-                                        <div
-                                            style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
-                                            <div
-                                                style="display:flex;justify-content:space-between;align-items:start;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
-                                                <div>
-                                                    <div
-                                                        style="font-size:18px;font-weight:800;color:#22c55e;margin-bottom:2px;">
-                                                        ${q.cropName}</div>
-                                                    <div style="font-size:12px;color:#6b7280;">
-                                                        👤 <span>${q.user.fullName}</span>
-                                                        &nbsp;•&nbsp; <span>${q.user.phone}</span>
-                                                        &nbsp;•&nbsp; <span>${q.createdAt}</span>
-                                                    </div>
-                                                </div>
-                                                <span
-                                                    class="badge ${q.status == 'PENDING' ? 'badge-warning' : (q.status == 'DIAGNOSED' ? 'badge-success' : 'badge-info')}">${q.status}</span>
-                                            </div>
-
-                                            <div style="margin-bottom:14px;">
-                                                <div
-                                                    style="font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px;">
-                                                    SYMPTOMS DESCRIBED</div>
-                                                <div
-                                                    style="font-size:14px;color:#f0fdf4;padding:12px;background:rgba(22,163,74,0.05);border-radius:8px;border:1px solid rgba(22,163,74,0.1);">
-                                                    ${q.symptoms}</div>
-                                            </div>
-
-                                            <c:if test="${not empty q.diseaseName}">
-                                                <div style="margin-bottom:14px;">
-                                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                                                        <div
-                                                            style="padding:12px;background:rgba(22,163,74,0.08);border-radius:8px;border:1px solid rgba(22,163,74,0.15);">
-                                                            <div
-                                                                style="font-size:11px;font-weight:700;color:#22c55e;margin-bottom:4px;">
-                                                                🔬 DETECTED DISEASE</div>
-                                                            <div style="font-size:15px;color:#f0fdf4;font-weight:700;">
-                                                                ${q.diseaseName} <span
-                                                                    style="font-size:12px;color:#7dd3fc;background:rgba(14,165,233,0.1);padding:2px 6px;border-radius:4px;margin-left:6px;">${q.confidenceScore}%
-                                                                    Confidence</span></div>
-                                                            <div
-                                                                style="font-size:12px;margin-top:4px;color:${q.severityLevel == 'CRITICAL' ? '#ef4444' : (q.severityLevel == 'HIGH' ? '#f59e0b' : '#22c55e')}">
-                                                                Severity: <strong>${q.severityLevel}</strong></div>
-                                                        </div>
-                                                        <div
-                                                            style="padding:12px;background:rgba(251,191,36,0.08);border-radius:8px;border:1px solid rgba(251,191,36,0.15);">
-                                                            <div
-                                                                style="font-size:11px;font-weight:700;color:#fbbf24;margin-bottom:4px;">
-                                                                📋 GENERAL OVERVIEW</div>
-                                                            <div style="font-size:13px;color:#f0fdf4;">${q.diagnosis}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </c:if>
-
-                                            <!-- AI Expert Analysis Form -->
-                                            <form
-                                                action="${pageContext.request.contextPath}/admin/disease-queries/update/${q.id}"
-                                                method="post">
-                                                <div
-                                                    style="background:rgba(0,0,0,0.2);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;">
-                                                    <h4
-                                                        style="color:#22c55e;margin-bottom:16px;font-size:14px;border-bottom:1px solid rgba(34,197,94,0.2);padding-bottom:8px;">
-                                                        🛡️ AI / Expert Analysis Panel</h4>
-
-                                                    <div
-                                                        style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
-                                                        <div>
-                                                            <label class="form-label" style="font-size:11px;">Disease
-                                                                Name</label>
-                                                            <input type="text" name="diseaseName" class="form-control"
-                                                                value="${q.diseaseName}" placeholder="e.g. Leaf Blight"
-                                                                required />
-                                                        </div>
-                                                        <div>
-                                                            <label class="form-label" style="font-size:11px;">Confidence %</label>
-                                                            <input type="number" step="0.1" name="confidenceScore"
-                                                                class="form-control" value="${q.confidenceScore}"
-                                                                placeholder="e.g. 95.5" required />
-                                                        </div>
-                                                        <div>
-                                                            <label class="form-label" style="font-size:11px;">Severity</label>
-                                                            <select name="severityLevel" class="form-control" required>
-                                                                <option value="LOW" ${q.severityLevel=='LOW'
-                                                                    ? 'selected' : '' }>LOW</option>
-                                                                <option value="MEDIUM" ${q.severityLevel=='MEDIUM'
-                                                                    ? 'selected' : '' }>MEDIUM</option>
-                                                                <option value="HIGH" ${q.severityLevel=='HIGH'
-                                                                    ? 'selected' : '' }>HIGH</option>
-                                                                <option value="CRITICAL" ${q.severityLevel=='CRITICAL'
-                                                                    ? 'selected' : '' }>CRITICAL</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div style="margin-bottom:12px;">
-                                                        <label class="form-label" style="font-size:11px;">Detailed
-                                                            Diagnosis & Impact</label>
-                                                        <textarea name="diagnosis" class="form-control" rows="2"
-                                                            placeholder="General description...">${q.diagnosis}</textarea>
-                                                    </div>
-
-                                                    <div
-                                                        style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-                                                        <div>
-                                                            <label class="form-label"
-                                                                style="font-size:11px;color:#84cc16;">Organic
-                                                                Treatment</label>
-                                                            <textarea name="organicTreatment" class="form-control"
-                                                                rows="2"
-                                                                placeholder="Bio-fungicides, neem oil...">${q.organicTreatment}</textarea>
-                                                        </div>
-                                                        <div>
-                                                            <label class="form-label"
-                                                                style="font-size:11px;color:#ef4444;">Chemical
-                                                                Treatment</label>
-                                                            <textarea name="chemicalTreatment" class="form-control"
-                                                                rows="2"
-                                                                placeholder="Chemical fungicides...">${q.chemicalTreatment}</textarea>
-                                                        </div>
-                                                    </div>
-
-                                                    <div style="margin-bottom:12px;">
-                                                        <label class="form-label"
-                                                            style="font-size:11px;color:#3b82f6;">Preventive
-                                                            Measures</label>
-                                                        <textarea name="preventiveMeasures" class="form-control"
-                                                            rows="2"
-                                                            placeholder="Crop rotation, spacing...">${q.preventiveMeasures}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div style="display:flex;gap:10px;align-items:center;">
-                                                    <button type="submit" class="btn btn-primary btn-sm">Save
-                                                        Diagnosis</button>
-                                                    <c:if test="${not empty q.diagnosis}">
-                                                        <div style="font-size:12px;color:#6b7280;">Already has
-                                                            diagnosis — update to refine</div>
-                                                    </c:if>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </c:forEach>
+                                    </div>
                                 </div>
                             </div>
+
+                            <c:forEach items="${queries}" var="q">
+                                <div class="v3-triage-node">
+                                    <div class="row align-items-start mb-5">
+                                        <div class="col-md-9">
+                                            <h2 class="text-white fw-950 display-6 mb-2" style="letter-spacing: -2px;">
+                                                ${q.cropName.toUpperCase()} Bio-Hazard</h2>
+                                            <div class="text-danger fw-950 uppercase d-flex flex-wrap gap-4"
+                                                style="letter-spacing: 1.5px; font-size: 11px;">
+                                                <span>👤 OPERATOR: ${q.user.fullName.toUpperCase()}</span>
+                                                <span>📅 TELEMETRY: ${q.createdAt}</span>
+                                                <c:if test="${not empty q.expert}">
+                                                    <span class="text-info">🩺 ASSIGNED EXPERT: DR.
+                                                        ${q.expert.user.fullName.toUpperCase()}</span>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 text-md-end">
+                                            <span class="v3-severity-badge 
+                                                <c:choose>
+                                                    <c:when test=" ${q.status=='PENDING' }">bg-warning text-dark
+                                                </c:when>
+                                                <c:when test="${q.status == 'ASSIGNED'}">bg-info text-white</c:when>
+                                                <c:when test="${q.status == 'REPORT_READY'}">bg-primary text-white
+                                                </c:when>
+                                                <c:when test="${q.status == 'REJECTED'}">bg-danger text-white</c:when>
+                                                <c:when test="${q.status == 'DIAGNOSED'}">bg-success text-white</c:when>
+                                                <c:otherwise>bg-secondary text-white</c:otherwise>
+                                                </c:choose>">
+                                                STATUS: ${q.status}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="v3-evidence-node">
+                                        <label class="trust-label uppercase d-block mb-3"
+                                            style="font-size: 9px; letter-spacing: 2.5px; color: #10b981;">TELEMETRY
+                                            EVIDENCE / SYMPTOMS</label>
+                                        <p class="text-white fs-6 fw-600 mb-0 italic"
+                                            style="opacity: 0.9; line-height: 1.6;">"${q.symptoms}"</p>
+                                    </div>
+
+                                    <div class="v3-protocol-box">
+                                        <h6 class="text-white fw-950 mb-4 uppercase fs-5"
+                                            style="letter-spacing: -0.5px; color: #8b5cf6;">🛡️ DIAGNOSTIC PROTOCOL LOG
+                                            (READ-ONLY)</h6>
+
+                                        <div class="row g-4 mb-5">
+                                            <div class="col-md-4">
+                                                <label class="v3-field-label">Identified Pathogen</label>
+                                                <div class="v3-data-pill">${not empty q.diseaseName ? q.diseaseName :
+                                                    'STANDBY'}</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="v3-field-label">Confidence Score %</label>
+                                                <div class="v3-data-pill">${not empty q.confidenceScore ?
+                                                    q.confidenceScore : '0.00'}</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="v3-field-label">Severity Level</label>
+                                                <div class="v3-data-pill">${not empty q.severityLevel ? q.severityLevel
+                                                    : 'STANDBY'}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-5">
+                                            <label class="v3-field-label">General Diagnosis</label>
+                                            <div class="v3-data-pill" style="min-height: 80px; line-height: 1.6;">
+                                                ${not empty q.diagnosis ? q.diagnosis : 'WAITING FOR EXPERT BIOLOGICAL
+                                                VERIFICATION...'}
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <label class="v3-field-label" style="color: #10b981;">Bio-Organic
+                                                    Strategy</label>
+                                                <div class="v3-data-pill" style="min-height: 60px;">${not empty
+                                                    q.organicTreatment ? q.organicTreatment : '---'}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="v3-field-label" style="color: #ef4444;">Chemical
+                                                    Counter-Protocol</label>
+                                                <div class="v3-data-pill" style="min-height: 60px;">${not empty
+                                                    q.chemicalTreatment ? q.chemicalTreatment : '---'}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+
+                            <c:if test="${empty queries}">
+                                <div class="text-center py-5">
+                                    <div class="display-3 opacity-10 mb-5">🔬</div>
+                                    <div class="text-white-50 fw-950 uppercase"
+                                        style="letter-spacing: 4px; font-size: 14px;">NO BIOLOGICAL THREATS DETECTED
+                                    </div>
+                                    <div class="text-muted small fw-800 uppercase mt-3"
+                                        style="font-size: 10px; letter-spacing: 3px;">SYSTEMS CLEAR | MONITORING GLOBAL
+                                        TELEMETRIC RADIUS</div>
+                                </div>
+                            </c:if>
                         </div>
-                    </div>
+                    </main>
                 </div>
-                <script>function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }</script>
-            
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+                <script src="${pageContext.request.contextPath}/js/background-switcher.js"></script>
+                <script src="${pageContext.request.contextPath}/js/voice-assistant.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script>
+                    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+                </script>
+            </body>
 
             </html>

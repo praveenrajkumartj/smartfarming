@@ -1017,14 +1017,15 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 // Initialize translation and injection
 document.addEventListener('DOMContentLoaded', () => {
-    // Try to inject in one of the usual spots
+    // Language selector injection removed per user request
+    /*
     const injected = injectLanguageSelector();
     
-    // If we couldn't find a spot, force floating version
     if (!injected) {
         injectLanguageSelector(true);
     }
-    
+    */
+
     // Initial translation if a language is already set
     const lang = localStorage.getItem('appLang') || 'en';
     if (lang !== 'en') {

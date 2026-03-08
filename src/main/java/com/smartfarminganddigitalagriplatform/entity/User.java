@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User {
 
     @Id
@@ -54,8 +55,23 @@ public class User {
     @Column(nullable = false)
     private String subscriptionPlan = "Basic Plan";
 
+    @Column
+    private String upiId;
+
+    @Column
+    private String bankAccountNumber;
+
+    @Column
+    private String ifscCode;
+
+    @Column(name = "is_verified", columnDefinition = "boolean default false")
+    private Boolean isVerified = false;
+
+    @Column(name = "trust_score", columnDefinition = "integer default 100")
+    private Integer trustScore = 100;
+
     public enum Role {
-        FARMER, BUYER, ADMIN
+        FARMER, BUYER, ADMIN, EXPERT, B2B_BUYER, MENTOR
     }
 
     @PrePersist
@@ -172,5 +188,49 @@ public class User {
 
     public void setSubscriptionPlan(String subscriptionPlan) {
         this.subscriptionPlan = subscriptionPlan;
+    }
+
+    public String getUpiId() {
+        return upiId;
+    }
+
+    public void setUpiId(String upiId) {
+        this.upiId = upiId;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getIfscCode() {
+        return ifscCode;
+    }
+
+    public void setIfscCode(String ifscCode) {
+        this.ifscCode = ifscCode;
+    }
+
+    public boolean isVerified() {
+        return Boolean.TRUE.equals(isVerified);
+    }
+
+    public void setVerified(Boolean verified) {
+        if (verified == null)
+            verified = false;
+        isVerified = verified;
+    }
+
+    public int getTrustScore() {
+        return trustScore == null ? 100 : trustScore;
+    }
+
+    public void setTrustScore(Integer trustScore) {
+        if (trustScore == null)
+            trustScore = 100;
+        this.trustScore = trustScore;
     }
 }

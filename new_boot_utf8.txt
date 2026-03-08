@@ -1,0 +1,524 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< com.smartfarminganddigitalagriplatform:smartfarminganddigitalagriplatform >--
+[INFO] Building smartfarminganddigitalagriplatform 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.3:run (default-cli) > test-compile @ smartfarminganddigitalagriplatform >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ smartfarminganddigitalagriplatform ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 193 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ smartfarminganddigitalagriplatform ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ smartfarminganddigitalagriplatform ---
+[INFO] skip non existing resourceDirectory D:\spring\smartfarminganddigitalagriplatform\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ smartfarminganddigitalagriplatform ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.3:run (default-cli) < test-compile @ smartfarminganddigitalagriplatform <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.3:run (default-cli) @ smartfarminganddigitalagriplatform ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-03-05T19:18:53.210+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Starting SmartfarminganddigitalagriplatformApplication using Java 25.0.1 with PID 17960 (D:\spring\smartfarminganddigitalagriplatform\target\classes started by ADMIN in D:\spring\smartfarminganddigitalagriplatform)
+2026-03-05T19:18:53.212+05:30 DEBUG 17960 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-03-05T19:18:53.212+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : No active profile set, falling back to 1 default profile: "default"
+2026-03-05T19:18:53.273+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-05T19:18:53.273+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-05T19:18:54.029+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-05T19:18:54.154+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 120 ms. Found 22 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/C:/Users/ADMIN/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.19/tomcat-embed-core-10.1.19.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-03-05T19:18:54.869+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-05T19:18:54.882+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-05T19:18:54.882+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-03-05T19:18:55.139+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2026-03-05T19:18:55.145+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-05T19:18:55.145+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1872 ms
+2026-03-05T19:18:55.290+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-05T19:18:55.327+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-03-05T19:18:55.350+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-05T19:18:55.512+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-05T19:18:55.530+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-05T19:18:55.664+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5a7b3f89
+2026-03-05T19:18:55.665+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-05T19:18:55.705+05:30  WARN 17960 --- [SmartFarmingPlatform] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-05T19:18:56.742+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table users 
+       modify column role enum ('FARMER','BUYER','ADMIN','EXPERT','B2B_BUYER','MENTOR') not null
+2026-03-05T19:18:57.047+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-05T19:18:57.338+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-05T19:18:58.355+05:30  WARN 17960 --- [SmartFarmingPlatform] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-05T19:18:58.622+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3183feb0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37036f6a, org.springframework.security.web.context.SecurityContextHolderFilter@6f56d32, org.springframework.security.web.header.HeaderWriterFilter@6360b9e0, org.springframework.web.filter.CorsFilter@437ec7e, org.springframework.security.web.authentication.logout.LogoutFilter@6fb6c13f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3801fb28, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@711bfcfb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4088ca66, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@12943276, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6656826b, org.springframework.security.web.access.ExceptionTranslationFilter@41e203b8, org.springframework.security.web.access.intercept.AuthorizationFilter@14a0098b]
+2026-03-05T19:18:58.796+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-05T19:18:58.831+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-05T19:18:58.832+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-03-05T19:18:58.832+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@319d7f70]]
+2026-03-05T19:18:58.833+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-03-05T19:18:58.841+05:30  INFO 17960 --- [SmartFarmingPlatform] [  restartedMain] farminganddigitalagriplatformApplication : Started SmartfarminganddigitalagriplatformApplication in 5.968 seconds (process running for 6.416)
+Running Real-time Price Drop Detection...
+Running Consultation Reminder Engine...
+Running Real-time Weather Alert Engine...
+Running Trust & Safety: Equipment Misuse Prevention...
+Running Smart Surplus Detection Job...
+Running Trust & Safety: Fraud Detection Logic...
+Running Trust & Safety: Farmer Verification Evaluator...
+Running Trust & Safety: Fake Listing Detection...
+Hibernate: 
+    select
+        cc1_0.id,
+        cc1_0.expert_id,
+        cc1_0.farmer_id,
+        cc1_0.fee,
+        cc1_0.meet_link,
+        cc1_0.plant_image_path,
+        cc1_0.session_time,
+        cc1_0.status,
+        cc1_0.symptoms_description 
+    from
+        clinic_consultations cc1_0
+Hibernate: 
+    select
+        er1_0.id,
+        er1_0.end_time,
+        er1_0.equipment_id,
+        er1_0.payment_token,
+        er1_0.rating,
+        er1_0.renter_id,
+        er1_0.review,
+        er1_0.start_time,
+        er1_0.status,
+        er1_0.total_cost 
+    from
+        equipment_rentals er1_0
+Hibernate: 
+    select
+        mp1_0.id,
+        mp1_0.created_at,
+        mp1_0.crop_name,
+        mp1_0.district,
+        mp1_0.market,
+        mp1_0.max_price,
+        mp1_0.min_price,
+        mp1_0.modal_price,
+        mp1_0.price_date,
+        mp1_0.state,
+        mp1_0.unit 
+    from
+        market_prices mp1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.bank_account_number,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.full_name,
+        u1_0.ifsc_code,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.profile_image_path,
+        u1_0.role,
+        u1_0.state,
+        u1_0.subscription_plan,
+        u1_0.trust_score,
+        u1_0.updated_at,
+        u1_0.upi_id 
+    from
+        users u1_0 
+    where
+        u1_0.role=?
+Hibernate: 
+    select
+        ml1_0.id,
+        ml1_0.clearance_price,
+        ml1_0.contact_number,
+        ml1_0.created_at,
+        ml1_0.crop_name,
+        ml1_0.description,
+        ml1_0.farmer_id,
+        ml1_0.is_surplus,
+        ml1_0.is_suspicious,
+        ml1_0.location,
+        ml1_0.price_per_unit,
+        ml1_0.quantity,
+        ml1_0.status,
+        ml1_0.unit 
+    from
+        marketplace_listings ml1_0 
+    where
+        ml1_0.status=? 
+        and ml1_0.created_at<?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.bank_account_number,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.full_name,
+        u1_0.ifsc_code,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.profile_image_path,
+        u1_0.role,
+        u1_0.state,
+        u1_0.subscription_plan,
+        u1_0.trust_score,
+        u1_0.updated_at,
+        u1_0.upi_id 
+    from
+        users u1_0 
+    where
+        u1_0.role=?
+Hibernate: 
+    select
+        ml1_0.id,
+        ml1_0.clearance_price,
+        ml1_0.contact_number,
+        ml1_0.created_at,
+        ml1_0.crop_name,
+        ml1_0.description,
+        ml1_0.farmer_id,
+        ml1_0.is_surplus,
+        ml1_0.is_suspicious,
+        ml1_0.location,
+        ml1_0.price_per_unit,
+        ml1_0.quantity,
+        ml1_0.status,
+        ml1_0.unit 
+    from
+        marketplace_listings ml1_0 
+    where
+        ml1_0.status=? 
+    order by
+        ml1_0.created_at desc
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.amount,
+        t1_0.buyer_id,
+        t1_0.commission,
+        t1_0.consultation_id,
+        t1_0.farmer_id,
+        t1_0.final_earnings,
+        t1_0.is_suspicious,
+        t1_0.listing_id,
+        t1_0.order_status,
+        t1_0.payment_method,
+        t1_0.quantity,
+        t1_0.shipping_address,
+        t1_0.status,
+        t1_0.timestamp,
+        t1_0.tracking_number 
+    from
+        transactions t1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.bank_account_number,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.full_name,
+        u1_0.ifsc_code,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.profile_image_path,
+        u1_0.role,
+        u1_0.state,
+        u1_0.subscription_plan,
+        u1_0.trust_score,
+        u1_0.updated_at,
+        u1_0.upi_id 
+    from
+        users u1_0 
+    where
+        u1_0.role=?
+>>> DB MIGRATION: User role column expanded to VARCHAR(50)
+Hibernate: 
+    select
+        cp1_0.id,
+        cp1_0.amount,
+        cp1_0.consultation_id,
+        cp1_0.payment_date,
+        cp1_0.status,
+        cp1_0.transaction_id 
+    from
+        clinic_payments cp1_0 
+    where
+        cp1_0.consultation_id=?
+Hibernate: 
+    select
+        tr1_0.id,
+        tr1_0.fertilizer_usage,
+        tr1_0.harvest_date,
+        tr1_0.irrigation_method,
+        tr1_0.listing_id,
+        tr1_0.pesticide_usage,
+        tr1_0.planting_date,
+        tr1_0.sustainability_practices,
+        tr1_0.traceability_id 
+    from
+        traceability_records tr1_0 
+    where
+        tr1_0.listing_id=?
+Hibernate: 
+    select
+        tr1_0.id,
+        tr1_0.fertilizer_usage,
+        tr1_0.harvest_date,
+        tr1_0.irrigation_method,
+        tr1_0.listing_id,
+        tr1_0.pesticide_usage,
+        tr1_0.planting_date,
+        tr1_0.sustainability_practices,
+        tr1_0.traceability_id 
+    from
+        traceability_records tr1_0 
+    where
+        tr1_0.listing_id=?
+Hibernate: 
+    select
+        tr1_0.id,
+        tr1_0.fertilizer_usage,
+        tr1_0.harvest_date,
+        tr1_0.irrigation_method,
+        tr1_0.listing_id,
+        tr1_0.pesticide_usage,
+        tr1_0.planting_date,
+        tr1_0.sustainability_practices,
+        tr1_0.traceability_id 
+    from
+        traceability_records tr1_0 
+    where
+        tr1_0.listing_id=?
+Hibernate: 
+    select
+        cp1_0.id,
+        cp1_0.additional_advice,
+        cp1_0.consultation_id,
+        cp1_0.diagnosis,
+        cp1_0.issued_at,
+        cp1_0.medications 
+    from
+        clinic_prescriptions cp1_0 
+    where
+        cp1_0.consultation_id=?
+Hibernate: 
+    select
+        tr1_0.id,
+        tr1_0.fertilizer_usage,
+        tr1_0.harvest_date,
+        tr1_0.irrigation_method,
+        tr1_0.listing_id,
+        tr1_0.pesticide_usage,
+        tr1_0.planting_date,
+        tr1_0.sustainability_practices,
+        tr1_0.traceability_id 
+    from
+        traceability_records tr1_0 
+    where
+        tr1_0.listing_id=?
+Hibernate: 
+    select
+        cp1_0.id,
+        cp1_0.amount,
+        cp1_0.consultation_id,
+        cp1_0.payment_date,
+        cp1_0.status,
+        cp1_0.transaction_id 
+    from
+        clinic_payments cp1_0 
+    where
+        cp1_0.consultation_id=?
+Hibernate: 
+    select
+        cp1_0.id,
+        cp1_0.additional_advice,
+        cp1_0.consultation_id,
+        cp1_0.diagnosis,
+        cp1_0.issued_at,
+        cp1_0.medications 
+    from
+        clinic_prescriptions cp1_0 
+    where
+        cp1_0.consultation_id=?
+Hibernate: 
+    select
+        ml1_0.id,
+        ml1_0.clearance_price,
+        ml1_0.contact_number,
+        ml1_0.created_at,
+        ml1_0.crop_name,
+        ml1_0.description,
+        ml1_0.farmer_id,
+        ml1_0.is_surplus,
+        ml1_0.is_suspicious,
+        ml1_0.location,
+        ml1_0.price_per_unit,
+        ml1_0.quantity,
+        ml1_0.status,
+        ml1_0.unit 
+    from
+        marketplace_listings ml1_0 
+    where
+        ml1_0.farmer_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.bank_account_number,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.full_name,
+        u1_0.ifsc_code,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.profile_image_path,
+        u1_0.role,
+        u1_0.state,
+        u1_0.subscription_plan,
+        u1_0.trust_score,
+        u1_0.updated_at,
+        u1_0.upi_id 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.bank_account_number,
+        u1_0.created_at,
+        u1_0.district,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.full_name,
+        u1_0.ifsc_code,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.profile_image_path,
+        u1_0.role,
+        u1_0.state,
+        u1_0.subscription_plan,
+        u1_0.trust_score,
+        u1_0.updated_at,
+        u1_0.upi_id 
+    from
+        users u1_0 
+    where
+        u1_0.role=?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        count(*) 
+    from
+        crops c1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        market_prices mp1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        government_schemes gs1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        learning_videos lv1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        mentors m1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        transactions t1_0
+Hibernate: 
+    select
+        ml1_0.id,
+        ml1_0.clearance_price,
+        ml1_0.contact_number,
+        ml1_0.created_at,
+        ml1_0.crop_name,
+        ml1_0.description,
+        ml1_0.farmer_id,
+        ml1_0.is_surplus,
+        ml1_0.is_suspicious,
+        ml1_0.location,
+        ml1_0.price_per_unit,
+        ml1_0.quantity,
+        ml1_0.status,
+        ml1_0.unit 
+    from
+        marketplace_listings ml1_0 
+    where
+        upper(ml1_0.crop_name) like upper(?) escape '\\'
+Hibernate: 
+    select
+        lv1_0.id,
+        lv1_0.category,
+        lv1_0.description,
+        lv1_0.title,
+        lv1_0.video_url 
+    from
+        learning_videos lv1_0

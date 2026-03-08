@@ -1,174 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="jakarta.tags.core" %>
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
 
         <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Register - Smart Farming Platform</title>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-                href="${pageContext.request.contextPath}/css/style.css?v=<%= System.currentTimeMillis() %>" />
-            <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>" />
+            <title>📝 ASSET REGISTRATION - AGROPLANTER</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+            <link rel="icon"
+                href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>" />
             <style>
                 body {
-                    background: transparent;
+                    background: #020617;
                     min-height: 100vh;
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .auth-container {
-                    flex: 1;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     padding: 40px 20px;
+                    font-family: 'Outfit', sans-serif;
+                    color: #f8fafc;
                 }
 
-                .auth-box {
+                .auth-scene {
+                    position: fixed;
+                    inset: 0;
+                    background:
+                        radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+                    z-index: -1;
+                }
+
+                .auth-card-premium {
                     width: 100%;
-                    max-width: 520px;
+                    max-width: 600px;
+                    background: rgba(15, 23, 42, 0.6);
+                    backdrop-filter: blur(30px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 40px;
+                    padding: 40px;
+                    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+                    animation: cardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
                 }
 
-                .auth-logo {
-                    text-align: center;
-                    margin-bottom: 28px;
+                @keyframes cardEnter {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
                 }
 
-                .auth-logo-icon {
-                    width: 56px;
-                    height: 56px;
-                    background: linear-gradient(135deg, #16a34a, #22c55e);
-                    border-radius: 14px;
+                .role-selector-premium {
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 28px;
-                    margin: 0 auto 12px;
-                    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.4);
+                    gap: 12px;
+                    margin-bottom: 30px;
                 }
 
-                .auth-logo h1 {
-                    font-size: 20px;
-                    font-weight: 800;
-                    color: #f0fdf4;
+                .role-item {
+                    flex: 1;
                 }
 
-                .auth-logo p {
-                    font-size: 13px;
-                    color: #6b7280;
-                }
-
-                .auth-card {
-                    background: #0d150d;
-                    border: 1px solid rgba(22, 163, 74, 0.15);
-                    border-radius: 24px;
-                    padding: 32px;
-                    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
-                }
-
-                .auth-title {
-                    font-size: 22px;
-                    font-weight: 800;
-                    color: #f0fdf4;
-                    margin-bottom: 4px;
-                }
-
-                .auth-subtitle {
-                    font-size: 13px;
-                    color: #6b7280;
-                    margin-bottom: 24px;
-                }
-
-                .form-row {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 14px;
-                }
-
-                .input-group {
-                    position: relative;
-                    margin-bottom: 16px;
-                }
-
-                .input-icon {
-                    position: absolute;
-                    left: 14px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    font-size: 15px;
-                    color: #6b7280;
-                    pointer-events: none;
-                }
-
-                .password-toggle {
-                    position: absolute;
-                    right: 14px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    font-size: 16px;
-                    cursor: pointer;
-                    opacity: 0.6;
-                    transition: opacity 0.2s;
-                    user-select: none;
-                    background: none;
-                    border: none;
-                    padding: 0;
-                }
-
-                .password-toggle:hover {
-                    opacity: 1;
-                }
-
-                .input-label {
-                    display: block;
-                    font-size: 11px;
-                    font-weight: 600;
-                    color: #86efac;
-                    margin-bottom: 5px;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                }
-
-                .input-group input,
-                .input-group select {
-                    width: 100%;
-                    padding: 11px 14px 11px 40px;
-                    background: #1a2b1a;
-                    border: 1px solid rgba(22, 163, 74, 0.15);
-                    border-radius: 10px;
-                    color: #f0fdf4;
-                    font-size: 14px;
-                    font-family: 'Inter', sans-serif;
-                    transition: all 0.3s;
-                }
-
-                .input-group input:focus,
-                .input-group select:focus {
-                    outline: none;
-                    border-color: #16a34a;
-                    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
-                    background: #1f3520;
-                }
-
-                .input-group input::placeholder {
-                    color: #4b5563;
-                }
-
-                .input-group select option {
-                    background: #1a2b1a;
-                }
-
-                .role-selector {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 10px;
-                    margin-bottom: 18px;
-                }
-
-                .role-option {
+                .role-item input {
                     display: none;
                 }
 
@@ -176,267 +75,244 @@
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 4px;
-                    padding: 14px 10px;
-                    background: #1a2b1a;
-                    border: 1px solid rgba(22, 163, 74, 0.15);
-                    border-radius: 12px;
+                    padding: 15px;
+                    background: rgba(0, 0, 0, 0.2);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 20px;
                     cursor: pointer;
-                    transition: all 0.2s;
-                    text-align: center;
+                    transition: 0.3s;
                 }
 
-                .role-label:hover {
-                    border-color: rgba(22, 163, 74, 0.4);
-                    background: #1f3520;
+                .role-item input:checked+.role-label {
+                    border-color: #10b981;
+                    background: rgba(16, 185, 129, 0.1);
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.1);
                 }
 
-                .role-option:checked+.role-label {
-                    border-color: #16a34a;
-                    background: rgba(22, 163, 74, 0.15);
-                    box-shadow: 0 0 16px rgba(22, 163, 74, 0.2);
+                .auth-input {
+                    background: rgba(0, 0, 0, 0.3) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    border-radius: 16px !important;
+                    padding: 12px 20px !important;
+                    color: #fff !important;
+                    transition: 0.3s;
+                    font-size: 14px !important;
                 }
 
-                .role-emoji {
-                    font-size: 24px;
+                .auth-input:focus {
+                    border-color: #10b981 !important;
+                    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2) !important;
                 }
 
-                .role-name {
-                    font-size: 12px;
-                    font-weight: 600;
-                    color: #f0fdf4;
+                .col-md-12 {
+                    position: relative;
                 }
 
-                .submit-btn {
+                .password-toggle {
+                    position: absolute;
+                    right: 30px;
+                    top: 38px;
+                    color: rgba(255, 255, 255, 0.4);
+                    cursor: pointer;
+                    transition: 0.3s;
+                    z-index: 10;
+                }
+
+                .password-toggle:hover {
+                    color: #10b981;
+                }
+
+                .auth-label {
+                    font-size: 10px;
+                    font-weight: 800;
+                    color: #94a3b8;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin-bottom: 6px;
+                    margin-left: 4px;
+                }
+
+                .btn-auth {
                     width: 100%;
-                    padding: 13px;
-                    background: linear-gradient(135deg, #16a34a, #22c55e);
-                    color: white;
-                    border: none;
-                    border-radius: 12px;
-                    font-size: 14px;
-                    font-weight: 700;
-                    cursor: pointer;
-                    transition: all 0.3s;
-                    font-family: 'Inter', sans-serif;
-                }
-
-                .submit-btn:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 28px rgba(22, 163, 74, 0.4);
-                }
-
-                .auth-footer {
-                    text-align: center;
-                    margin-top: 20px;
-                    font-size: 13px;
-                    color: #6b7280;
-                }
-
-                .auth-footer a {
-                    color: #22c55e;
-                    font-weight: 600;
-                }
-
-                .auth-footer a:hover {
-                    color: #16a34a;
-                }
-
-                .back-link {
-                    text-align: center;
                     padding: 16px;
+                    border-radius: 100px;
+                    background: linear-gradient(135deg, #10b981, #3b82f6);
+                    border: none;
+                    color: white;
+                    font-weight: 900;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin-top: 20px;
+                    transition: 0.3s;
                 }
 
-                .back-link a {
-                    color: #6b7280;
-                    font-size: 13px;
-                    text-decoration: none;
+                .btn-auth:hover {
+                    transform: scale(1.02);
+                    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
                 }
 
-                .back-link a:hover {
-                    color: #22c55e;
+                .brand-premium {
+                    font-size: 28px;
+                    font-weight: 900;
+                    letter-spacing: -1.5px;
+                    background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
                 }
 
-                .form-group {
-                    margin-bottom: 0;
+                .brand-icon-box {
+                    width: 40px;
+                    height: 40px;
+                    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
+                    border: 1px solid rgba(16, 185, 129, 0.3);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    color: #10b981;
                 }
             </style>
         </head>
 
         <body>
-            <div class="auth-container">
-                <div class="auth-box">
-                    <div class="auth-logo" style="cursor: pointer;" onclick="window.location.href='${pageContext.request.contextPath}/'">
-                        <div class="auth-logo-icon">🌾</div>
-                        <h1>Smart Farming Platform</h1>
-                        <p>Create your free account today</p>
+            <div class="auth-scene"></div>
+
+            <div class="auth-card-premium">
+                <div class="text-center mb-4">
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="brand-premium">
+                            <div class="brand-icon-box">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            AGROPLANTER
+                        </div>
                     </div>
+                    <h2 class="fw-900 text-white mb-1" style="font-size: 1.5rem; letter-spacing: 2px;">ASSET ONBOARDING
+                    </h2>
+                    <p class="text-white-50 small text-uppercase fw-bold letter-spacing-1">Join the AGROPLANTER
+                        Ecosystem</p>
+                </div>
 
-                    <div class="auth-card">
-                        <h2 class="auth-title">Create Account ✨</h2>
-                        <p class="auth-subtitle">Join thousands of farmers on our platform</p>
+                <c:if test="${not empty errorMessage}">
+                    <div
+                        class="alert bg-danger bg-opacity-10 border-danger border-opacity-25 text-danger small mb-4 py-2 rounded-4 text-center">
+                        ${errorMessage}
+                    </div>
+                </c:if>
 
-                        <c:if test="${not empty errorMessage}">
-                            <div class="alert alert-error" style="margin-bottom:16px;">
-                                ❌ <span>${errorMessage}</span>
-                            </div>
-                        </c:if>
-
-                        <form action="${pageContext.request.contextPath}/register" method="post">
-
-                            <!-- Choose Role -->
-                            <div style="margin-bottom:18px;">
-                                <label class="input-label" style="margin-bottom:10px;">I am a:</label>
-                                <div class="role-selector">
-                                    <div>
-                                        <input type="radio" id="roleFarmer" class="role-option" name="role"
-                                            value="FARMER" checked />
-                                        <label for="roleFarmer" class="role-label">
-                                            <span class="role-emoji">👨‍🌾</span>
-                                            <span class="role-name">Farmer</span>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="roleBuyer" class="role-option" name="role"
-                                            value="BUYER" />
-                                        <label for="roleBuyer" class="role-label">
-                                            <span class="role-emoji">🛒</span>
-                                            <span class="role-name">Buyer</span>
-                                        </label>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div>
-                                    <label class="input-label">Full Name</label>
-                                    <div class="input-group" style="margin-bottom:0;">
-                                        <span class="input-icon">🌾</span>
-                                        <input type="text" name="fullName" value="${user.fullName}"
-                                            placeholder="Full name" required />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="input-label">Phone Number</label>
-                                    <div class="input-group" style="margin-bottom:0;">
-                                        <span class="input-icon">🌾</span>
-                                        <input type="text" name="phone" value="${user.phone}"
-                                            placeholder="10-digit phone" required />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style="margin-top:16px;">
-                                <label class="input-label">Email Address</label>
-                                <div class="input-group" style="margin-bottom:0;">
-                                    <span class="input-icon">🌾</span>
-                                    <input type="email" name="email" value="${user.email}"
-                                        placeholder="Enter your email" required />
-                                </div>
-                            </div>
-
-                            <div class="form-row" style="margin-top:16px;">
-                                <div>
-                                    <label class="input-label">State</label>
-                                    <div class="input-group" style="margin-bottom:0;">
-                                        <span class="input-icon">📍</span>
-                                        <select name="state">
-                                            <option value="">Select State</option>
-                                            <option value="Andhra Pradesh" ${user.state=='Andhra Pradesh' ? 'selected'
-                                                : '' }>Andhra Pradesh</option>
-                                            <option value="Bihar" ${user.state=='Bihar' ? 'selected' : '' }>Bihar
-                                            </option>
-                                            <option value="Chhattisgarh" ${user.state=='Chhattisgarh' ? 'selected' : ''
-                                                }>Chhattisgarh</option>
-                                            <option value="Delhi" ${user.state=='Delhi' ? 'selected' : '' }>Delhi
-                                            </option>
-                                            <option value="Gujarat" ${user.state=='Gujarat' ? 'selected' : '' }>Gujarat
-                                            </option>
-                                            <option value="Haryana" ${user.state=='Haryana' ? 'selected' : '' }>Haryana
-                                            </option>
-                                            <option value="Jharkhand" ${user.state=='Jharkhand' ? 'selected' : '' }>
-                                                Jharkhand</option>
-                                            <option value="Karnataka" ${user.state=='Karnataka' ? 'selected' : '' }>
-                                                Karnataka</option>
-                                            <option value="Kerala" ${user.state=='Kerala' ? 'selected' : '' }>Kerala
-                                            </option>
-                                            <option value="Madhya Pradesh" ${user.state=='Madhya Pradesh' ? 'selected'
-                                                : '' }>Madhya Pradesh</option>
-                                            <option value="Maharashtra" ${user.state=='Maharashtra' ? 'selected' : '' }>
-                                                Maharashtra</option>
-                                            <option value="Odisha" ${user.state=='Odisha' ? 'selected' : '' }>Odisha
-                                            </option>
-                                            <option value="Punjab" ${user.state=='Punjab' ? 'selected' : '' }>Punjab
-                                            </option>
-                                            <option value="Rajasthan" ${user.state=='Rajasthan' ? 'selected' : '' }>
-                                                Rajasthan</option>
-                                            <option value="Tamil Nadu" ${user.state=='Tamil Nadu' ? 'selected' : '' }>
-                                                Tamil Nadu</option>
-                                            <option value="Telangana" ${user.state=='Telangana' ? 'selected' : '' }>
-                                                Telangana</option>
-                                            <option value="Uttar Pradesh" ${user.state=='Uttar Pradesh' ? 'selected'
-                                                : '' }>Uttar Pradesh</option>
-                                            <option value="Uttarakhand" ${user.state=='Uttarakhand' ? 'selected' : '' }>
-                                                Uttarakhand</option>
-                                            <option value="West Bengal" ${user.state=='West Bengal' ? 'selected' : '' }>
-                                                West Bengal</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="input-label">District</label>
-                                    <div class="input-group" style="margin-bottom:0;">
-                                        <span class="input-icon">🌾</span>
-                                        <input type="text" name="district" value="${user.district}"
-                                            placeholder="Your district" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style="margin-top:16px;">
-                                <label class="input-label">Password</label>
-                                <div class="input-group" style="margin-bottom:0;">
-                                    <span class="input-icon">🌾</span>
-                                    <input type="password" name="password" id="password"
-                                        placeholder="Create password (min 6 chars)" required
-                                        style="padding-right: 42px;" />
-                                    <span class="password-toggle" onclick="togglePassword('password', this)"
-                                        title="Toggle password visibility">👁️</span>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="submit-btn" style="margin-top:20px;">
-                                🚀 Create My Account
-                            </button>
-                        </form>
-
-                        <div class="auth-footer">
-                            Already have an account? <a href="${pageContext.request.contextPath}/login">Login Here</a>
+                <form action="${pageContext.request.contextPath}/register" method="post" autocomplete="off">
+                    <div class="role-selector-premium">
+                        <div class="role-item">
+                            <input type="radio" id="farmer" name="role" value="FARMER" checked>
+                            <label for="farmer" class="role-label">
+                                <span class="fs-4 mb-2">👨‍🌾</span>
+                                <span class="small fw-bold">FARMER</span>
+                            </label>
+                        </div>
+                        <div class="role-item">
+                            <input type="radio" id="buyer" name="role" value="BUYER">
+                            <label for="buyer" class="role-label">
+                                <span class="fs-4 mb-2">🛒</span>
+                                <span class="small fw-bold">BUYER</span>
+                            </label>
+                        </div>
+                        <div class="role-item">
+                            <input type="radio" id="industry" name="role" value="B2B_BUYER">
+                            <label for="industry" class="role-label">
+                                <span class="fs-4 mb-2">🏭</span>
+                                <span class="small fw-bold">B2B</span>
+                            </label>
                         </div>
                     </div>
 
-                    <div class="back-link">
-                        <a href="${pageContext.request.contextPath}/">← Back to Home</a>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="auth-label">LEGAL FULL NAME</label>
+                            <input type="text" name="fullName" class="form-control auth-input"
+                                placeholder="e.g. Rahul Sharma" required autocomplete="none" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="auth-label">MOBILE TELEMETRY</label>
+                            <input type="text" name="phone" class="form-control auth-input"
+                                placeholder="10-digit primary" required autocomplete="none" />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="auth-label">SECURE EMAIL ENDPOINT</label>
+                            <input type="email" name="email" id="email" class="form-control auth-input"
+                                placeholder="operator@Agroplanter.com" required autocomplete="none" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="auth-label">STATE JURISDICTION</label>
+                            <select name="state" class="form-select auth-input">
+                                <option value="">Select Region</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="auth-label">DISTRICT SECTOR</label>
+                            <input type="text" name="district" class="form-control auth-input"
+                                placeholder="Specify district" />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="auth-label">ACCESS PASSWORD</label>
+                            <input type="password" name="password" id="password" class="form-control auth-input"
+                                placeholder="Create high-entropy key" required autocomplete="new-password" />
+                            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-auth">FINALIZE ENROLLMENT →</button>
+                </form>
+
+                <div class="text-center mt-4 pt-3 border-top border-white border-opacity-10">
+                    <p class="text-white-50 small">ALREADY REGISTERED? <a
+                            href="${pageContext.request.contextPath}/login"
+                            class="text-white fw-bold text-decoration-none">DECRYPT SESSION</a></p>
+                    <div class="d-flex justify-content-center gap-4 mt-2">
+                        <p class="small text-muted mb-0">Expert? <a
+                                href="${pageContext.request.contextPath}/clinic/expert/register"
+                                class="text-info text-decoration-none">APPLY FOR CLINIC ACCESS</a></p>
                     </div>
                 </div>
             </div>
-            <script src="${pageContext.request.contextPath}/js/background-switcher.js"></script>
+
             <script>
-                function togglePassword(inputId, icon) {
-                    const input = document.getElementById(inputId);
-                    if (input.type === 'password') {
-                        input.type = 'text';
-                        icon.innerText = '👁️';
-                    } else {
-                        input.type = 'password';
-                        icon.innerText = '🙈';
-                    }
-                }
+                document.addEventListener('DOMContentLoaded', function () {
+                    const registerForm = document.querySelector('form');
+                    // Force clear form on load to bypass browser memory
+                    setTimeout(() => {
+                        registerForm.reset();
+                        // Explicitly clear specific fields if needed
+                        document.querySelectorAll('.auth-input').forEach(input => {
+                            if (input.tagName === 'INPUT') input.value = '';
+                        });
+                    }, 100);
+
+                    document.getElementById('togglePassword').addEventListener('click', function () {
+                        const password = document.getElementById('password');
+                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                        password.setAttribute('type', type);
+                        this.classList.toggle('fa-eye');
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                });
             </script>
-        
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+            <script src="${pageContext.request.contextPath}/js/background-switcher.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
 
         </html>

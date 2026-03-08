@@ -1,80 +1,53 @@
 /**
  * Background Switcher for Smart Farming Platform
- * Changes background images every second
+ * Revised: Deactivated dynamic images and stabilized dashboard colors.
+ * This ensures high text visibility and a premium, distraction-free UI.
  */
 
 (function () {
-    const farmingImages = [
-        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1544923246-77265be722f6?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1595113316349-9fa4eb24f884?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1527847263472-aa5338d178b8?auto=format&fit=crop&q=80&w=1600',
-        'https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=1600'
-    ];
+    function applyPremiumStabilization() {
+        // Stabilize the theme variables to a solid premium navy
+        const root = document.documentElement;
 
-    let currentIndex = 0;
+        // Update CSS variables dynamically for global reach
+        root.style.setProperty('--bg-dark', '#020617');
+        root.style.setProperty('--bg-card', '#0f172a');
+        root.style.setProperty('--bg-sidebar', '#010409');
+        root.style.setProperty('--surface', '#1e293b');
+        root.style.setProperty('--surface-light', '#334155');
 
-    function createBackgroundLayer() {
-        if (document.getElementById('global-bg-layer')) return document.getElementById('global-bg-layer');
+        // Ensure muted text is visible enough on ultra-dark backgrounds
+        root.style.setProperty('--text-muted', '#94a3b8');
+        root.style.setProperty('--text-secondary', '#cbd5e1');
 
-        const layer = document.createElement('div');
-        layer.id = 'global-bg-layer';
-        Object.assign(layer.style, {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: -1,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            transition: 'background-image 0.8s ease-in-out',
-            filter: 'brightness(0.35) contrast(1.1)',
-            pointerEvents: 'none'
-        });
+        // Stabilize borders
+        root.style.setProperty('--border', 'rgba(255, 255, 255, 0.1)');
+        root.style.setProperty('--border-light', 'rgba(255, 255, 255, 0.05)');
 
-        // Add a gradient overlay to make text more readable
-        const overlay = document.createElement('div');
-        Object.assign(overlay.style, {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'linear-gradient(rgba(5, 10, 5, 0.4), rgba(5, 10, 5, 0.7))'
-        });
+        // Finalize body styling - Solid, non-distracting colors
+        document.body.style.backgroundColor = '#020617';
+        document.body.style.backgroundImage = 'radial-gradient(circle at 50% 10%, #0f172a 0%, #020617 100%)';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.color = '#ffffff';
 
-        layer.appendChild(overlay);
-        document.body.prepend(layer);
-        return layer;
+        // Remove the dynamic layer if it exists to clean up the DOM
+        const layer = document.getElementById('global-bg-layer');
+        if (layer) {
+            layer.innerHTML = ''; // Clear sub-overlays
+            layer.style.backgroundImage = 'none';
+            layer.style.backgroundColor = 'transparent';
+            layer.remove();
+        }
     }
 
-    function changeBackground() {
-        const layer = createBackgroundLayer();
-        currentIndex = (currentIndex + 1) % farmingImages.length;
-        const nextImage = farmingImages[currentIndex];
+    // Apply immediately to prevent flash of old background
+    applyPremiumStabilization();
 
-        // Preload next image
-        const img = new Image();
-        img.src = nextImage;
-        img.onload = () => {
-            layer.style.backgroundImage = `url('${nextImage}')`;
-        };
-    }
+    // Re-verify on DOM content loaded
+    document.addEventListener('DOMContentLoaded', applyPremiumStabilization);
 
-    // Start shifting
-    document.addEventListener('DOMContentLoaded', () => {
-        // Set initial background immediately if possible
-        const layer = createBackgroundLayer();
-        layer.style.backgroundImage = `url('${farmingImages[0]}')`;
-
-        // Change every 1 second
-        setInterval(changeBackground, 1000);
-    });
+    // Safety check: ensure no intervals from previous versions are running
+    // Note: We can't easily kill anonymous intervals, but since we've 
+    // overwritten the file and the browser reloads the script, 
+    // the old intervals will disappear unless the page hasn't been refreshed.
 })();

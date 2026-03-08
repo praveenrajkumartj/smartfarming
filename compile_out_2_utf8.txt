@@ -1,0 +1,47 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< com.smartfarminganddigitalagriplatform:smartfarminganddigitalagriplatform >--
+[INFO] Building smartfarminganddigitalagriplatform 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ smartfarminganddigitalagriplatform ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 217 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ smartfarminganddigitalagriplatform ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 91 source files with javac [debug release 21] to target\classes
+[INFO] /D:/spring/smartfarminganddigitalagriplatform/src/main/java/com/smartfarminganddigitalagriplatform/controller/VoiceController.java: D:\spring\smartfarminganddigitalagriplatform\src\main\java\com\smartfarminganddigitalagriplatform\controller\VoiceController.java uses unchecked or unsafe operations.
+[INFO] /D:/spring/smartfarminganddigitalagriplatform/src/main/java/com/smartfarminganddigitalagriplatform/controller/VoiceController.java: Recompile with -Xlint:unchecked for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/spring/smartfarminganddigitalagriplatform/src/main/java/com/smartfarminganddigitalagriplatform/controller/AdminController.java:[436,54] cannot find symbol
+  symbol:   method findById(java.lang.Long)
+  location: variable learningVideoService of type com.smartfarminganddigitalagriplatform.service.LearningVideoService
+[ERROR] /D:/spring/smartfarminganddigitalagriplatform/src/main/java/com/smartfarminganddigitalagriplatform/controller/AdminController.java:[464,29] cannot find symbol
+  symbol:   method updateVideo(com.smartfarminganddigitalagriplatform.entity.LearningVideo)
+  location: variable learningVideoService of type com.smartfarminganddigitalagriplatform.service.LearningVideoService
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.011 s
+[INFO] Finished at: 2026-03-08T14:00:24+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project smartfarminganddigitalagriplatform: Compilation failure: Compilation failure: 
+[ERROR] /D:/spring/smartfarminganddigitalagriplatform/src/main/java/com/smartfarminganddigitalagriplatform/controller/AdminController.java:[436,54] cannot find symbol
+[ERROR]   symbol:   method findById(java.lang.Long)
+[ERROR]   location: variable learningVideoService of type com.smartfarminganddigitalagriplatform.service.LearningVideoService
+[ERROR] /D:/spring/smartfarminganddigitalagriplatform/src/main/java/com/smartfarminganddigitalagriplatform/controller/AdminController.java:[464,29] cannot find symbol
+[ERROR]   symbol:   method updateVideo(com.smartfarminganddigitalagriplatform.entity.LearningVideo)
+[ERROR]   location: variable learningVideoService of type com.smartfarminganddigitalagriplatform.service.LearningVideoService
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

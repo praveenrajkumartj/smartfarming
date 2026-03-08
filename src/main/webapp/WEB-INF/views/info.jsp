@@ -6,9 +6,9 @@
         <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>${infoTitle} - Smart Farming Platform</title>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+            <title>${infoTitle} - AGROPLANTER</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
             <style>
                 .info-page-container {
                     max-width: 800px;
@@ -59,8 +59,9 @@
                     transform: translateY(-2px);
                 }
             </style>
-            <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ℹ️</text></svg>" />
-            </head>
+            <link rel="icon"
+                href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ℹ️</text></svg>" />
+        </head>
 
         <body style="background-color: var(--bg-dark); color: var(--text-light); font-family: 'Inter', sans-serif;">
             <div class="info-page-container">
@@ -77,9 +78,11 @@
                 <p class="info-content">${infoContent}</p>
                 <a href="${pageContext.request.contextPath}/" class="back-btn">← Back to Home</a>
             </div>
-        
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+            <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
 
         </html>
+
+

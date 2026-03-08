@@ -15,4 +15,13 @@ public interface MarketplaceListingRepository extends JpaRepository<MarketplaceL
     List<MarketplaceListing> findByCropNameContainingIgnoreCase(String cropName);
 
     List<MarketplaceListing> findByStatusOrderByCreatedAtDesc(MarketplaceListing.Status status);
+
+    List<MarketplaceListing> findByStatusAndCreatedAtBefore(MarketplaceListing.Status status,
+            java.time.LocalDateTime date);
+
+    List<MarketplaceListing> findByIsSurplusAndStatus(boolean isSurplus, MarketplaceListing.Status status);
+
+    List<MarketplaceListing> findByIsSuspiciousTrue();
+
+    long countByIsSuspiciousTrue();
 }

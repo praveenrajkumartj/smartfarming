@@ -27,6 +27,21 @@ public class DataInitializer implements CommandLineRunner {
         private LearningVideoRepository learningVideoRepository;
 
         @Autowired
+        private MentorRepository mentorRepository;
+
+        @Autowired
+        private EquipmentRepository equipmentRepository;
+
+        @Autowired
+        private TransactionRepository transactionRepository;
+
+        @Autowired
+        private MarketplaceListingRepository marketplaceListingRepository;
+
+        @Autowired
+        private EquipmentRentalRepository rentalRepository;
+
+        @Autowired
         private PasswordEncoder passwordEncoder;
 
         @Override
@@ -88,6 +103,33 @@ public class DataInitializer implements CommandLineRunner {
                 // Add learning videos if none exist
                 if (learningVideoRepository.count() == 0) {
                         addLearningVideos();
+                }
+
+                // Add mentors if none exist
+                if (mentorRepository.count() == 0) {
+                        addMentors();
+                }
+
+                // Add equipment if none exist (or force refresh for testing)
+                // rentalRepository.deleteAll();
+                // equipmentRepository.deleteAll();
+                // addEquipment();
+
+                // Add sample rentals for audit logs
+                // addSampleRentals();
+
+                // Add sample transactions for dashboard
+                if (transactionRepository.count() == 0) {
+                        addSampleTransactions();
+                }
+
+                // Remove specifically requested "groundnut" listing
+                java.util.List<MarketplaceListing> groundnutListings = marketplaceListingRepository
+                                .findByCropNameContainingIgnoreCase("groundnut");
+                for (MarketplaceListing gl : groundnutListings) {
+                        if (gl.getQuantity() == 2.1) {
+                                marketplaceListingRepository.delete(gl);
+                        }
                 }
 
                 // Fix old broken embedded videos in existing databases
@@ -301,5 +343,133 @@ public class DataInitializer implements CommandLineRunner {
                                 "Understanding how soil type and weather data help choose the best crops.",
                                 "crop",
                                 "https://www.youtube.com/embed/lRyXlvIJFWI"));
+        }
+
+        private void addMentors() {
+                // Create mentor users if they don't exist
+                String[][] mentorUsers = {
+                                { "Dr. Arun Varma", "arun@mentor.com", "mentor123", "Organic Specialist" },
+                                { "Savitri Devi", "savitri@mentor.com", "mentor123", "Irrigation Expert" },
+                                { "John Miller", "john@mentor.com", "mentor123", "Modern Machinery Analyst" }
+                };
+
+                for (String[] data : mentorUsers) {
+                        if (!userRepository.existsByEmail(data[1])) {
+                                User user = new User();
+                                user.setFullName(data[0]);
+                                user.setEmail(data[1]);
+                                user.setPassword(passwordEncoder.encode(data[2]));
+                                user.setPhone("910000000" + data[0].length());
+                                user.setRole(User.Role.ADMIN); // Mentors have elevated roles or specific roles
+                                userRepository.save(user);
+
+                                Mentor mentor = new Mentor(user, data[3], 500.0);
+                                mentor.setBio("Helping farmers grow better and smarter with over 15 years of field experience.");
+                                mentor.setRating(4.5 + (data[0].length() % 5) * 0.1);
+                                mentor.setTotalReviews(12 + data[0].length());
+                                mentorRepository.save(mentor);
+                        }
+                }
+        }
+
+        private void addEquipment() {
+                User farmer = userRepository.findByEmail("farmer@smartfarm.com").orElse(null);
+                User admin = userRepository.findByEmail("admin@smartfarm.com").orElse(null);
+                User buyer = userRepository.findByEmail("buyer@smartfarm.com").orElse(null);
+
+                if (farmer == null || admin == null || buyer == null)
+                        return;
+
+                // Equipment owned by Farmer (Visible to Others)
+                String[][] farmerEquipment = {
+                                { "Mahindra Yuvo 575 DI", "Robust tractor for all farming needs.", "500.0",
+                                                "https://images.unsplash.com/photo-1594494424759-6446e557199a?auto=format&fit=crop&q=80&w=400",
+                                                "TRACTOR" },
+                                { "Power Rotavator 7HP", "High-performance soil preparation tool.", "200.0",
+                                                "https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?auto=format&fit=crop&q=80&w=400",
+                                                "ROTAVATOR" }
+                };
+
+                // Equipment owned by Admin (Visible to Farmer)
+                String[][] adminEquipment = {
+                                { "John Deere Combine Harvester", "Efficient harvesting for large fields.", "1500.0",
+                                                "https://images.unsplash.com/photo-1592915264629-65fe00a6e309?auto=format&fit=crop&q=80&w=400",
+                                                "HARVESTER" },
+                                { "DJI Agras T30 Drone", "Precision spraying and mapping drone.", "2500.0",
+                                                "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=400",
+                                                "DRONE" }
+                };
+
+                // Equipment owned by Buyer/Other (Visible to Farmer)
+                String[][] buyerEquipment = {
+                                { "New Holland 3630", "Turbo super tractor for heavy load.", "600.0",
+                                                "https://images.unsplash.com/photo-1594494424759-6446e557199a?auto=format&fit=crop&q=80&w=400",
+                                                "TRACTOR" },
+                                { "Kubota Rice Transplanter", "Fast and efficient rice transplanting.", "800.0",
+                                                "https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?auto=format&fit=crop&q=80&w=400",
+                                                "TRANSPLANTER" }
+                };
+
+                saveEquipmentSet(farmer, farmerEquipment);
+                saveEquipmentSet(admin, adminEquipment);
+                saveEquipmentSet(buyer, buyerEquipment);
+        }
+
+        private void saveEquipmentSet(User owner, String[][] data) {
+                for (String[] eqData : data) {
+                        Equipment eq = new Equipment(owner, eqData[0], eqData[4], Double.parseDouble(eqData[2]) / 8,
+                                        Double.parseDouble(eqData[2]));
+                        eq.setDescription(eqData[1]);
+                        eq.setImagePath(eqData[3]);
+                        eq.setState(owner.getState());
+                        eq.setDistrict(owner.getDistrict());
+                        eq.setLocation(owner.getDistrict());
+                        eq.setApproved(true);
+                        equipmentRepository.save(eq);
+                }
+        }
+
+        private void addSampleTransactions() {
+                User farmer = userRepository.findByEmail("farmer@smartfarm.com").orElse(null);
+                User buyer = userRepository.findByEmail("buyer@smartfarm.com").orElse(null);
+                if (farmer == null || buyer == null)
+                        return;
+
+                double[] amounts = { 25000.0, 15000.0, 42000.0, 18000.0, 31000.0, 27000.0 };
+                for (int i = 0; i < amounts.length; i++) {
+                        Transaction t = new Transaction(null, farmer, buyer, amounts[i], amounts[i] * 0.05, 1.0);
+                        t.setTimestamp(java.time.LocalDateTime.now().minusDays(i * 5));
+                        transactionRepository.save(t);
+                }
+        }
+
+        private void addSampleRentals() {
+                User farmer = userRepository.findByEmail("farmer@smartfarm.com").orElse(null);
+                User admin = userRepository.findByEmail("admin@smartfarm.com").orElse(null);
+                User buyer = userRepository.findByEmail("buyer@smartfarm.com").orElse(null);
+
+                if (farmer == null || admin == null || buyer == null)
+                        return;
+
+                Equipment harvester = equipmentRepository.findAll().stream()
+                                .filter(e -> e.getName().contains("Harvester")).findFirst().orElse(null);
+                Equipment tractor = equipmentRepository.findAll().stream()
+                                .filter(e -> e.getName().contains("Yuvo")).findFirst().orElse(null);
+
+                if (harvester != null) {
+                        EquipmentRental r1 = new EquipmentRental(harvester, farmer,
+                                        java.time.LocalDateTime.now().minusDays(5),
+                                        java.time.LocalDateTime.now().minusDays(2), 4500.0);
+                        r1.setStatus(EquipmentRental.Status.COMPLETED);
+                        rentalRepository.save(r1);
+                }
+
+                if (tractor != null) {
+                        EquipmentRental r2 = new EquipmentRental(tractor, buyer,
+                                        java.time.LocalDateTime.now().plusDays(1),
+                                        java.time.LocalDateTime.now().plusDays(3), 1200.0);
+                        r2.setStatus(EquipmentRental.Status.APPROVED);
+                        rentalRepository.save(r2);
+                }
         }
 }

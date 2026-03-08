@@ -42,6 +42,18 @@ public class MarketplaceListing {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @OneToOne(mappedBy = "listing", cascade = CascadeType.ALL)
+    private TraceabilityRecord traceabilityRecord;
+
+    @Column(name = "is_surplus")
+    private boolean isSurplus = false;
+
+    @Column(name = "clearance_price")
+    private Double clearancePrice;
+
+    @Column(name = "is_suspicious", columnDefinition = "boolean default false")
+    private Boolean isSuspicious = false;
+
     public enum Status {
         AVAILABLE, SOLD, PENDING
     }
@@ -138,5 +150,43 @@ public class MarketplaceListing {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public TraceabilityRecord getTraceabilityRecord() {
+        return traceabilityRecord;
+    }
+
+    public void setTraceabilityRecord(TraceabilityRecord traceabilityRecord) {
+        this.traceabilityRecord = traceabilityRecord;
+    }
+
+    public boolean isSurplus() {
+        return isSurplus;
+    }
+
+    public void setSurplus(boolean surplus) {
+        isSurplus = surplus;
+    }
+
+    public Double getClearancePrice() {
+        return clearancePrice;
+    }
+
+    public void setClearancePrice(Double clearancePrice) {
+        this.clearancePrice = clearancePrice;
+    }
+
+    public boolean isSuspicious() {
+        return Boolean.TRUE.equals(isSuspicious);
+    }
+
+    public Boolean getIsSuspicious() {
+        return isSuspicious;
+    }
+
+    public void setSuspicious(Boolean suspicious) {
+        if (suspicious == null)
+            suspicious = false;
+        isSuspicious = suspicious;
     }
 }

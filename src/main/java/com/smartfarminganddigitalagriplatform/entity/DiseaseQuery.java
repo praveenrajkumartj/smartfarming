@@ -50,14 +50,21 @@ public class DiseaseQuery {
     private String preventiveMeasures;
     // -------------------------------------
 
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.PENDING;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_id")
+    private ClinicExpert expert;
+
+    @Column(nullable = false)
+    private String status = "PENDING";
+
+    @Column(columnDefinition = "TEXT")
+    private String rejectionReason;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
     public enum Status {
-        PENDING, DIAGNOSED, RESOLVED
+        PENDING, PAYMENT_PENDING, ASSIGNED, REPORT_READY, DIAGNOSED, REJECTED, RESOLVED
     }
 
     @PrePersist
@@ -66,6 +73,14 @@ public class DiseaseQuery {
     }
 
     // Getters and Setters
+    public ClinicExpert getExpert() {
+        return expert;
+    }
+
+    public void setExpert(ClinicExpert expert) {
+        this.expert = expert;
+    }
+
     public Long getId() {
         return id;
     }
@@ -170,11 +185,11 @@ public class DiseaseQuery {
         this.preventiveMeasures = preventiveMeasures;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -184,5 +199,13 @@ public class DiseaseQuery {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
     }
 }

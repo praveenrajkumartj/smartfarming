@@ -2,292 +2,496 @@
     <%@ taglib prefix="c" uri="jakarta.tags.core" %>
         <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
             <!DOCTYPE html>
-            <html>
+            <html lang="en">
 
             <head>
                 <meta charset="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>👨‍🌾 Farmer Dashboard - Smart Farming Platform</title>
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-                    href="${pageContext.request.contextPath}/css/style.css?v=<%= System.currentTimeMillis() %>" />
-                <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+                <title>👨‍🌾 Farmer Command Center - AGROPLANTER</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/voice-assistant.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap"
+                    rel="stylesheet">
+                <link rel="icon"
+                    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍🌾</text></svg>" />
+                <script>
+                    window.AgroplanterUser = "${user.id}";
+                    window.AgroplanterUserFull = "${user.fullName}";
+                    window.AgroplanterRole = "${user.role}";
+                </script>
+                <style>
+                    .v3-stat-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                        gap: 30px;
+                        margin-bottom: 50px;
+                    }
+
+                    .v3-stat-node {
+                        background: rgba(15, 23, 42, 0.4);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 40px;
+                        padding: 40px;
+                        backdrop-filter: blur(30px);
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .v3-stat-node:hover {
+                        transform: translateY(-15px) scale(1.02);
+                        background: rgba(15, 23, 42, 0.6);
+                        border-color: rgba(16, 185, 129, 0.3);
+                        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+                    }
+
+                    .v3-stat-node::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -30px;
+                        right: -30px;
+                        width: 120px;
+                        height: 120px;
+                        background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+                        opacity: 0.1;
+                        filter: blur(30px);
+                    }
+
+                    .v3-ops-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                        gap: 25px;
+                        margin-bottom: 50px;
+                    }
+
+                    .v3-op-node {
+                        background: rgba(15, 23, 42, 0.4);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 30px;
+                        padding: 30px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 20px;
+                        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        text-decoration: none;
+                        backdrop-filter: blur(20px);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .v3-op-node:hover {
+                        background: rgba(16, 185, 129, 0.05);
+                        border-color: rgba(16, 185, 129, 0.3);
+                        transform: translateY(-8px);
+                    }
+
+                    .v3-op-node .orb {
+                        width: 70px;
+                        height: 70px;
+                        background: rgba(255, 255, 255, 0.02);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 32px;
+                        transition: 0.3s;
+                    }
+
+                    .v3-op-node:hover .orb {
+                        background: rgba(16, 185, 129, 0.1);
+                        transform: scale(1.15) rotate(-5deg);
+                    }
+
+                    .v3-nexus-panel {
+                        background: rgba(15, 23, 42, 0.4);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 40px;
+                        padding: 50px;
+                        backdrop-filter: blur(30px);
+                        height: 100%;
+                    }
+
+                    .v3-data-table {
+                        width: 100%;
+                        border-collapse: separate;
+                        border-spacing: 0 15px;
+                    }
+
+                    .v3-data-table th {
+                        color: #475569;
+                        font-family: 'Outfit';
+                        font-size: 11px;
+                        font-weight: 950;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        padding: 0 25px 15px;
+                    }
+
+                    .v3-data-table td {
+                        background: rgba(255, 255, 255, 0.015);
+                        padding: 25px;
+                        border-top: 1px solid rgba(255, 255, 255, 0.03);
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+                        font-size: 15px;
+                    }
+
+                    .v3-data-table tr td:first-child {
+                        border-left: 1px solid rgba(255, 255, 255, 0.03);
+                        border-radius: 20px 0 0 20px;
+                    }
+
+                    .v3-data-table tr td:last-child {
+                        border-right: 1px solid rgba(255, 255, 255, 0.03);
+                        border-radius: 0 20px 20px 0;
+                    }
+
+                    .brand-premium {
+                        font-size: 28px;
+                        font-weight: 900;
+                        letter-spacing: -1.5px;
+                        background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .brand-icon-box {
+                        width: 38px;
+                        height: 38px;
+                        background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
+                        border: 1px solid rgba(16, 185, 129, 0.3);
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 20px;
+                        color: #10b981;
+                    }
+                </style>
             </head>
 
             <body>
+                <div class="dashboard-scene"></div>
                 <div class="dashboard-layout">
-                    <!-- Sidebar -->
-                    <aside class="sidebar" id="sidebar">
-                        <div class="sidebar-brand" style="cursor: pointer;" onclick="window.location.href='${pageContext.request.contextPath}/'">
-                            <div class="brand-icon">🌾</div>
-                            <div class="brand-text">
-                                <h3>Smart Farming</h3>
-                                <span>Farmer Portal</span>
+                    <aside class="sidebar sidebar-premium" id="sidebar">
+                        <div class="sidebar-brand px-4 py-4"
+                            style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;"
+                            onclick="window.location.href='${pageContext.request.contextPath}/'">
+                            <div class="brand-premium" style="font-size: 20px;">
+                                <div class="brand-icon-box">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="brand-text">
+                                    <h3 class="m-0"
+                                        style="font-size: 18px; font-weight: 900; background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                                        AGROPLANTER</h3>
+                                    <span
+                                        style="font-size: 9px; color: #94a3b8; font-weight: 800; letter-spacing: 1px; -webkit-text-fill-color: #94a3b8;">FARMER
+                                        NODE V3</span>
+                                </div>
                             </div>
                         </div>
+                        <nav class="sidebar-nav px-3 py-4">
+                            <div class="nav-section-title px-2 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                STRATEGIC CORE</div>
+                            <a href="${pageContext.request.contextPath}/farmer/dashboard"
+                                class="sidebar-nav-item active mb-2"><span class="nav-icon">📊</span> Command Center</a>
+                            <a href="${pageContext.request.contextPath}/farmer/crop-recommendation"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🌱</span> Strategic Intel</a>
+                            <a href="${pageContext.request.contextPath}/farmer/disease-detection"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🔬</span> Bio-Diagnostics</a>
+                            <a href="${pageContext.request.contextPath}/clinic/farmer/dashboard"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🌿</span> Plant Clinic</a>
 
-                        <nav class="sidebar-nav">
-                            <div class="nav-section-title">Main Menu</div>
-                            <a href="${pageContext.request.contextPath}/farmer/dashboard" class="active"><span
-                                    class="nav-icon">📊</span> Dashboard</a>
-                            <a href="${pageContext.request.contextPath}/farmer/crop-recommendation"><span
-                                    class="nav-icon">🌱</span> Crop Recommendation</a>
-                            <a href="${pageContext.request.contextPath}/farmer/market-prices"><span
-                                    class="nav-icon">📈</span> Market Prices</a>
-                            <a href="${pageContext.request.contextPath}/farmer/disease-detection"><span
-                                    class="nav-icon">🔬</span> Disease Detection</a>
-                            <a href="${pageContext.request.contextPath}/farmer/marketplace"><span
-                                    class="nav-icon">🛒</span> My Marketplace</a>
-                            <a href="${pageContext.request.contextPath}/farmer/schemes"><span
-                                    class="nav-icon">🏛️</span> Govt. Schemes</a>
-                            <a href="${pageContext.request.contextPath}/farmer/learning"><span
-                                    class="nav-icon">🎓</span> Learning Videos</a>
-                            <div class="nav-section-title">Account</div>
-                            <a href="${pageContext.request.contextPath}/farmer/profile"><span class="nav-icon">👤</span> My Profile</a>
-                            <a href="${pageContext.request.contextPath}/logout"><span class="nav-icon">🚪</span> Logout</a>
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">MARKET
+                                OPS</div>
+                            <a href="${pageContext.request.contextPath}/farmer/marketplace"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🛍️</span> Global Market</a>
+                            <a href="${pageContext.request.contextPath}/farmer/orders"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">📈</span> Trade Orders</a>
+                            <a href="${pageContext.request.contextPath}/farmer/product-reviews"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">⭐</span> Product Intel</a>
+                            <a href="${pageContext.request.contextPath}/farmer/equipment-rental"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🚜</span> Agri-Uber</a>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                INTELLIGENCE</div>
+                            <a href="${pageContext.request.contextPath}/farmer/weather"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">⛈️</span> Weather Intel</a>
+                            <a href="${pageContext.request.contextPath}/farmer/market-prices"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">📊</span> Live Mandi</a>
+                            <a href="${pageContext.request.contextPath}/farmer/schemes"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🏛️</span> Institutional</a>
+                            <a href="${pageContext.request.contextPath}/farmer/learning"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🎓</span> Agri-Academy</a>
+                            <a href="${pageContext.request.contextPath}/farmer/mentors"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">👨‍🏫</span> Expert Panel</a>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">
+                                PROFESSIONAL</div>
+                            <c:choose>
+                                <c:when test="${user.role eq 'MENTOR'}">
+                                    <a href="${pageContext.request.contextPath}/mentor/dashboard"
+                                        class="sidebar-nav-item mb-2" style="color: #fbbf24;"><span
+                                            class="nav-icon">🎓</span> Advisor Workspace</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/mentor/become"
+                                        class="sidebar-nav-item mb-2" style="color: #fbbf24;"><span
+                                            class="nav-icon">🌟</span> Become Advisor</a>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">FINANCE
+                                & SAFETY</div>
+                            <a href="${pageContext.request.contextPath}/farmer/finance"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">💰</span> Capital Hub</a>
+                            <a href="${pageContext.request.contextPath}/farmer/safety-hub"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon">🛡️</span> Safety HQ</a>
+
+                            <div class="nav-section-title px-2 mt-4 mb-2"
+                                style="color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 2px;">ACCOUNT
+                                OPS</div>
+                            <a href="${pageContext.request.contextPath}/farmer/profile"
+                                class="sidebar-nav-item mb-2"><span class="nav-icon" style="color: #8b5cf6;">👤</span>
+                                Profile Node</a>
+                            <a href="${pageContext.request.contextPath}/chat" class="sidebar-nav-item mb-2"><span
+                                    class="nav-icon">💬</span> Message Core</a>
+
+                            <div class="mt-auto px-2">
+                                <a href="${pageContext.request.contextPath}/logout"
+                                    class="sidebar-nav-item text-danger mt-4" style="border-radius: 12px;"><span
+                                        class="nav-icon">🚪</span> Terminate Session</a>
+                            </div>
                         </nav>
-
-                        <div class="sidebar-footer">
-                            <div style="font-size:11px;color:#6b7280;text-align:center;">
-                                Smart Farming Platform v1.0<br />
-                                <span style="color:#22c55e;">● System Online</span>
-                            </div>
-                        </div>
                     </aside>
 
-                    <!-- Main Content -->
-                    <div class="main-content">
-                        <!-- Top Nav -->
+                    <main class="main-content">
                         <header class="top-nav">
-                            <div class="top-nav-left">
-                                <div class="hamburger" onclick="toggleSidebar()" id="hamburger">
+                            <div class="top-nav-left d-flex align-items-center gap-3">
+                                <div class="hamburger" onclick="toggleSidebar()">
                                     <span></span><span></span><span></span>
                                 </div>
-                                <span class="page-title">👨‍🌾 Farmer Dashboard</span>
+                                <div class="page-title">
+                                    <h1 id="dynamicGreeting" class="m-0 fw-900 text-white"
+                                        style="font-size: 2.2rem; letter-spacing: -1.5px;">Command Center</h1>
+                                    <span class="v3-page-subtitle text-success uppercase"
+                                        style="letter-spacing: 1px; font-weight: 800;">
+                                        📡 ${not empty user.district ? user.district : 'GLOBAL'}, ${not empty user.state
+                                        ? user.state : 'NODE'} | OPERATIONAL HUB ACTIVE | NODE: SECURED
+                                    </span>
+                                </div>
                             </div>
                             <div class="top-nav-right">
-                                <div class="user-info">
-                                    <div class="user-avatar" <c:if test="${not empty user.profileImagePath}">
-                                        style="background: transparent; padding: 0;"</c:if>>
+                                <div class="user-info"
+                                    style="gap: 15px; cursor: pointer; display: flex; align-items: center;"
+                                    onclick="window.location.href='${pageContext.request.contextPath}/farmer/profile'">
+                                    <div class="user-details d-none d-md-flex flex-column text-end">
+                                        <span class="user-name text-white fw-800"
+                                            style="font-size: 14px; letter-spacing: -0.5px;">${user.fullName}</span>
+                                        <span class="user-role uppercase fw-950"
+                                            style="font-size: 9px; color: #10b981; letter-spacing: 1px;">NODAL
+                                            ${user.role}</span>
+                                    </div>
+                                    <div class="user-avatar"
+                                        style="width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);">
                                         <c:choose>
                                             <c:when test="${not empty user.profileImagePath}">
                                                 <img src="${pageContext.request.contextPath}${user.profileImagePath}"
-                                                    style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;"
-                                                    alt="Profile Picture" />
+                                                    alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
                                             </c:when>
                                             <c:otherwise>
-                                                ${fn:substring(user.fullName, 0, 1)}
+                                                <div
+                                                    style="width: 100%; height: 100%; background: linear-gradient(135deg, #10b981, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 950; font-size: 20px; color: white;">
+                                                    <i class="fas fa-user-circle"></i>
+                                                </div>
                                             </c:otherwise>
                                         </c:choose>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; justify-content: center;">
-                                        <div class="user-name">${user.fullName}</div>
-                                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
-                                            <div class="user-role" style="margin-bottom: 0;">👨‍🌾 Farmer</div>
-                                            <div
-                                                style="font-size: 10px; background: rgba(34,197,94,0.15); color: #22c55e; padding: 2px 6px; border-radius: 6px; display: inline-flex; align-items: center; font-weight: 700; border: 1px solid rgba(34,197,94,0.3); letter-spacing: 0.5px;">
-                                                ⭐ ${not empty user.subscriptionPlan ? user.subscriptionPlan : 'Basic
-                                                Plan'}
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </header>
 
-                        <div class="page-body">
-                            <!-- Welcome Banner -->
-                            <div
-                                style="background: linear-gradient(135deg, #0d2515, #1a3824); border: 1px solid rgba(22,163,74,0.2); border-radius: 20px; padding: 28px; margin-bottom: 24px; position: relative; overflow: hidden;">
-                                <div
-                                    style="position: absolute; right: -30px; top: -30px; font-size: 120px; opacity: 0.1;">
-                                    🌤️</div>
-                                <h2 style="font-size: 22px; font-weight: 800; color: #f0fdf4; margin-bottom: 6px;">
-                                    <span id="greetingText">Good Morning</span>, <span
-                                        style="color: #22c55e;">${user.fullName}</span>! <span
-                                        id="greetingIcon">👋</span>
-                                </h2>
-                                <p style="color: #86efac; font-size: 14px;">
-                                    📍 <span>${user.district}</span>, <span>${user.state}</span>
-                                    &nbsp; | &nbsp; 📅 Today: <span id="currentDate"></span>
-                                </p>
-                            </div>
-
-                            <!-- Stats -->
-                            <div class="stats-grid">
-                                <div class="stat-card">
-                                    <span class="stat-icon">🛒</span>
-                                    <div class="stat-value">${totalListings}</div>
-                                    <div class="stat-label">My Listings</div>
+                        <div class="page-body px-5 py-5">
+                            <div class="v3-stat-grid">
+                                <div class="v3-stat-node">
+                                    <span class="trust-label uppercase d-block mb-2"
+                                        style="font-size: 9px; letter-spacing: 2px; color: #475569;">ACTIVE YIELD</span>
+                                    <div class="display-5 fw-950 text-white mb-1" style="letter-spacing: -2px;">
+                                        ${totalListings}</div>
+                                    <div class="text-white-50 x-small fw-950 uppercase"
+                                        style="font-size: 8px; letter-spacing: 1.5px;">SECURED LISTINGS</div>
                                 </div>
-                                <div class="stat-card blue">
-                                    <span class="stat-icon">📈</span>
-                                    <div class="stat-value">${availableListings}</div>
-                                    <div class="stat-label">Market Available</div>
+                                <div class="v3-stat-node">
+                                    <span class="trust-label uppercase d-block mb-2"
+                                        style="font-size: 9px; letter-spacing: 2px; color: #475569;">MARKET
+                                        ACCESSIBILITY</span>
+                                    <div class="display-5 fw-950 text-white mb-1" style="letter-spacing: -2px;">
+                                        ${availableListings}</div>
+                                    <div class="text-white-50 x-small fw-950 uppercase"
+                                        style="font-size: 8px; letter-spacing: 1.5px;">GLOBAL MARKET NODES</div>
                                 </div>
-                                <div class="stat-card amber">
-                                    <span class="stat-icon">🩺</span>
-                                    <div class="stat-value">${diseaseQueries}</div>
-                                    <div class="stat-label">Disease Queries</div>
+                                <div class="v3-stat-node">
+                                    <span class="trust-label uppercase d-block mb-2"
+                                        style="font-size: 9px; letter-spacing: 2px; color: #475569;">BIO-TELEMETRY</span>
+                                    <div class="display-5 fw-950 text-white mb-1" style="letter-spacing: -2px;">
+                                        ${diseaseQueries}</div>
+                                    <div class="text-white-50 x-small fw-950 uppercase"
+                                        style="font-size: 8px; letter-spacing: 1.5px;">DIAGNOSTIC QUERIES</div>
                                 </div>
-                                <div class="stat-card purple">
-                                    <span class="stat-icon">🏛️</span>
-                                    <div class="stat-value">${fn:length(recentSchemes)}</div>
-                                    <div class="stat-label">Active Schemes</div>
+                                <div class="v3-stat-node">
+                                    <span class="trust-label uppercase d-block mb-2"
+                                        style="font-size: 9px; letter-spacing: 2px; color: #475569;">NODE TRUST
+                                        RATING</span>
+                                    <div class="display-5 fw-950 text-success mb-1" style="letter-spacing: -2px;">${not
+                                        empty user.trustScore ? user.trustScore : 0}%</div>
+                                    <div class="text-white-50 x-small fw-950 uppercase"
+                                        style="font-size: 8px; letter-spacing: 1.5px;">SYSTEM REPUTATION</div>
                                 </div>
-                            </div>
-
-                            <!-- Quick Actions -->
-                            <div class="card" style="margin-bottom: 24px;">
-                                <div class="card-header">
-                                    <span class="card-title">⚡ Quick Actions</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="quick-actions">
-                                        <a href="${pageContext.request.contextPath}/farmer/crop-recommendation}"
-                                            class="quick-action-btn">
-                                            <span class="quick-action-icon">🌱</span>
-                                            <span class="quick-action-label">Crop Advice</span>
-                                        </a>
-                                        <a href="${pageContext.request.contextPath}/farmer/market-prices"
-                                            class="quick-action-btn">
-                                            <span class="quick-action-icon">📈</span>
-                                            <span class="quick-action-label">Market Prices</span>
-                                        </a>
-                                        <a href="${pageContext.request.contextPath}/farmer/disease-detection"
-                                            class="quick-action-btn">
-                                            <span class="quick-action-icon">🔬</span>
-                                            <span class="quick-action-label">Check Disease</span>
-                                        </a>
-                                        <a href="${pageContext.request.contextPath}/farmer/marketplace"
-                                            class="quick-action-btn">
-                                            <span class="quick-action-icon">🛒</span>
-                                            <span class="quick-action-label">Sell Crops</span>
-                                        </a>
-                                        <a href="${pageContext.request.contextPath}/farmer/schemes"
-                                            class="quick-action-btn">
-                                            <span class="quick-action-icon">🏛️</span>
-                                            <span class="quick-action-label">Govt Schemes</span>
-                                        </a>
-                                        <a href="${pageContext.request.contextPath}/farmer/learning"
-                                            class="quick-action-btn">
-                                            <span class="quick-action-icon">🎓</span>
-                                            <span class="quick-action-label">Learn Farming</span>
-                                        </a>
-                                    </div>
+                                <div class="v3-stat-node" style="cursor: pointer;"
+                                    onclick="window.location.href='${pageContext.request.contextPath}/farmer/product-reviews'">
+                                    <span class="trust-label uppercase d-block mb-2"
+                                        style="font-size: 9px; letter-spacing: 2px; color: #475569;">PRODUCT
+                                        INTEL</span>
+                                    <div class="display-5 fw-950 text-white mb-1" style="letter-spacing: -2px;">
+                                        ${totalReviews}</div>
+                                    <div class="text-white-50 x-small fw-950 uppercase"
+                                        style="font-size: 8px; letter-spacing: 1.5px;">BUYER FEEDBACK LOGS</div>
                                 </div>
                             </div>
 
-                            <!-- Two Column: Market Prices + Schemes -->
-                            <div class="grid-2">
-                                <!-- Latest Market Prices -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="card-title">📈 Latest Market Prices</span>
-                                        <a href="${pageContext.request.contextPath}/farmer/market-prices"
-                                            class="btn btn-secondary btn-sm">View All</a>
-                                    </div>
-                                    <div class="card-body" style="padding: 0;">
-                                        <div class="table-container">
-                                            <table>
+                            <div class="v3-ops-grid">
+                                <a href="${pageContext.request.contextPath}/farmer/crop-recommendation"
+                                    class="v3-op-node">
+                                    <div class="orb">🌱</div>
+                                    <span class="trust-label uppercase"
+                                        style="font-size: 10px; letter-spacing: 1.5px;">STRATEGIC INTEL</span>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/farmer/market-prices" class="v3-op-node">
+                                    <div class="orb">📊</div>
+                                    <span class="trust-label uppercase"
+                                        style="font-size: 10px; letter-spacing: 1.5px;">LIVE MANDI</span>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/farmer/weather" class="v3-op-node">
+                                    <div class="orb">⛈️</div>
+                                    <span class="trust-label uppercase"
+                                        style="font-size: 10px; letter-spacing: 1.5px;">ATMOS DATA</span>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/farmer/disease-detection"
+                                    class="v3-op-node">
+                                    <div class="orb">🔬</div>
+                                    <span class="trust-label uppercase"
+                                        style="font-size: 10px; letter-spacing: 1.5px;">BIO SCAN</span>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/farmer/marketplace" class="v3-op-node">
+                                    <div class="orb">🛍️</div>
+                                    <span class="trust-label uppercase"
+                                        style="font-size: 10px; letter-spacing: 1.5px;">MARKET HUB</span>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/farmer/safety-hub" class="v3-op-node"
+                                    style="border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05);">
+                                    <div class="orb text-danger">🛡️</div>
+                                    <span class="trust-label uppercase text-danger"
+                                        style="font-size: 10px; letter-spacing: 1.5px;">SAFETY HQ</span>
+                                </a>
+                            </div>
+
+                            <div class="row g-5">
+                                <div class="col-xl-7">
+                                    <div class="v3-nexus-panel">
+                                        <div class="d-flex justify-content-between align-items-center mb-5">
+                                            <h4 class="fw-900 text-white m-0 fs-2"
+                                                style="letter-spacing: -1.5px; line-height: 1;">Regional Price Analytics
+                                            </h4>
+                                            <a href="${pageContext.request.contextPath}/farmer/market-prices"
+                                                class="btn btn-quantum px-5 py-3 small fw-950 uppercase"
+                                                style="font-size: 10px;">FULL TELEMETRY →</a>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="v3-data-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Crop</th>
-                                                        <th>Market</th>
-                                                        <th>₹/Quintal</th>
+                                                        <th>CROP ASSET</th>
+                                                        <th>MARKET HUB</th>
+                                                        <th class="text-end">VALUATION</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach items="${recentPrices}" var="price">
                                                         <tr>
-                                                            <td><strong>${price.cropName}</strong></td>
-                                                            <td style="color:#9ca3af;font-size:12px;">${price.market}
+                                                            <td><span class="fw-950 text-white">${price.cropName}</span>
                                                             </td>
-                                                            <td><span
-                                                                    style="color:#4ade80;font-weight:700;">₹${price.modalPrice}</span>
+                                                            <td class="text-white-50 x-small fw-950 uppercase"
+                                                                style="font-size: 10px;">${price.market}</td>
+                                                            <td class="text-end"><span
+                                                                    class="text-success fw-950 fs-5">₹${price.modalPrice}</span>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
-                                                    <c:if test="${empty recentPrices}">
-                                                        <tr>
-                                                            <td colspan="3"
-                                                                style="text-align:center;color:#6b7280;padding:20px;">No
-                                                                prices available</td>
-                                                        </tr>
-                                                    </c:if>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Active Schemes -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="card-title">🏛️ Government Schemes</span>
-                                        <a href="${pageContext.request.contextPath}/farmer/schemes"
-                                            class="btn btn-secondary btn-sm">View All</a>
-                                    </div>
-                                    <div class="card-body">
-                                        <c:if test="${empty recentSchemes}">
-                                            <div class="empty-state" style="padding:20px;">
-                                                <p>No schemes available</p>
-                                            </div>
-                                        </c:if>
-                                        <c:forEach items="${recentSchemes}" var="scheme">
-                                            <div
-                                                style="padding: 14px; background: var(--surface); border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border);">
-                                                <div
-                                                    style="font-size:14px;font-weight:700;color:#f0fdf4;margin-bottom:4px;">
-                                                    ${scheme.title}</div>
-                                                <div style="font-size:12px;color:#9ca3af;margin-bottom:8px;">
-                                                    <c:choose>
-                                                        <c:when test="${fn:length(scheme.description) > 100}">
-                                                            ${fn:substring(scheme.description, 0, 100)}...
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ${scheme.description}
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                <div class="col-xl-5">
+                                    <div class="v3-nexus-panel">
+                                        <div class="d-flex justify-content-between align-items-center mb-5">
+                                            <h4 class="fw-900 text-white m-0 fs-2"
+                                                style="letter-spacing: -1.5px; line-height: 1;">Institutional Feed</h4>
+                                            <a href="${pageContext.request.contextPath}/farmer/schemes"
+                                                class="text-white-50 small fw-950 uppercase"
+                                                style="font-size: 10px; letter-spacing: 1px;">ALL PROJECTS →</a>
+                                        </div>
+                                        <div class="alerts-list">
+                                            <c:forEach items="${recentSchemes}" var="scheme">
+                                                <div class="p-4 rounded-4 mb-3"
+                                                    style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;"
+                                                    onmouseover="this.style.background='rgba(255,255,255,0.04)'"
+                                                    onmouseout="this.style.background='rgba(255,255,255,0.02)'">
+                                                    <span
+                                                        class="badge bg-success bg-opacity-10 text-success x-small px-3 py-1 mb-3 rounded-pill fw-950 uppercase"
+                                                        style="font-size: 8px; letter-spacing: 1.5px; border: 1px solid rgba(16, 185, 129, 0.1);">${scheme.category}</span>
+                                                    <div class="fw-950 text-white mb-2 fs-5"
+                                                        style="letter-spacing: -0.5px;">${scheme.title}</div>
+                                                    <div class="text-white-50 x-small lh-lg fw-600"
+                                                        style="opacity: 0.6;">${fn:substring(scheme.description, 0,
+                                                        100)}...</div>
                                                 </div>
-                                                <span class="badge badge-success">${scheme.category}</span>
-                                            </div>
-                                        </c:forEach>
+                                            </c:forEach>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </main>
                 </div>
 
+                <div class="voice-assistant-container">
+                    <label class="voice-status-label" id="voiceStatus">IDLE</label>
+                    <button class="voice-trigger-btn" id="startVoice">🎙️</button>
+                </div>
+
+                <script src="${pageContext.request.contextPath}/js/voice-assistant.js"></script>
                 <script src="${pageContext.request.contextPath}/js/background-switcher.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
-                    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', {
-                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                    });
-
-                    // Dynamic Greeting Logic
                     const hour = new Date().getHours();
-                    let greeting = "Good Morning";
-                    let icon = "☀️";
-
-                    if (hour >= 12 && hour < 17) {
-                        greeting = "Good Afternoon";
-                        icon = "🌤️";
-                    } else if (hour >= 17) {
-                        greeting = "Good Evening";
-                        icon = "🌙";
-                    }
-
-                    document.getElementById('greetingText').textContent = greeting;
-                    document.getElementById('greetingIcon').textContent = icon;
-
+                    const greeting = hour < 12 ? "Good Morning" : (hour < 17 ? "Good Afternoon" : "Good Evening");
+                    document.getElementById('dynamicGreeting').innerText = greeting + ", ${user.fullName} 👋";
                     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
                 </script>
-            
-<script src="${pageContext.request.contextPath}/js/i18n.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
+            </body>
 
             </html>

@@ -1,0 +1,100 @@
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.profile_image_path,
+        u1_0.role,
+        u1_0.state,
+        u1_0.subscription_plan,
+        u1_0.trust_score,
+        u1_0.updated_at,
+        u1_0.upi_id 
+    from
+        users u1_0 
+    where
+        u1_0.role=?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    limit
+        ?
+Hibernate: 
+    select
+        count(*) 
+    from
+        crops c1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        market_prices mp1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        government_schemes gs1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        learning_videos lv1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        mentors m1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        transactions t1_0
+Hibernate: 
+    select
+        ml1_0.id,
+        ml1_0.clearance_price,
+        ml1_0.contact_number,
+        ml1_0.created_at,
+        ml1_0.crop_name,
+        ml1_0.description,
+        ml1_0.farmer_id,
+        ml1_0.is_surplus,
+        ml1_0.is_suspicious,
+        ml1_0.location,
+        ml1_0.price_per_unit,
+        ml1_0.quantity,
+        ml1_0.status,
+        ml1_0.unit 
+    from
+        marketplace_listings ml1_0 
+    where
+        upper(ml1_0.crop_name) like upper(?) escape '\\'
+Hibernate: 
+    select
+        lv1_0.id,
+        lv1_0.category,
+        lv1_0.description,
+        lv1_0.title,
+        lv1_0.video_url 
+    from
+        learning_videos lv1_0
