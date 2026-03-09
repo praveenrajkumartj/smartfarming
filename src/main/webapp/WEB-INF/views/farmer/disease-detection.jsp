@@ -346,6 +346,69 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row g-5 mt-4">
+                                <div class="col-12">
+                                    <div class="diagnostic-nexus-panel">
+                                        <h4 class="fw-900 text-white mb-5 display-6" style="letter-spacing: -1.5px;">
+                                            Diagnostic History Log</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-dark table-hover align-middle"
+                                                style="--bs-table-bg: transparent; --bs-table-border-color: rgba(255,255,255,0.05);">
+                                                <thead>
+                                                    <tr class="text-white-50 fw-950 uppercase" style="font-size: 10px;">
+                                                        <th class="border-0">CASE ID</th>
+                                                        <th class="border-0">CROP ASSET</th>
+                                                        <th class="border-0">PRELIMINARY AI DIAGNOSIS</th>
+                                                        <th class="border-0">STATUS</th>
+                                                        <th class="border-0">AI CONF</th>
+                                                        <th class="border-0 text-end">PROTOCOL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${myQueries}" var="q">
+                                                        <tr style="border-top: 1px solid rgba(255,255,255,0.03);">
+                                                            <td><span class="text-muted fw-800">#DIAG-${q.id}</span>
+                                                            </td>
+                                                            <td><span
+                                                                    class="text-white fw-900 uppercase">${q.cropName}</span>
+                                                            </td>
+                                                            <td class="text-white-50 small fw-600">${q.diseaseName}</td>
+                                                            <td>
+                                                                <span
+                                                                    class="badge ${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'bg-success' : (q.status == 'REJECTED' ? 'bg-danger' : 'bg-warning')} bg-opacity-10 text-${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'success' : (q.status == 'REJECTED' ? 'danger' : 'warning')} fw-950 px-3 py-1 rounded-pill uppercase"
+                                                                    style="font-size: 8px; letter-spacing: 1px;">${q.status}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="text-info fw-950 small">
+                                                                    <c:choose>
+                                                                        <c:when test="${q.status == 'PENDING'}">WAIT
+                                                                        </c:when>
+                                                                        <c:otherwise>${q.confidenceScore}%</c:otherwise>
+                                                                    </c:choose>
+                                                                </span>
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <a href="${pageContext.request.contextPath}/farmer/disease-detection/result/${q.id}"
+                                                                    class="btn btn-quantum px-4 py-2 small fw-950 uppercase"
+                                                                    style="font-size: 8px;">VIEW RESULT</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    <c:if test="${empty myQueries}">
+                                                        <tr>
+                                                            <td colspan="6" class="text-center py-5">
+                                                                <span class="text-white-50 fw-900 uppercase small"
+                                                                    style="letter-spacing: 2px; opacity: 0.3;">NO
+                                                                    BIOLOGICAL TELEMETRY FOUND</span>
+                                                            </td>
+                                                        </tr>
+                                                    </c:if>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </main>
                 </div>

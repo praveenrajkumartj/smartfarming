@@ -81,6 +81,7 @@ public class FarmerController {
                 marketplaceService.getListingsByFarmer(java.util.Objects.requireNonNull(user)).size());
         model.addAttribute("availableListings", marketplaceService.getAvailableListings().size());
         model.addAttribute("diseaseQueries", diseaseQueryService.getQueriesByUser(user).size());
+        model.addAttribute("recentQueries", diseaseQueryService.getQueriesByUser(user).stream().limit(5).toList());
         model.addAttribute("recentPrices", marketPriceService.getAllPrices().stream().limit(5).toList());
         model.addAttribute("recentSchemes", schemeService.getActiveSchemes().stream().limit(3).toList());
 

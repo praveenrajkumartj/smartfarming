@@ -473,8 +473,78 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row g-5 mt-4">
+                                    <div class="col-12">
+                                        <div class="v3-nexus-panel">
+                                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                                <h4 class="fw-900 text-white m-0 fs-2"
+                                                    style="letter-spacing: -1.5px; line-height: 1;">Recent Biological
+                                                    Diagnostics</h4>
+                                                <a href="${pageContext.request.contextPath}/farmer/disease-detection"
+                                                    class="btn btn-quantum px-5 py-3 small fw-950 uppercase"
+                                                    style="font-size: 10px;">BIO-LAB ACCESS →</a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="v3-data-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>CASE ID</th>
+                                                            <th>CROP ASSET</th>
+                                                            <th>DIAGNOSTIC STATUS</th>
+                                                            <th>AI CONFIDENCE</th>
+                                                            <th class="text-end">ACTIONS</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${recentQueries}" var="q">
+                                                            <tr>
+                                                                <td><span class="text-white-50 fw-950"
+                                                                        style="font-size: 12px;">#DIAG-${q.id}</span>
+                                                                </td>
+                                                                <td><span
+                                                                        class="fw-950 text-white uppercase">${q.cropName}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge ${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'bg-success' : 'bg-warning'} bg-opacity-10 text-${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'success' : 'warning'} fw-950 px-3 py-1 rounded-pill uppercase"
+                                                                        style="font-size: 9px; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.05);">
+                                                                        ${q.status}
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex align-items-center gap-2">
+                                                                        <div class="progress flex-grow-1"
+                                                                            style="height: 4px; background: rgba(255,255,255,0.05); width: 80px;">
+                                                                            <div class="progress-bar bg-success"
+                                                                                style="width: ${q.confidenceScore}%">
+                                                                            </div>
+                                                                        </div>
+                                                                        <span
+                                                                            class="text-success fw-950 small">${q.confidenceScore}%</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-end">
+                                                                    <a href="${pageContext.request.contextPath}/farmer/disease-detection/result/${q.id}"
+                                                                        class="btn btn-sm btn-quantum px-4 py-2 fw-950 uppercase"
+                                                                        style="font-size: 9px;">VIEW REPORT</a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        <c:if test="${empty recentQueries}">
+                                                            <tr>
+                                                                <td colspan="5"
+                                                                    class="text-center py-5 text-white-50 fw-800 uppercase"
+                                                                    style="letter-spacing: 2px; opacity: 0.5;">No
+                                                                    diagnostic logs detected in current cycle</td>
+                                                            </tr>
+                                                        </c:if>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                     </main>
                 </div>
 

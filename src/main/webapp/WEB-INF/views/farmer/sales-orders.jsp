@@ -408,9 +408,9 @@
                                                                             style="font-size: 10px;"
                                                                             href="${pageContext.request.contextPath}/chat?with=${s.buyer.id}">INITIATE
                                                                             COMMS</a></li>
-                                                                    <li><a class="dropdown-item py-2 px-3 fw-800 uppercase x-small"
+                                                                    <li><a class="dropdown-item py-2 px-3 fw-800 uppercase x-small location-data-btn"
                                                                             style="font-size: 10px;" href="#"
-                                                                            onclick="showToast('LOGISTICS DATA', 'DESTINATION NODE: ${fn:escapeXml(s.shippingAddress)}')">LOCATION
+                                                                            data-address="${fn:escapeXml(s.shippingAddress)}">LOCATION
                                                                             DATA</a></li>
                                                                     <li>
                                                                         <hr class="dropdown-divider opacity-10">
@@ -500,7 +500,7 @@
                             const iconEl = document.getElementById('toastIcon');
 
                             titleEl.innerText = title;
-                            msgEl.innerText = message;
+                            msgEl.innerHTML = message;
 
                             if (isError) {
                                 toast.style.borderColor = '#ef4444';
@@ -524,6 +524,20 @@
                                 toast.style.pointerEvents = 'none';
                             }, 4000);
                         }
+
+                        document.querySelectorAll('.location-data-btn').forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const address = btn.getAttribute('data-address');
+                                if (!address || address.trim() === "" || address === "null") {
+                                    showToast('LOGISTICS ERROR', 'NO DESTINATION TELEMETRY DETECTED', true);
+                                    return;
+                                }
+                                const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+                                const html = `DESTINATION NODE: <br><span class="text-white fw-900" style="font-size: 11px;">\${address}</span><br><a href="\${mapUrl}" target="_blank" class="btn btn-sm btn-quantum mt-3 py-2 px-3 fw-950 uppercase" style="font-size: 8px;">🛰️ OPEN IN NAVIGATOR →</a>`;
+                                showToast('LOGISTICS DATA', html, false);
+                            });
+                        });
                     </script>
                 </body>
 
