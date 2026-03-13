@@ -63,6 +63,9 @@ public class DiseaseQuery {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @Column
+    private LocalDateTime updatedAt;
+
     public enum Status {
         PENDING, PAYMENT_PENDING, ASSIGNED, REPORT_READY, DIAGNOSED, REJECTED, RESOLVED
     }
@@ -70,9 +73,23 @@ public class DiseaseQuery {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public ClinicExpert getExpert() {
         return expert;
     }

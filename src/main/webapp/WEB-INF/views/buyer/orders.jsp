@@ -17,6 +17,8 @@
                         rel="stylesheet">
                     <link rel="icon"
                         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>" />
+                    <meta name="_csrf" content="${_csrf.token}" />
+                    <meta name="_csrf_header" content="${_csrf.headerName}" />
                     <script>
                         window.AgroplanterUser = "${user.id}";
                         window.AgroplanterUserFull = "${user.fullName}";
@@ -291,7 +293,7 @@
                                                                                 DATA</a></li>
                                                                     </c:if>
                                                                     <c:if
-                                                                        test="${o.orderStatus == 'DELIVERED' and not empty o.listing}">
+                                                                        test="${o.orderStatus == 'DELIVERED' and not empty o.listing and not reviewedOrderIds.contains(o.id)}">
                                                                         <li>
                                                                             <button
                                                                                 class="dropdown-item text-warning py-2 fw-800"
@@ -355,7 +357,7 @@
                                         data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body p-4 bg-dark">
-                                    <input type="hidden" id="reviewProductId">
+                                    <input type="hidden" id="reviewOrderId">
                                     <div class="text-center mb-4">
                                         <div class="star-rating-input fs-1 text-warning mb-3" style="cursor: pointer;">
                                             <span onclick="setRating(1)">☆</span>
@@ -425,7 +427,7 @@
                         }
 
                         function openReviewModal(orderId, productId, productName) {
-                            document.getElementById('reviewProductId').value = productId;
+                            document.getElementById('reviewOrderId').value = orderId;
                             document.getElementById('reviewTitle').innerText = "⭐ RATE: " + productName.toUpperCase();
                             setRating(0);
                             document.getElementById('reviewComment').value = "";
@@ -447,17 +449,23 @@
                                 showToast("DATA REQUIRED", "Please select a rating for the product.", true);
                                 return;
                             }
-                            const productId = document.getElementById('reviewProductId').value;
+                            const orderId = document.getElementById('reviewOrderId').value;
                             const comment = document.getElementById('reviewComment').value;
-
-                            if (!productId || productId === "" || productId === "null") {
-                                showToast("SYSTEM ERROR", "Critical ID mismatch: Product context lost.", true);
+                            if (!orderId || orderId === "" || orderId === "null") {
+                                showToast("SYSTEM ERROR", "Order context lost during transmission.", true);
                                 return;
                             }
+                            const csrfTokenMsg = document.querySelector('meta[name="_csrf"]');
+                            const csrfHeaderMsg = document.querySelector('meta[name="_csrf_header"]');
 
-                            fetch('${pageContext.request.contextPath}/api/reviews/product/' + productId, {
+                            const headers = { 'Content-Type': 'application/json' };
+                            if (csrfTokenMsg && csrfHeaderMsg && csrfHeaderMsg.getAttribute('content')) {
+                                headers[csrfHeaderMsg.getAttribute('content')] = csrfTokenMsg.getAttribute('content');
+                            }
+
+                            fetch('${pageContext.request.contextPath}/api/reviews/order/' + orderId, {
                                 method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
+                                headers: headers,
                                 body: JSON.stringify({ rating: currentRating, comment: comment })
                             })
                                 .then(response => {

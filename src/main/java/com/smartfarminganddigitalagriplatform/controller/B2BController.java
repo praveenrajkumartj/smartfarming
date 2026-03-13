@@ -49,12 +49,19 @@ public class B2BController {
         public String purchaseSurplus(@PathVariable Long listingId,
                         @RequestParam String shippingAddress,
                         @RequestParam String paymentMethod,
+                        @RequestParam(required = false) String gateway,
+                        @RequestParam(required = false) String cardNumber,
+                        @RequestParam(required = false) String cardExpiry,
+                        @RequestParam(required = false) String cardCvv,
                         Principal principal, Model model) {
+                System.out.println("Processing B2B acquisition for listing: " + listingId);
                 Optional<MarketplaceListing> listingOpt = listingRepository.findById(listingId);
                 User buyer = userService.findByEmail(principal.getName()).orElse(null);
 
                 if (listingOpt.isPresent() && buyer != null) {
                         MarketplaceListing listing = listingOpt.get();
+                        System.out.println("Listing status: " + listing.getStatus() + ", isSurplus: "
+                                        + listing.isSurplus());
                         if (listing.isSurplus() && listing.getStatus() == MarketplaceListing.Status.AVAILABLE) {
                                 // Determine transaction total amount from clearance price and quantity
                                 Double totalCost = listing.getClearancePrice() * listing.getQuantity();
@@ -67,7 +74,14 @@ public class B2BController {
                                                 totalCost, commission,
                                                 listing.getQuantity());
                                 transaction.setShippingAddress(shippingAddress);
-                                transaction.setPaymentMethod(paymentMethod);
+
+                                // Store the specific settlement channel
+                                String methodDetail = paymentMethod;
+                                if ("UPI".equals(paymentMethod) && gateway != null) {
+                                        methodDetail += " (" + gateway + ")";
+                                }
+                                transaction.setPaymentMethod(methodDetail);
+
                                 transaction.setStatus(Transaction.Status.SUCCESS);
                                 transactionRepository.save(transaction);
 
@@ -92,6 +106,7 @@ public class B2BController {
                                 return "redirect:/b2b/dashboard?success=1";
                         }
                 }
+                System.out.println("B2B acquisition failed for listing: " + listingId);
                 return "redirect:/b2b/dashboard?error=1";
         }
 }

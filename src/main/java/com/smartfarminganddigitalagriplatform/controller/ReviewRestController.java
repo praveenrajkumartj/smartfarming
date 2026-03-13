@@ -23,7 +23,7 @@ public class ReviewRestController {
     private UserRepository userRepository;
 
     @Autowired
-    private MarketplaceListingRepository marketplaceListingRepository;
+    private TransactionRepository transactionRepository;
 
     @Autowired
     private MentorRepository mentorRepository;
@@ -39,22 +39,22 @@ public class ReviewRestController {
 
     // --- Product Reviews ---
 
-    @PostMapping("/product/{productId}")
-    public ResponseEntity<?> addProductReview(@PathVariable Long productId,
+    @PostMapping("/order/{orderId}")
+    public ResponseEntity<?> addProductReview(@PathVariable Long orderId,
             @RequestBody Map<String, Object> payload,
             Authentication authentication) {
         User user = getAuthenticatedUser(authentication);
         if (user == null)
             return ResponseEntity.status(401).body("Unauthorized");
 
-        MarketplaceListing product = marketplaceListingRepository.findById(productId).orElse(null);
-        if (product == null)
-            return ResponseEntity.badRequest().body("Product not found");
+        Transaction transaction = transactionRepository.findById(orderId).orElse(null);
+        if (transaction == null)
+            return ResponseEntity.badRequest().body("Order not found");
 
         try {
             Integer rating = Integer.parseInt(payload.get("rating").toString());
             String comment = payload.get("comment").toString();
-            ProductReview review = reviewService.addProductReview(user, product, rating, comment);
+            ProductReview review = reviewService.addProductReview(user, transaction, rating, comment);
             return ResponseEntity.ok(review);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

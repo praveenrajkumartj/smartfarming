@@ -19,6 +19,10 @@ public class ProductReview {
     @JoinColumn(name = "product_id", nullable = false)
     private MarketplaceListing product;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
+
     @Column(nullable = false)
     private Integer rating; // 1-5
 
@@ -64,6 +68,14 @@ public class ProductReview {
 
     public void setProduct(MarketplaceListing product) {
         this.product = product;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 
     public Integer getRating() {

@@ -20,11 +20,11 @@ public class DiseaseQueryService {
     }
 
     public List<DiseaseQuery> getQueriesByUser(@org.springframework.lang.NonNull User user) {
-        return diseaseQueryRepository.findByUserOrderByCreatedAtDesc(user);
+        return diseaseQueryRepository.findByUserOrderByUpdatedAtDesc(user);
     }
 
     public List<DiseaseQuery> getQueriesByExpert(@org.springframework.lang.NonNull ClinicExpert expert) {
-        return diseaseQueryRepository.findByExpert(expert);
+        return diseaseQueryRepository.findByExpertOrderByUpdatedAtDesc(expert);
     }
 
     public List<DiseaseQuery> getPendingQueries() {

@@ -294,7 +294,19 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="top-nav-right">
+                            <div class="top-nav-right d-flex align-items-center gap-4">
+                                <div class="notification-trigger position-relative"
+                                    style="cursor: pointer; font-size: 20px; color: #94a3b8;"
+                                    onclick="window.location.href='${pageContext.request.contextPath}/farmer/notifications'">
+                                    <i class="fas fa-bell"></i>
+                                    <c:if test="${unreadNotifications > 0}">
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                            style="font-size: 8px; padding: 4px 6px;">
+                                            ${unreadNotifications}
+                                        </span>
+                                    </c:if>
+                                </div>
                                 <div class="user-info"
                                     style="gap: 15px; cursor: pointer; display: flex; align-items: center;"
                                     onclick="window.location.href='${pageContext.request.contextPath}/farmer/profile'">
@@ -505,10 +517,13 @@
                                                                         class="fw-950 text-white uppercase">${q.cropName}</span>
                                                                 </td>
                                                                 <td>
+                                                                    <c:set var="statusClass"
+                                                                        value="${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'success' : (q.status == 'REJECTED' ? 'danger' : 'warning')}" />
                                                                     <span
-                                                                        class="badge ${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'bg-success' : 'bg-warning'} bg-opacity-10 text-${q.status == 'REPORT_READY' || q.status == 'DIAGNOSED' ? 'success' : 'warning'} fw-950 px-3 py-1 rounded-pill uppercase"
+                                                                        class="badge bg-${statusClass} bg-opacity-10 text-${statusClass} fw-950 px-3 py-1 rounded-pill uppercase"
                                                                         style="font-size: 9px; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.05);">
-                                                                        ${q.status}
+                                                                        ${q.status == 'REPORT_READY' || q.status ==
+                                                                        'DIAGNOSED' ? 'READY' : q.status}
                                                                     </span>
                                                                 </td>
                                                                 <td>
@@ -516,11 +531,12 @@
                                                                         <div class="progress flex-grow-1"
                                                                             style="height: 4px; background: rgba(255,255,255,0.05); width: 80px;">
                                                                             <div class="progress-bar bg-success"
-                                                                                style="width: ${q.confidenceScore}%">
+                                                                                style="width: ${not empty q.confidenceScore ? q.confidenceScore : 0}%">
                                                                             </div>
                                                                         </div>
-                                                                        <span
-                                                                            class="text-success fw-950 small">${q.confidenceScore}%</span>
+                                                                        <span class="text-success fw-950 small">${not
+                                                                            empty q.confidenceScore ? q.confidenceScore
+                                                                            : 0}%</span>
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-end">
@@ -536,6 +552,65 @@
                                                                     class="text-center py-5 text-white-50 fw-800 uppercase"
                                                                     style="letter-spacing: 2px; opacity: 0.5;">No
                                                                     diagnostic logs detected in current cycle</td>
+                                                            </tr>
+                                                        </c:if>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="v3-nexus-panel mt-5">
+                                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                                <h4 class="fw-900 text-white m-0 fs-2"
+                                                    style="letter-spacing: -1.5px; line-height: 1;">Recent Plant Clinic
+                                                    Consultations</h4>
+                                                <a href="${pageContext.request.contextPath}/clinic/farmer/dashboard"
+                                                    class="btn btn-quantum px-5 py-3 small fw-950 uppercase"
+                                                    style="font-size: 10px;">CLINIC DESK ACCESS →</a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="v3-data-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>EXPERT HUB</th>
+                                                            <th>SESSION TIME</th>
+                                                            <th>STATUS</th>
+                                                            <th class="text-end">ACTIONS</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${recentConsultations}" var="c">
+                                                            <tr>
+                                                                <td><span class="fw-950 text-white">DR.
+                                                                        ${c.expert.user.fullName}</span></td>
+                                                                <td class="text-white-50 small fw-800">${c.sessionTime}
+                                                                </td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge ${c.status == 'COMPLETED' ? 'bg-success' : (c.status == 'APPROVED' ? 'bg-info' : (c.status == 'CANCELLED' ? 'bg-danger' : 'bg-warning'))} bg-opacity-10 text-${c.status == 'COMPLETED' ? 'success' : (c.status == 'APPROVED' ? 'info' : (c.status == 'CANCELLED' ? 'danger' : 'warning'))} fw-950 px-3 py-1 rounded-pill uppercase"
+                                                                        style="font-size: 9px; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.05);">${c.status}</span>
+                                                                </td>
+                                                                <td class="text-end">
+                                                                    <div class="d-flex justify-content-end gap-2">
+                                                                        <c:if test="${c.status == 'COMPLETED'}">
+                                                                            <a href="${pageContext.request.contextPath}/clinic/farmer/dashboard"
+                                                                                class="btn btn-sm btn-quantum px-4 py-2 fw-950 uppercase"
+                                                                                style="font-size: 9px; background: linear-gradient(135deg, #10b981, #059669);">VIEW
+                                                                                REPORT</a>
+                                                                        </c:if>
+                                                                        <a href="${pageContext.request.contextPath}/clinic/farmer/dashboard"
+                                                                            class="btn btn-sm btn-quantum px-4 py-2 fw-950 uppercase"
+                                                                            style="font-size: 9px;">VIEW CLINIC HUB</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        <c:if test="${empty recentConsultations}">
+                                                            <tr>
+                                                                <td colspan="4"
+                                                                    class="text-center py-5 text-white-50 fw-800 uppercase"
+                                                                    style="letter-spacing: 2px; opacity: 0.5;">No clinic
+                                                                    consultations on active file</td>
                                                             </tr>
                                                         </c:if>
                                                     </tbody>

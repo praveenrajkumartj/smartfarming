@@ -25,6 +25,8 @@ public class ClinicController {
     private DiseaseQueryService diseaseQueryService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private NotificationService notificationService;
 
     private User getCurrentUser(Authentication auth) {
         if (auth == null || !auth.isAuthenticated())
@@ -130,6 +132,18 @@ public class ClinicController {
     public String providePrescription(@ModelAttribute ClinicPrescription prescription,
             @RequestParam Long consultationId, RedirectAttributes ra) {
         clinicService.addPrescription(consultationId, prescription);
+
+        // Notify Farmer
+        ClinicConsultation c = clinicService.getConsultationById(consultationId);
+        if (c != null) {
+            notificationService.sendNotification(
+                    c.getFarmer(),
+                    "Clinic Report Available",
+                    "Dr. " + c.getExpert().getUser().getFullName()
+                            + " has updated your diagnostic report. View it in the Clinic Hub.",
+                    "CLINIC_REPORT");
+        }
+
         ra.addFlashAttribute("successMessage", "Prescription Saved!");
         return "redirect:/clinic/expert/dashboard";
     }
@@ -173,6 +187,14 @@ public class ClinicController {
 
         query.setStatus(DiseaseQuery.Status.REPORT_READY.name());
         diseaseQueryService.saveQuery(query);
+
+        // Notify Farmer
+        notificationService.sendNotification(
+                query.getUser(),
+                "Diagnostic Report Ready",
+                "The expert has finished analyzing your specimen for " + query.getCropName()
+                        + ". View your dashboard for results.",
+                "DISEASE_REPORT");
         redirectAttributes.addFlashAttribute("successMessage", "AI / Expert Analysis Updated Successfully!");
         return "redirect:/clinic/expert/disease-queries";
     }

@@ -24,6 +24,24 @@
                     color: #f8fafc;
                 }
 
+                /* Premium Scrollbar */
+                ::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                ::-webkit-scrollbar-track {
+                    background: #020617;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background: linear-gradient(to bottom, #10b981, #3b82f6);
+                    border-radius: 10px;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #10b981;
+                }
+
                 .auth-scene {
                     position: fixed;
                     inset: 0;
@@ -43,6 +61,13 @@
                     padding: 40px;
                     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
                     animation: cardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+
+                @media (max-width: 576px) {
+                    .auth-card-premium {
+                        padding: 25px 15px;
+                        border-radius: 30px;
+                    }
                 }
 
                 @keyframes cardEnter {
@@ -240,7 +265,10 @@
                         <div class="col-md-6">
                             <label class="auth-label">MOBILE TELEMETRY</label>
                             <input type="text" name="phone" class="form-control auth-input"
-                                placeholder="10-digit primary" required autocomplete="none" />
+                                placeholder="10-digit primary" required autocomplete="none"
+                                maxlength="10" pattern="[0-9]{10}" 
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
+                                title="Please enter a valid 10-digit mobile number" />
                         </div>
                         <div class="col-md-12">
                             <label class="auth-label">SECURE EMAIL ENDPOINT</label>

@@ -159,7 +159,10 @@
                         <div class="col-md-6">
                             <label class="v3-field-label">Mobile Telemetry</label>
                             <input type="text" name="phone" class="form-control v3-terminal-input"
-                                placeholder="10-Digit Secure Comms" required />
+                                placeholder="10-Digit Secure Comms" required 
+                                maxlength="10" pattern="[0-9]{10}"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
+                                title="Please enter a valid 10-digit mobile number" />
                         </div>
                     </div>
 

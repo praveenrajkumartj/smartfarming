@@ -58,6 +58,9 @@ public class FarmerController {
     private ClinicService clinicService;
 
     @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
     private ReviewService reviewService;
 
     @org.springframework.lang.NonNull
@@ -89,6 +92,9 @@ public class FarmerController {
         model.addAttribute("totalEarnings", transactionService.getTotalEarnings(user));
         model.addAttribute("recentTransactions", transactionService.getRecentTransactions(user));
         model.addAttribute("totalReviews", reviewService.getProductReviewsForFarmer(user).size());
+        model.addAttribute("recentConsultations",
+                clinicService.getConsultationsForFarmer(user.getId()).stream().limit(3).toList());
+        model.addAttribute("unreadNotifications", notificationService.getUnreadCount(user));
 
         return "farmer/dashboard";
     }
@@ -675,5 +681,13 @@ public class FarmerController {
         model.addAttribute("averageRating", avg);
 
         return "farmer/product-reviews";
+    }
+
+    @GetMapping("/notifications")
+    public String notifications(Authentication auth, Model model) {
+        User user = getCurrentUser(auth);
+        model.addAttribute("user", user);
+        model.addAttribute("notifications", notificationService.getAllNotifications(user));
+        return "farmer/notifications";
     }
 }

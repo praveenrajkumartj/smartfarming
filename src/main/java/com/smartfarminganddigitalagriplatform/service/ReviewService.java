@@ -22,9 +22,6 @@ public class ReviewService {
     private ExpertReviewRepository expertReviewRepository;
 
     @Autowired
-    private TransactionRepository transactionRepository;
-
-    @Autowired
     private ConsultationRepository consultationRepository;
 
     @Autowired
@@ -39,19 +36,29 @@ public class ReviewService {
     // --- Product Reviews ---
 
     @Transactional
-    public ProductReview addProductReview(User reviewer, MarketplaceListing product, Integer rating, String comment) {
-        if (productReviewRepository.existsByReviewerIdAndProductId(reviewer.getId(), product.getId())) {
-            throw new RuntimeException("You have already reviewed this product.");
+    public ProductReview addProductReview(User reviewer, Transaction transaction, Integer rating, String comment) {
+        if (!transaction.getBuyer().getId().equals(reviewer.getId())) {
+            throw new RuntimeException("Unauthorized: You did not purchase this order.");
         }
 
-        if (!transactionRepository.existsByBuyerIdAndListingIdAndStatus(reviewer.getId(), product.getId(),
-                Transaction.Status.SUCCESS)) {
-            throw new RuntimeException("Only users who purchased the product can review it.");
+        if (productReviewRepository.existsByTransactionId(transaction.getId())) {
+            throw new RuntimeException("You have already reviewed this specific order.");
+        }
+
+        MarketplaceListing product = transaction.getListing();
+        if (product == null) {
+            throw new RuntimeException("Product associated with this order no longer exists.");
+        }
+
+        if (transaction.getStatus() != Transaction.Status.SUCCESS ||
+                transaction.getOrderStatus() != Transaction.OrderStatus.DELIVERED) {
+            throw new RuntimeException("You can only review items after successful delivery.");
         }
 
         ProductReview review = new ProductReview();
         review.setReviewer(reviewer);
         review.setProduct(product);
+        review.setTransaction(transaction);
         review.setRating(rating);
         review.setComment(comment);
         return productReviewRepository.save(review);

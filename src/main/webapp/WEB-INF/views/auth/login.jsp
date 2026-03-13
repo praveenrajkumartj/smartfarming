@@ -17,12 +17,30 @@
             <style>
                 body {
                     background: #020617;
-                    height: 100vh;
+                    min-height: 100vh;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    overflow: hidden;
+                    padding: 40px 20px;
                     font-family: 'Outfit', sans-serif;
+                }
+
+                /* Premium Scrollbar */
+                ::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                ::-webkit-scrollbar-track {
+                    background: #020617;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background: linear-gradient(to bottom, #10b981, #3b82f6);
+                    border-radius: 10px;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #10b981;
                 }
 
                 .auth-scene {
@@ -54,6 +72,13 @@
                     padding: 50px;
                     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.05);
                     animation: cardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+
+                @media (max-width: 576px) {
+                    .auth-card-premium {
+                        padding: 30px 20px;
+                        border-radius: 30px;
+                    }
                 }
 
                 @keyframes cardEnter {

@@ -337,104 +337,16 @@
                                                         </td>
                                                         <td class="text-end">
                                                             <div class="d-flex gap-2 justify-content-end">
-                                                                <button class="btn btn-quantum-success"
+                                                                <button type="button" class="btn btn-quantum-success"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#approveModal-${req.id}">
                                                                     AUTHORIZE
                                                                 </button>
-                                                                <button class="btn btn-quantum-danger"
+                                                                <button type="button" class="btn btn-quantum-danger"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#rejectModal-${req.id}">
                                                                     REJECT
                                                                 </button>
-                                                            </div>
-
-                                                            <!-- Approve Modal -->
-                                                            <div class="modal fade" id="approveModal-${req.id}"
-                                                                tabindex="-1" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content v3-modal-glass">
-                                                                        <div class="modal-header border-0 p-5 pb-0">
-                                                                            <h5 class="modal-title fw-950 display-6 text-white"
-                                                                                style="letter-spacing: -2px;">Verify
-                                                                                Settlement</h5>
-                                                                            <button type="button"
-                                                                                class="btn-close btn-close-white"
-                                                                                data-bs-dismiss="modal"></button>
-                                                                        </div>
-                                                                        <div class="modal-body p-5">
-                                                                            <div
-                                                                                class="p-4 bg-success bg-opacity-10 rounded-4 border border-success border-opacity-20 mb-4 text-center">
-                                                                                <div
-                                                                                    class="display-5 fw-950 text-success mb-2">
-                                                                                    ₹${req.amount}</div>
-                                                                                <div class="text-success-50 small fw-800 uppercase"
-                                                                                    style="letter-spacing: 1px;">TARGET:
-                                                                                    ${req.transferReference}</div>
-                                                                            </div>
-                                                                            <p class="text-white-50 fw-600 mb-0 lh-lg">
-                                                                                By clicking confirm, you certify that
-                                                                                the physical bank transfer to
-                                                                                <strong>${req.farmer.fullName}</strong>
-                                                                                has been initiated and verify the
-                                                                                transaction record.
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="modal-footer border-0 p-5 pt-0">
-                                                                            <form
-                                                                                action="${pageContext.request.contextPath}/admin/payouts/approve/${req.id}"
-                                                                                method="post" class="w-100">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-quantum-success w-100 py-3 rounded-4 fs-6">CONFIRM
-                                                                                    SETTLEMENT</button>
-                                                                            </form>
-                                                                            <button type="button"
-                                                                                class="btn btn-link text-white-50 w-100 fw-900 mt-3 text-decoration-none x-small uppercase"
-                                                                                data-bs-dismiss="modal">ABORT
-                                                                                PROCEDURE</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Reject Modal -->
-                                                            <div class="modal fade" id="rejectModal-${req.id}"
-                                                                tabindex="-1" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content v3-modal-glass">
-                                                                        <div class="modal-header border-0 p-5 pb-0">
-                                                                            <h5 class="modal-title fw-950 display-6 text-white"
-                                                                                style="letter-spacing: -2px;">Reject
-                                                                                Request</h5>
-                                                                            <button type="button"
-                                                                                class="btn-close btn-close-white"
-                                                                                data-bs-dismiss="modal"></button>
-                                                                        </div>
-                                                                        <div class="modal-body p-5">
-                                                                            <p class="text-white-50 fw-600 mb-0 lh-lg">
-                                                                                Are you certain you want to reject this
-                                                                                withdrawal request of
-                                                                                <strong>₹${req.amount}</strong> for
-                                                                                farmer ${req.farmer.fullName}? Funds
-                                                                                will be returned to the farmer's
-                                                                                internal wallet.
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="modal-footer border-0 p-5 pt-0">
-                                                                            <form
-                                                                                action="${pageContext.request.contextPath}/admin/payouts/reject/${req.id}"
-                                                                                method="post" class="w-100">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-quantum-danger w-100 py-3 rounded-4 fs-6">YES,
-                                                                                    REJECT REQUEST</button>
-                                                                            </form>
-                                                                            <button type="button"
-                                                                                class="btn btn-link text-white-50 w-100 fw-900 mt-3 text-decoration-none x-small uppercase"
-                                                                                data-bs-dismiss="modal">CANCEL
-                                                                                ACTION</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -512,6 +424,84 @@
                             </div>
                         </main>
                     </div>
+
+                    <!-- Authorization Modals (Moved outside table for interaction stability) -->
+                    <c:forEach var="req" items="${pendingWithdrawals}">
+                        <!-- Approve Modal -->
+                        <div class="modal fade" id="approveModal-${req.id}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content v3-modal-glass">
+                                    <div class="modal-header border-0 p-5 pb-0">
+                                        <h5 class="modal-title fw-950 display-6 text-white"
+                                            style="letter-spacing: -2px;">
+                                            Verify Settlement</h5>
+                                        <button type="button" class="btn-close btn-close-white"
+                                            data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body p-5">
+                                        <div
+                                            class="p-4 bg-success bg-opacity-10 rounded-4 border border-success border-opacity-20 mb-4 text-center">
+                                            <div class="display-5 fw-950 text-success mb-2">₹${req.amount}</div>
+                                            <div class="text-success-50 small fw-800 uppercase"
+                                                style="letter-spacing: 1px;">TARGET: ${req.transferReference}</div>
+                                        </div>
+                                        <p class="text-white-50 fw-600 mb-0 lh-lg">
+                                            By clicking confirm, you certify that the physical bank transfer to
+                                            <strong>${req.farmer.fullName}</strong> has been initiated and verify the
+                                            transaction record.
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer border-0 p-5 pt-0">
+                                        <form
+                                            action="${pageContext.request.contextPath}/admin/payouts/approve/${req.id}"
+                                            method="post" class="w-100">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                            <button type="submit"
+                                                class="btn btn-quantum-success w-100 py-3 rounded-4 fs-6">CONFIRM
+                                                SETTLEMENT</button>
+                                        </form>
+                                        <button type="button"
+                                            class="btn btn-link text-white-50 w-100 fw-900 mt-3 text-decoration-none x-small uppercase"
+                                            data-bs-dismiss="modal">ABORT PROCEDURE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reject Modal -->
+                        <div class="modal fade" id="rejectModal-${req.id}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content v3-modal-glass">
+                                    <div class="modal-header border-0 p-5 pb-0">
+                                        <h5 class="modal-title fw-950 display-6 text-white"
+                                            style="letter-spacing: -2px;">
+                                            Reject Request</h5>
+                                        <button type="button" class="btn-close btn-close-white"
+                                            data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body p-5">
+                                        <p class="text-white-50 fw-600 mb-0 lh-lg">
+                                            Are you certain you want to reject this withdrawal request of
+                                            <strong>₹${req.amount}</strong> for farmer ${req.farmer.fullName}? Funds
+                                            will be returned to the farmer's internal wallet.
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer border-0 p-5 pt-0">
+                                        <form action="${pageContext.request.contextPath}/admin/payouts/reject/${req.id}"
+                                            method="post" class="w-100">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                            <button type="submit"
+                                                class="btn btn-quantum-danger w-100 py-3 rounded-4 fs-6">YES, REJECT
+                                                REQUEST</button>
+                                        </form>
+                                        <button type="button"
+                                            class="btn btn-link text-white-50 w-100 fw-900 mt-3 text-decoration-none x-small uppercase"
+                                            data-bs-dismiss="modal">CANCEL ACTION</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
 
                     <script src="${pageContext.request.contextPath}/js/voice-assistant.js"></script>
                     <script src="${pageContext.request.contextPath}/js/background-switcher.js"></script>

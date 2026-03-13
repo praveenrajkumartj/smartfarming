@@ -13,7 +13,9 @@ public interface DiseaseQueryRepository extends JpaRepository<DiseaseQuery, Long
 
     List<DiseaseQuery> findByStatus(String status);
 
-    List<DiseaseQuery> findByUserOrderByCreatedAtDesc(User user);
+    List<DiseaseQuery> findByUserOrderByUpdatedAtDesc(User user);
+
+    List<DiseaseQuery> findByExpertOrderByUpdatedAtDesc(ClinicExpert expert);
 
     List<DiseaseQuery> findByExpert(ClinicExpert expert);
 

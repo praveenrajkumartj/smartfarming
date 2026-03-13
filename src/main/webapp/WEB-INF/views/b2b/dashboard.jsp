@@ -62,6 +62,23 @@
                         box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
                     }
 
+                    .btn-quantum {
+                        background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+                        color: white !important;
+                        border: none !important;
+                        border-radius: 50px !important;
+                        padding: 12px 28px !important;
+                        font-weight: 800 !important;
+                        letter-spacing: 0.5px !important;
+                        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3) !important;
+                        transition: all 0.3s ease !important;
+                    }
+
+                    .btn-quantum:hover {
+                        transform: translateY(-2px) rotate(-1deg) !important;
+                        box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4) !important;
+                    }
+
                     .v3-clearance-badge {
                         background: linear-gradient(90deg, #ef4444, #f59e0b);
                         color: white;
@@ -247,6 +264,13 @@
                                 </div>
                             </c:if>
 
+                            <c:if test="${not empty param.error}">
+                                <div class="alert alert-danger border-0 bg-danger bg-opacity-10 text-danger rounded-4 mb-5 p-4 fw-800 uppercase x-small"
+                                    style="letter-spacing: 1px;">
+                                    ⚠️ SYSTEM WARNING: Procurement protocol failed. Please verify asset availability.
+                                </div>
+                            </c:if>
+
                             <div class="v3-b2b-hero">
                                 <div class="row align-items-center">
                                     <div class="col-md-9">
@@ -285,9 +309,11 @@
                                                     style="font-size: 8px; letter-spacing: 2px; color: #475569;">ORIGIN
                                                     NODE (FARMER)</label>
                                                 <div class="text-white fw-950 fs-6">👨‍🌾
-                                                    ${item.farmer.fullName.toUpperCase()}</div>
+                                                    ${not empty item.farmer.fullName ?
+                                                    item.farmer.fullName.toUpperCase() : 'UNKNOWN PRODUCER'}</div>
                                                 <div class="text-white-50 x-small fw-600 uppercase mt-1"
-                                                    style="letter-spacing: 1px;">${item.location.toUpperCase()}</div>
+                                                    style="letter-spacing: 1px;">${not empty item.location ?
+                                                    item.location.toUpperCase() : 'LOCATION UNDISCLOSED'}</div>
                                             </div>
 
                                             <div class="v3-data-grid">
@@ -328,199 +354,187 @@
                                                     <button type="button" class="v3-action-btn" data-bs-toggle="modal"
                                                         data-bs-target="#procurementModal${item.id}">ACQUIRE INVENTORY
                                                         →</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                                    <!-- Procurement Modal -->
-                                                    <div class="modal fade" id="procurementModal${item.id}"
-                                                        tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                            <div class="modal-content"
-                                                                style="background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 40px; overflow: hidden; color: white;">
-                                                                <form
-                                                                    action="${pageContext.request.contextPath}/b2b/purchase/${item.id}"
-                                                                    method="post">
-                                                                    <div class="modal-header border-0 p-5 pb-0">
-                                                                        <h3 class="fw-950 m-0"
-                                                                            style="letter-spacing: -2px;">⚡ Industrial
-                                                                            Acquisition</h3>
-                                                                        <button type="button"
-                                                                            class="btn-close btn-close-white"
-                                                                            data-bs-dismiss="modal"></button>
+                                    <!-- Moved Procurement Modal Outside of animated container v3-surplus-node -->
+                                    <div class="modal fade" id="procurementModal${item.id}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div
+                                            class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                            <form action="${pageContext.request.contextPath}/b2b/purchase/${item.id}"
+                                                method="post" class="modal-content"
+                                                style="background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 40px; overflow: hidden; color: white;">
+                                                <div class="modal-header border-0 p-5 pb-0">
+                                                    <h3 class="fw-950 m-0" style="letter-spacing: -2px;">⚡
+                                                        Industrial
+                                                        Acquisition</h3>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body p-5">
+                                                    <div class="v3-asset-preview p-4 rounded-4 mb-4"
+                                                        style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <span class="v3-identity-label">ASSET:
+                                                                    ${item.cropName}</span>
+                                                                <div class="fw-950 fs-5">
+                                                                    ${item.quantity} ${item.unit}
+                                                                </div>
+                                                            </div>
+                                                            <div class="v3-valuation-display">
+                                                                ₹${item.clearancePrice * item.quantity}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <c:if test="${not empty item.traceabilityRecord}">
+                                                        <div class="p-4 rounded-4 mb-4"
+                                                            style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
+                                                            <div
+                                                                class="d-flex justify-content-between align-items-center mb-3">
+                                                                <span class="v3-identity-label text-success mb-0">🛡️
+                                                                    PROVENANCE VERIFIED</span>
+                                                                <a href="${pageContext.request.contextPath}/traceability/${item.traceabilityRecord.traceabilityId}"
+                                                                    class="text-info fw-950 uppercase"
+                                                                    style="font-size: 9px; letter-spacing: 1px; text-decoration: none;">FULL
+                                                                    BATCH DATA →</a>
+                                                            </div>
+                                                            <div class="row g-2">
+                                                                <div class="col-4">
+                                                                    <div class="small fw-800 text-white-50 uppercase"
+                                                                        style="font-size: 8px;">
+                                                                        PLANTED</div>
+                                                                    <div class="text-white fw-950 small">
+                                                                        ${item.traceabilityRecord.plantingDate}
                                                                     </div>
-                                                                    <div class="modal-body p-5">
-                                                                        <div class="v3-asset-preview p-4 rounded-4 mb-4"
-                                                                            style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
-                                                                            <div
-                                                                                class="d-flex justify-content-between align-items-center">
-                                                                                <div>
-                                                                                    <span
-                                                                                        class="v3-identity-label">ASSET:
-                                                                                        ${item.cropName}</span>
-                                                                                    <div class="fw-950 fs-5">
-                                                                                        ${item.quantity} ${item.unit}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="v3-valuation-display">
-                                                                                    ₹${item.clearancePrice *
-                                                                                    item.quantity}</div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <c:if
-                                                                            test="${not empty item.traceabilityRecord}">
-                                                                            <div class="p-4 rounded-4 mb-4"
-                                                                                style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between align-items-center mb-3">
-                                                                                    <span
-                                                                                        class="v3-identity-label text-success mb-0">🛡️
-                                                                                        PROVENANCE VERIFIED</span>
-                                                                                    <a href="${pageContext.request.contextPath}/traceability/${item.traceabilityRecord.traceabilityId}"
-                                                                                        class="text-info fw-950 uppercase"
-                                                                                        style="font-size: 9px; letter-spacing: 1px; text-decoration: none;">FULL
-                                                                                        BATCH DATA →</a>
-                                                                                </div>
-                                                                                <div class="row g-2">
-                                                                                    <div class="col-4">
-                                                                                        <div class="small fw-800 text-white-50 uppercase"
-                                                                                            style="font-size: 8px;">
-                                                                                            PLANTED</div>
-                                                                                        <div
-                                                                                            class="text-white fw-950 small">
-                                                                                            ${item.traceabilityRecord.plantingDate}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="col-4 border-start border-white border-opacity-10 ps-3">
-                                                                                        <div class="small fw-800 text-white-50 uppercase"
-                                                                                            style="font-size: 8px;">
-                                                                                            HARVESTED</div>
-                                                                                        <div
-                                                                                            class="text-white fw-950 small">
-                                                                                            ${item.traceabilityRecord.harvestDate}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="col-4 border-start border-white border-opacity-10 ps-3">
-                                                                                        <div class="small fw-800 text-white-50 uppercase"
-                                                                                            style="font-size: 8px;">
-                                                                                            IRRIGATION</div>
-                                                                                        <div
-                                                                                            class="text-white fw-950 small text-truncate">
-                                                                                            ${item.traceabilityRecord.irrigationMethod}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </c:if>
-
-
-                                                                        <div class="mb-4">
-                                                                            <span class="v3-identity-label">LOGISTICS
-                                                                                DESTINATION</span>
-                                                                            <textarea name="shippingAddress"
-                                                                                class="form-control v3-terminal-input"
-                                                                                rows="3"
-                                                                                placeholder="Specify full industrial drop point..."
-                                                                                required></textarea>
-                                                                        </div>
-
-                                                                        <span class="v3-identity-label mb-3">SETTLEMENT
-                                                                            PROTOCOL</span>
-                                                                        <div class="d-flex gap-2 mb-4">
-                                                                            <input type="radio" class="btn-check"
-                                                                                name="paymentMethod" id="upi${item.id}"
-                                                                                value="UPI" checked
-                                                                                onchange="togglePaymentDetails('${item.id}', 'upi')">
-                                                                            <label
-                                                                                class="btn btn-quantum flex-fill py-3 settlement-btn"
-                                                                                for="upi${item.id}">📱 UPI</label>
-                                                                            <input type="radio" class="btn-check"
-                                                                                name="paymentMethod" id="card${item.id}"
-                                                                                value="CARD"
-                                                                                onchange="togglePaymentDetails('${item.id}', 'card')">
-                                                                            <label
-                                                                                class="btn btn-quantum flex-fill py-3 settlement-btn"
-                                                                                for="card${item.id}">💳 CARD</label>
-                                                                        </div>
-
-                                                                        <!-- UPI Sub-options -->
-                                                                        <div id="upi_details_${item.id}"
-                                                                            class="payment-details mb-4">
-                                                                            <span class="v3-identity-label mb-2">CHOOSE
-                                                                                GATEWAY</span>
-                                                                            <div class="d-flex gap-2">
-                                                                                <div class="flex-fill p-3 rounded-4 text-center gateway-node"
-                                                                                    style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
-                                                                                    onclick="selectGateway(this)">
-                                                                                    <img src="https://img.icons8.com/color/48/google-pay.png"
-                                                                                        style="width: 24px;"
-                                                                                        alt="GPay"><br><span
-                                                                                        class="x-small fw-800 mt-1 d-block opacity-50">GPAY</span>
-                                                                                </div>
-                                                                                <div class="flex-fill p-3 rounded-4 text-center gateway-node"
-                                                                                    style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
-                                                                                    onclick="selectGateway(this)">
-                                                                                    <img src="https://img.icons8.com/color/48/phone-pe.png"
-                                                                                        style="width: 24px;"
-                                                                                        alt="PhonePe"><br><span
-                                                                                        class="x-small fw-800 mt-1 d-block opacity-50">PHONEPE</span>
-                                                                                </div>
-                                                                                <div class="flex-fill p-3 rounded-4 text-center gateway-node"
-                                                                                    style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
-                                                                                    onclick="selectGateway(this)">
-                                                                                    <img src="https://img.icons8.com/color/48/paytm.png"
-                                                                                        style="width: 24px;"
-                                                                                        alt="Paytm"><br><span
-                                                                                        class="x-small fw-800 mt-1 d-block opacity-50">PAYTM</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Card Details Section -->
-                                                                        <div id="card_details_${item.id}"
-                                                                            class="payment-details mb-4 d-none">
-                                                                            <div class="mb-3">
-                                                                                <span class="v3-identity-label">CARD
-                                                                                    NUMBER</span>
-                                                                                <input type="text" name="cardNumber"
-                                                                                    class="form-control v3-terminal-input"
-                                                                                    placeholder="0000 0000 0000 0000">
-                                                                            </div>
-                                                                            <div class="row g-3">
-                                                                                <div class="col-7">
-                                                                                    <span
-                                                                                        class="v3-identity-label">EXPIRY</span>
-                                                                                    <input type="text" name="cardExpiry"
-                                                                                        class="form-control v3-terminal-input"
-                                                                                        placeholder="MM/YY">
-                                                                                </div>
-                                                                                <div class="col-5">
-                                                                                    <span
-                                                                                        class="v3-identity-label">CVV</span>
-                                                                                    <input type="password"
-                                                                                        name="cardCvv"
-                                                                                        class="form-control v3-terminal-input"
-                                                                                        placeholder="***">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="p-3 rounded-4 text-info x-small text-center fw-950 uppercase"
-                                                                            style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); letter-spacing: 2px;">
-                                                                            ESCROW PROTECTION ENABLED</div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-4 border-start border-white border-opacity-10 ps-3">
+                                                                    <div class="small fw-800 text-white-50 uppercase"
+                                                                        style="font-size: 8px;">
+                                                                        HARVESTED</div>
+                                                                    <div class="text-white fw-950 small">
+                                                                        ${item.traceabilityRecord.harvestDate}
                                                                     </div>
-                                                                    <div class="modal-footer border-0 p-5 pt-0">
-                                                                        <button type="submit"
-                                                                            class="btn btn-quantum w-100 py-3"
-                                                                            style="background: #3b82f6 !important;">CONFIRM
-                                                                            ACQUISITION →</button>
+                                                                </div>
+                                                                <div
+                                                                    class="col-4 border-start border-white border-opacity-10 ps-3">
+                                                                    <div class="small fw-800 text-white-50 uppercase"
+                                                                        style="font-size: 8px;">
+                                                                        IRRIGATION</div>
+                                                                    <div class="text-white fw-950 small text-truncate">
+                                                                        ${item.traceabilityRecord.irrigationMethod}
                                                                     </div>
-                                                                </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+
+
+                                                    <div class="mb-4">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                            <span class="v3-identity-label mb-0">LOGISTICS
+                                                                DESTINATION</span>
+                                                            <button type="button"
+                                                                class="btn btn-sm p-0 text-info fw-950 uppercase"
+                                                                style="font-size: 8px; letter-spacing: 1px;"
+                                                                onclick="autoFillAddress('${item.id}')">
+                                                                ✨ AUTO-FILL FROM PROFILE
+                                                            </button>
+                                                        </div>
+                                                        <textarea name="shippingAddress" id="shippingAddress_${item.id}"
+                                                            class="form-control v3-terminal-input" rows="3"
+                                                            placeholder="Specify full industrial drop point..."
+                                                            required></textarea>
+                                                    </div>
+
+                                                    <span class="v3-identity-label mb-3">SETTLEMENT
+                                                        PROTOCOL</span>
+                                                    <div class="d-flex gap-2 mb-4">
+                                                        <input type="radio" class="btn-check" name="paymentMethod"
+                                                            id="upi${item.id}" value="UPI" checked
+                                                            onchange="togglePaymentDetails('${item.id}', 'upi')">
+                                                        <label class="btn flex-fill py-3 settlement-btn"
+                                                            for="upi${item.id}">📱 UPI</label>
+                                                        <input type="radio" class="btn-check" name="paymentMethod"
+                                                            id="card${item.id}" value="CARD"
+                                                            onchange="togglePaymentDetails('${item.id}', 'card')">
+                                                        <label class="btn flex-fill py-3 settlement-btn"
+                                                            for="card${item.id}">💳 CARD</label>
+                                                    </div>
+
+                                                    <div id="upi_details_${item.id}" class="payment-details mb-4">
+
+                                                        <!-- UPI Sub-options -->
+                                                        <span class="v3-identity-label mb-3">CHOOSE
+                                                            GATEWAY</span>
+                                                        <input type="hidden" name="gateway"
+                                                            id="selected_gateway_${item.id}" value="GPAY">
+                                                        <div class="d-flex gap-2">
+                                                            <div class="flex-fill p-3 rounded-4 text-center gateway-node active-gateway"
+                                                                style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.4); cursor: pointer;"
+                                                                onclick="selectGateway(this, 'GPAY', '${item.id}')">
+                                                                <img src="https://img.icons8.com/color/48/google-pay.png"
+                                                                    style="width: 24px;" alt="GPay"><br><span
+                                                                    class="x-small fw-800 mt-1 d-block"
+                                                                    style="opacity: 1;">GPAY</span>
+                                                            </div>
+                                                            <div class="flex-fill p-3 rounded-4 text-center gateway-node"
+                                                                style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                                                onclick="selectGateway(this, 'PHONEPE', '${item.id}')">
+                                                                <img src="https://img.icons8.com/color/48/phone-pe.png"
+                                                                    style="width: 24px;" alt="PhonePe"><br><span
+                                                                    class="x-small fw-800 mt-1 d-block opacity-50">PHONEPE</span>
+                                                            </div>
+                                                            <div class="flex-fill p-3 rounded-4 text-center gateway-node"
+                                                                style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                                                onclick="selectGateway(this, 'PAYTM', '${item.id}')">
+                                                                <img src="https://img.icons8.com/color/48/paytm.png"
+                                                                    style="width: 24px;" alt="Paytm"><br><span
+                                                                    class="x-small fw-800 mt-1 d-block opacity-50">PAYTM</span>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <!-- Card Details Section -->
+                                                    <div id="card_details_${item.id}"
+                                                        class="payment-details mb-4 d-none">
+                                                        <div class="mb-3">
+                                                            <span class="v3-identity-label">CARD
+                                                                NUMBER</span>
+                                                            <input type="text" name="cardNumber"
+                                                                class="form-control v3-terminal-input"
+                                                                placeholder="0000 0000 0000 0000">
+                                                        </div>
+                                                        <div class="row g-3">
+                                                            <div class="col-7">
+                                                                <span class="v3-identity-label">EXPIRY</span>
+                                                                <input type="text" name="cardExpiry"
+                                                                    class="form-control v3-terminal-input"
+                                                                    placeholder="MM/YY">
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <span class="v3-identity-label">CVV</span>
+                                                                <input type="password" name="cardCvv"
+                                                                    class="form-control v3-terminal-input"
+                                                                    placeholder="***">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="p-3 rounded-4 text-info x-small text-center fw-950 uppercase"
+                                                        style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); letter-spacing: 2px;">
+                                                        ESCROW PROTECTION ENABLED</div>
                                                 </div>
-                                            </div>
+                                                <div class="modal-footer border-0 p-5 pt-0">
+                                                    <button type="submit" class="btn btn-quantum w-100 py-3">CONFIRM
+                                                        ACQUISITION →</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -545,7 +559,21 @@
                 <script src="${pageContext.request.contextPath}/js/voice-assistant.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.querySelectorAll('.modal').forEach(modal => document.body.appendChild(modal));
+                    });
+
                     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+                    function autoFillAddress(itemId) {
+                        const addressField = document.getElementById("shippingAddress_" + itemId);
+                        if (addressField) {
+                            const userDistrict = "${user.district != null ? user.district : ''}";
+                            const userState = "${user.state != null ? user.state : ''}";
+                            const fullAddress = userDistrict + (userDistrict && userState ? ", " : "") + userState;
+                            addressField.value = fullAddress || "Profile address not set";
+                        }
+                    }
 
                     function togglePaymentDetails(itemId, method) {
                         const upiDetails = document.getElementById("upi_details_" + itemId);
@@ -560,16 +588,31 @@
                         }
                     }
 
-                    function selectGateway(element) {
-                        const siblings = element.parentElement.children;
-                        for (let sibling of siblings) {
-                            sibling.style.background = 'rgba(255,255,255,0.02)';
-                            sibling.style.borderColor = 'rgba(255,255,255,0.1)';
-                            sibling.querySelector('span').style.opacity = '0.5';
-                        }
+                    function selectGateway(element, gateway, itemId) {
+                        const hiddenInput = document.getElementById("selected_gateway_" + itemId);
+                        if (hiddenInput) hiddenInput.value = gateway;
+
+                        const container = element.parentElement;
+                        const allNodes = container.querySelectorAll('.gateway-node');
+
+                        allNodes.forEach(node => {
+                            node.style.background = 'rgba(255,255,255,0.02)';
+                            node.style.borderColor = 'rgba(255,255,255,0.1)';
+                            node.classList.remove('active-gateway');
+                            const span = node.querySelector('span');
+                            if (span) {
+                                span.style.opacity = '0.5';
+                                span.style.color = '#fff';
+                            }
+                        });
                         element.style.background = 'rgba(59, 130, 246, 0.1)';
                         element.style.borderColor = 'rgba(59, 130, 246, 0.4)';
-                        element.querySelector('span').style.opacity = '1';
+                        element.classList.add('active-gateway');
+                        const targetSpan = element.querySelector('span');
+                        if (targetSpan) {
+                            targetSpan.style.opacity = '1';
+                            targetSpan.style.color = '#3b82f6';
+                        }
                     }
                 </script>
                 <style>
@@ -603,13 +646,13 @@
                         color: #3b82f6;
                         letter-spacing: -1.5px;
                     }
+
+                    .active-gateway {
+                        background: rgba(59, 130, 246, 0.15) !important;
+                        border-color: rgba(59, 130, 246, 0.5) !important;
+                        box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+                    }
                 </style>
             </body>
 
             </html>
-            drum
-
-
-
-
-

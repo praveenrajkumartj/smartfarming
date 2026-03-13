@@ -259,9 +259,18 @@
                                             </div>
                                             <div>
                                                 <span class="trust-label d-block uppercase mb-1"
+                                                    style="font-size: 8px; letter-spacing: 2px;">ORIGIN LOCATION</span>
+                                                <span class="text-white fw-900 fs-5 uppercase text-info"
+                                                    style="letter-spacing: -0.5px; color: #3b82f6 !important;">
+                                                    ${not empty query.user.district ? query.user.district : 'SECURED'},
+                                                    ${not empty query.user.state ? query.user.state : 'NODE'}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="trust-label d-block uppercase mb-1"
                                                     style="font-size: 8px; letter-spacing: 2px;">ANALYSIS STATUS</span>
                                                 <span
-                                                    class="badge ${query.status == 'DIAGNOSED' ? 'bg-success' : 'bg-warning'} bg-opacity-10 text-${query.status == 'DIAGNOSED' ? 'success' : 'warning'} fw-950 px-3 py-2 rounded-pill uppercase"
+                                                    class="badge ${query.status == 'DIAGNOSED' || query.status == 'REPORT_READY' ? 'bg-success' : 'bg-warning'} bg-opacity-10 text-${query.status == 'DIAGNOSED' || query.status == 'REPORT_READY' ? 'success' : 'warning'} fw-950 px-3 py-2 rounded-pill uppercase"
                                                     style="font-size: 8px; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.05);">${query.status}</span>
                                             </div>
                                         </div>
@@ -376,8 +385,3 @@
                 </body>
 
                 </html>
-
-
-
-
-

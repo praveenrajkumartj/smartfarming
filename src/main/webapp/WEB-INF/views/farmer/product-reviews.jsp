@@ -146,7 +146,8 @@
                             <header class="top-nav">
                                 <div class="top-nav-left d-flex align-items-center gap-3">
                                     <div class="hamburger" onclick="toggleSidebar()">
-                                        <span></span><span></span><span></span></div>
+                                        <span></span><span></span><span></span>
+                                    </div>
                                     <div class="page-title">
                                         <h1 class="m-0 fw-900 text-white"
                                             style="font-size: 2.2rem; letter-spacing: -1.5px;">Product Intel</h1>
@@ -208,7 +209,7 @@
                                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                                     <div class="d-flex align-items-center gap-3">
                                                         <div class="reviewer-avatar">
-                                                            ${fn:substring(r.reviewer.fullName, 0, 1)}
+                                                            <i class="fas fa-user-shield" style="font-size: 14px;"></i>
                                                         </div>
                                                         <div>
                                                             <div class="text-white fw-900" style="font-size: 14px;">

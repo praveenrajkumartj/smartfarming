@@ -17,7 +17,10 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @GetMapping
-    public Map<String, Object> getWeather(@RequestParam(defaultValue = "Pune") String city) {
+    public Map<String, Object> getWeather(@RequestParam(required = false) String city) {
+        if (city == null || city.trim().isEmpty()) {
+            city = "Pune";
+        }
         return weatherService.getWeatherData(city);
     }
 }

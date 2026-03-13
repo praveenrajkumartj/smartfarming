@@ -380,6 +380,7 @@
                                                 <span class="trust-label uppercase mb-2 d-block"
                                                     style="font-size: 8px;">DEBARKATION POINT</span>
                                                 <input type="text" name="location" class="form-control v3-market-input"
+                                                    value="${not empty user.district ? user.district : ''}${not empty user.district and not empty user.state ? ', ' : ''}${not empty user.state ? user.state : ''}"
                                                     placeholder="e.g. Warehouse 04, District Alpha" required />
                                             </div>
                                         </div>

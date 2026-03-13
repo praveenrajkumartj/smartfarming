@@ -18,6 +18,8 @@ public interface ProductReviewRepository extends JpaRepository<ProductReview, Lo
 
     boolean existsByReviewerIdAndProductId(Long reviewerId, Long productId);
 
+    boolean existsByTransactionId(Long transactionId);
+
     List<ProductReview> findByProductFarmerOrderByTimestampDesc(
             com.smartfarminganddigitalagriplatform.entity.User farmer);
 }

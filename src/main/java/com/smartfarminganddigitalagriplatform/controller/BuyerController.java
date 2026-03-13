@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/buyer")
@@ -34,6 +36,9 @@ public class BuyerController {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     private User getCurrentUser(Authentication auth) {
         return userService.findByEmail(auth.getName()).orElseThrow();
@@ -228,6 +233,14 @@ public class BuyerController {
                 .sorted((t1, t2) -> t2.getTimestamp().compareTo(t1.getTimestamp()))
                 .toList();
         model.addAttribute("orders", myOrders);
+
+        // Track which orders have been reviewed
+        Set<Long> reviewedOrderIds = reviewService.getAllProductReviews().stream()
+                .filter(r -> r.getTransaction() != null)
+                .map(r -> r.getTransaction().getId())
+                .collect(Collectors.toSet());
+        model.addAttribute("reviewedOrderIds", reviewedOrderIds);
+
         return "buyer/orders";
     }
 
